@@ -75,74 +75,84 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
   </nav>
 </header>
 
-<!-- Mobile menu overlay (Light Glassmorphism Panel) -->
+<!-- Mobile Menu Drawer (Right-side slideout) -->
 <div
-  id="mobile-menu-overlay"
-  class="fixed inset-0 z-[60] lg:hidden flex flex-col justify-between"
+  id="mobile-menu"
+  class="fixed inset-0 z-[60] lg:hidden pointer-events-none"
   aria-hidden="true"
-  style="display: none; opacity: 0; transition: opacity 0.3s ease;"
 >
-  <!-- Frosted glass backdrop -->
-  <div class="absolute inset-0 bg-white/80 backdrop-blur-2xl"></div>
+  <!-- Backdrop (dimmer overlay) -->
+  <div
+    id="menu-backdrop"
+    class="absolute inset-0 bg-slate-900/15 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 pointer-events-none"
+  ></div>
 
-  <!-- Panel header: logo + close button -->
-  <div class="relative z-10 flex items-center justify-between px-6 pt-5 pb-4 border-b border-slate-200/60">
-    <a href="/" class="flex items-center gap-2" id="menu-logo-link" aria-label="Home">
-      <img src="/images/logo_icon.png" alt="WolfWay Logistics LLC Logo" class="h-10 w-10 object-contain" />
-      <span class="font-heading text-sm font-extrabold uppercase tracking-wider text-ink">WolfWay Logistics LLC</span>
-    </a>
+  <!-- Sliding Drawer Panel -->
+  <div
+    id="menu-panel"
+    class="absolute top-0 right-0 bottom-0 w-[80vw] max-w-[300px] bg-white/90 backdrop-blur-2xl border-l border-slate-200/50 shadow-2xl flex flex-col justify-between translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto"
+  >
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between px-5 pt-6 pb-4 border-b border-slate-100">
+      <span class="font-heading text-xs font-bold uppercase tracking-wider text-slate-400">Menu</span>
+      <!-- Close button -->
+      <button
+        id="mobile-menu-close"
+        class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 hover:bg-red-50 hover:text-red-500 transition-colors"
+        aria-label="Close menu"
+      >
+        <svg width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
 
-    <!-- Close button -->
-    <button
-      id="mobile-menu-close"
-      class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-200 active:scale-95 transition-all duration-200 group focus-visible:outline-cyan/70"
-      aria-label="Close menu"
-    >
-      <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M2 2l14 14M16 2L2 16" stroke="#131722" stroke-width="2" stroke-linecap="round" class="group-hover:stroke-red-500 transition-colors duration-200"/>
-      </svg>
-    </button>
-  </div>
+    <!-- Navigation links -->
+    <nav class="flex-1 flex flex-col justify-start px-5 py-6 gap-1" aria-label="Mobile navigation">
+      {mainNav.map((item, i) => {
+        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        return (
+          <a
+            href={item.href}
+            class="mobile-nav-link group flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-200 hover:bg-slate-50"
+            style={`--i: ${i};`}
+          >
+            <span class:list={[
+              "font-heading text-lg font-bold uppercase tracking-wider transition-colors",
+              isActive ? "text-cyan" : "text-ink/80 group-hover:text-ink"
+            ]}>
+              {item.label}
+            </span>
+            <svg class:list={[
+              "w-4 h-4 transition-transform group-hover:translate-x-1",
+              isActive ? "text-cyan" : "text-slate-400"
+            ]} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        );
+      })}
+    </nav>
 
-  <!-- Nav links -->
-  <nav class="relative z-10 flex-1 flex flex-col justify-center items-center px-6 py-6 gap-2" aria-label="Mobile navigation">
-    {mainNav.map((item, i) => {
-      const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
-      return (
-        <a
-          href={item.href}
-          class="mobile-nav-link group py-3 px-5 rounded-xl w-full text-center transition-all duration-200 hover:bg-slate-100/80"
-          style={`--i: ${i};`}
-        >
-          <span class:list={[
-            "font-heading text-2xl font-extrabold uppercase tracking-widest transition-colors duration-200",
-            isActive ? "text-cyan" : "text-ink/70 group-hover:text-ink"
-          ]}>
-            {item.label}
-          </span>
+    <!-- Bottom CTA -->
+    <div class="px-5 pb-8 pt-4 border-t border-slate-100 space-y-4">
+      <Button
+        id="menu-cta"
+        href="/request-a-quote"
+        variant="primary"
+        size="md"
+        arrow={true}
+        class="w-full justify-center rounded-xl uppercase tracking-wider font-heading text-sm py-3"
+      >
+        Request a Quote
+      </Button>
+
+      <div class="text-center">
+        <p class="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-bold mb-1 font-body">Speak with dispatch</p>
+        <a href="tel:+12244464256" class="text-sm font-heading font-bold uppercase tracking-wider text-ink hover:text-cyan transition-colors">
+          +1 (224) 446-4256
         </a>
-      );
-    })}
-  </nav>
-
-  <!-- CTA + Contact (At Bottom) -->
-  <div class="relative z-10 px-6 pb-10 pt-5 border-t border-slate-200/60 space-y-4">
-    <Button
-      id="menu-cta"
-      href="/request-a-quote"
-      variant="primary"
-      size="lg"
-      arrow={true}
-      class="w-full justify-center rounded-xl uppercase tracking-wider font-heading text-base py-4"
-    >
-      Request a Quote
-    </Button>
-
-    <div class="text-center pt-1">
-      <p class="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-bold mb-1 font-body">Speak with dispatch</p>
-      <a href="tel:+12244464256" class="text-base font-heading font-extrabold uppercase tracking-wider text-ink hover:text-cyan transition-colors">
-        +1 (224) 446-4256
-      </a>
+      </div>
     </div>
   </div>
 </div>
@@ -184,50 +194,67 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
   }
 
   function setupMobileMenu() {
-    const openBtn  = document.getElementById('mobile-menu-open')  as HTMLButtonElement | null;
+    const menu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('menu-backdrop');
+    const panel = document.getElementById('menu-panel');
+    const openBtn = document.getElementById('mobile-menu-open') as HTMLButtonElement | null;
     const closeBtn = document.getElementById('mobile-menu-close') as HTMLButtonElement | null;
-    const overlay  = document.getElementById('mobile-menu-overlay') as HTMLElement | null;
 
-    if (!openBtn || !overlay) return;
+    if (!menu || !backdrop || !panel || !openBtn) return;
 
-    let menuOpen = false;
+    let isOpen = false;
 
     function openMenu() {
-      menuOpen = true;
-      overlay!.style.display = 'flex';
-      // Force layout reflow
-      overlay!.offsetHeight;
-      overlay!.style.opacity = '1';
-      
-      overlay!.setAttribute('aria-hidden', 'false');
+      isOpen = true;
+      menu!.classList.remove('pointer-events-none');
+      menu!.classList.add('pointer-events-auto');
+      menu!.setAttribute('aria-hidden', 'false');
       openBtn!.setAttribute('aria-expanded', 'true');
+      
+      // Animate backdrop
+      backdrop!.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop!.classList.add('opacity-100', 'pointer-events-auto');
+
+      // Animate panel
+      panel!.classList.remove('translate-x-full');
+      panel!.classList.add('translate-x-0');
+
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
-      menuOpen = false;
-      overlay!.style.opacity = '0';
-      
+      isOpen = false;
       openBtn!.setAttribute('aria-expanded', 'false');
-      overlay!.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      menu!.setAttribute('aria-hidden', 'true');
       
+      // Animate backdrop out
+      backdrop!.classList.remove('opacity-100', 'pointer-events-auto');
+      backdrop!.classList.add('opacity-0', 'pointer-events-none');
+
+      // Animate panel out
+      panel!.classList.remove('translate-x-0');
+      panel!.classList.add('translate-x-full');
+
+      document.body.style.overflow = '';
+
       setTimeout(() => {
-        if (!menuOpen) {
-          overlay!.style.display = 'none';
+        if (!isOpen) {
+          menu!.classList.remove('pointer-events-auto');
+          menu!.classList.add('pointer-events-none');
         }
-      }, 250);
+      }, 300);
     }
 
     openBtn.addEventListener('click', openMenu);
     closeBtn?.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
 
-    overlay.querySelectorAll('a').forEach(link => {
+    menu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menuOpen) closeMenu();
+      if (e.key === 'Escape' && isOpen) closeMenu();
     });
   }
 
@@ -249,11 +276,11 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
 <style>
   /* Mobile stacked link animations */
   @keyframes mobileLinkIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  #mobile-menu-overlay[style*="opacity: 1"] .mobile-nav-link {
-    animation: mobileLinkIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(var(--i) * 60ms + 100ms);
+  .translate-x-0 .mobile-nav-link {
+    animation: mobileLinkIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 40ms + 80ms);
   }
 </style>

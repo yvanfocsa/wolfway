@@ -1,0 +1,55 @@
+---
+// src/components/SplitAudience.astro
+import Button from './Button.astro';
+---
+
+<section class="relative overflow-hidden border-t border-b border-white/5 select-none" data-animate="fade-up">
+  <div class="grid md:grid-cols-2">
+    <!-- Left Panel: Shippers -->
+    <div class="relative bg-offwhite py-16 sm:py-20 px-8 sm:px-12 lg:px-20 flex flex-col justify-center items-start border-b md:border-b-0 md:border-r border-slate-200/60">
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-4">
+        FOR SHIPPERS
+      </p>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold uppercase text-ink leading-tight">
+        Move your freight<br class="hidden sm:inline" /> with precision.
+      </h2>
+      <p class="mt-4 text-sm leading-relaxed text-steel max-w-md font-body font-light">
+        Need flatbed, step-deck or specialized capacity? Partner with WolfWay for safe, on-time open-deck shipping solutions.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <Button href="/request-a-quote" variant="primary" size="lg" arrow={true} class="group w-full sm:w-auto justify-center">
+          Request a Quote
+        </Button>
+        <Button href="/services" variant="secondary" size="lg" class="w-full sm:w-auto justify-center border-slate-300 text-ink hover:bg-slate-100">
+          Our Services
+        </Button>
+      </div>
+    </div>
+
+    <!-- Right Panel: Drivers & Carriers -->
+    <div class="relative bg-navy py-16 sm:py-20 px-8 sm:px-12 lg:px-20 flex flex-col justify-center items-start overflow-hidden">
+      <!-- Grid pattern overlay -->
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:3rem_3rem]" aria-hidden="true"></div>
+
+      <div class="relative z-10 w-full flex flex-col items-start">
+        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-4">
+          FOR DRIVERS & CARRIERS
+        </p>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold uppercase text-white leading-tight">
+          Keep your trucks<br class="hidden sm:inline" /> moving.
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/60 max-w-md font-body font-light">
+          Join our driver pool or carrier network. We offer fair rates, clear dispatch communication, and fast weekly pay.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <Button href="/drive-with-us" variant="primary" size="lg" arrow={true} class="group w-full sm:w-auto justify-center">
+            Drive with Us
+          </Button>
+          <Button href="/carrier" variant="secondary" size="lg" class="w-full sm:w-auto justify-center">
+            Become a Carrier
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

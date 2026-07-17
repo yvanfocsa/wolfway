@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
+import TrustBar from '@/components/TrustBar.astro';
+import StatsCounter from '@/components/StatsCounter.astro';
+import HowItWorks from '@/components/HowItWorks.astro';
+import SplitAudience from '@/components/SplitAudience.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
-import CTASection from '@/components/CTASection.astro';
 import { principles } from '@/content/company';
 import { services } from '@/content/services';
 
@@ -80,9 +83,20 @@ const reviews = [
   <!-- Hero -->
   <Hero />
 
+  <!-- Trust Bar -->
+  <TrustBar />
+
   <!-- Three Principles -->
   <section class="bg-offwhite py-14 sm:py-20 lg:py-28" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <div class="mb-12 sm:mb-16">
+        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
+          THE WOLFWAY STANDARD
+        </p>
+        <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-ink">
+          Safety-first open-deck shipping
+        </h2>
+      </div>
       <div class="grid gap-8 sm:gap-10 sm:grid-cols-2 md:grid-cols-3">
         {principles.map((p) => (
           <div class="border-t-2 border-cyan pt-5">
@@ -99,8 +113,11 @@ const reviews = [
   </section>
 
   <!-- Services -->
-  <section class="bg-offwhite py-14 sm:py-20 lg:py-28" data-animate="fade-up">
+  <section class="bg-offwhite py-14 sm:py-20 lg:py-28 border-t border-slate-200/40" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
+        WHAT WE HAUL
+      </p>
       <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-ink">
         Our Services
       </h2>
@@ -119,6 +136,12 @@ const reviews = [
     </div>
   </section>
 
+  <!-- How It Works Section -->
+  <HowItWorks />
+
+  <!-- Stats Counter Section -->
+  <StatsCounter />
+
   <!-- Google Reviews Section (Premium Carousel - 9 cards total, 3 by 3) -->
   <section class="bg-navy py-14 sm:py-20 lg:py-28 text-white relative overflow-hidden" data-animate="fade-up">
     <!-- Subtle grid lines background -->
@@ -127,6 +150,9 @@ const reviews = [
     <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
       <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14 lg:mb-16">
+        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
+          TRUSTED BY SHIPPERS & CARRIERS
+        </p>
         <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase mb-4">What Our Partners Say</h2>
         <div class="flex items-center justify-center gap-1.5 pt-1">
           <span class="text-lg sm:text-xl font-bold text-cyan">5.0</span>
@@ -185,32 +211,8 @@ const reviews = [
     </div>
   </section>
 
-  <!-- Driver CTA -->
-  <CTASection
-    variant="dark"
-    heading="Drive with WolfWay"
-    description="We're looking for experienced OTR drivers and owner operators. Competitive pay, consistent freight, and a team that has your back."
-    buttonText="Apply Now"
-    buttonHref="/drive-with-us"
-  />
-
-  <!-- Carrier CTA -->
-  <CTASection
-    variant="light"
-    heading="Join Our Carrier Network"
-    description="We partner with reliable carriers across the country. Fair rates, consistent loads, and dispatch that communicates."
-    buttonText="Apply as Carrier"
-    buttonHref="/carrier"
-  />
-
-  <!-- Quote CTA -->
-  <CTASection
-    variant="dark"
-    heading="Ready to Move Your Freight?"
-    description="Get a competitive quote for your next open-deck shipment. Fast response, reliable service."
-    buttonText="Request a Quote"
-    buttonHref="/request-a-quote"
-  />
+  <!-- Split Audience Section (Shippers / Drivers CTAs) -->
+  <SplitAudience />
 </BaseLayout>
 
 <script>

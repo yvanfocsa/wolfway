@@ -44,52 +44,78 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: #0B1526;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
+        background: #F6F5F3;
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       }
       #splash-screen.is-hidden {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
       }
-      #splash-logo {
-        width: 72px;
-        height: 72px;
+      .splash-mark {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 24px;
+      }
+      .splash-mark img {
+        width: 52px;
+        height: 52px;
         object-fit: contain;
-        margin-bottom: 28px;
-        animation: splash-pulse 1.8s ease-in-out infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
-      #splash-bar-track {
-        width: 120px;
-        height: 2px;
-        background: rgba(255,255,255,0.08);
-        border-radius: 2px;
-        overflow: hidden;
+      .splash-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1.5px solid transparent;
+        border-top-color: #0B1526;
+        animation: splash-spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
-      #splash-bar-fill {
-        width: 40%;
-        height: 100%;
-        background: #00D4FF;
-        border-radius: 2px;
-        animation: splash-slide 1.2s ease-in-out infinite;
+      .splash-ring-outer {
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid rgba(11, 21, 38, 0.06);
       }
-      @keyframes splash-pulse {
-        0%, 100% { opacity: 0.6; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.04); }
+      .splash-name {
+        font-family: 'Inter', 'Outfit', system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #0B1526;
+        opacity: 0.4;
       }
-      @keyframes splash-slide {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(350%); }
+      .splash-shimmer {
+        width: 48px;
+        height: 1px;
+        margin-top: 20px;
+        background: linear-gradient(90deg, transparent, rgba(11, 21, 38, 0.15), transparent);
+        animation: splash-shimmer 1.6s ease-in-out infinite;
+      }
+      @keyframes splash-spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes splash-shimmer {
+        0%, 100% { opacity: 0; transform: scaleX(0.5); }
+        50% { opacity: 1; transform: scaleX(1); }
       }
     </style>
   </head>
   <body class="bg-offwhite text-ink antialiased">
     <!-- Splash Screen -->
     <div id="splash-screen" aria-hidden="true">
-      <img id="splash-logo" src="/images/logo_icon.png" alt="" width="72" height="72" />
-      <div id="splash-bar-track">
-        <div id="splash-bar-fill"></div>
+      <div class="splash-mark">
+        <div class="splash-ring-outer"></div>
+        <div class="splash-ring"></div>
+        <img src="/images/logo_icon.png" alt="" width="52" height="52" />
       </div>
+      <span class="splash-name">WolfWay Logistics</span>
+      <div class="splash-shimmer"></div>
     </div>
 
     <Header transition:persist />

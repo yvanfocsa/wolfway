@@ -113,7 +113,7 @@ const reviews = [
   </section>
 
   <!-- Services -->
-  <section class="bg-offwhite py-14 sm:py-20 lg:py-28 border-t border-slate-200/40" data-animate="fade-up">
+  <section class="bg-offwhite py-14 sm:py-20 lg:py-28" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
         WHAT WE HAUL
@@ -170,7 +170,7 @@ const reviews = [
         <!-- Carousel Track -->
         <div id="reviews-track" class="flex gap-5 sm:gap-6 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
           {reviews.map((r) => (
-            <div class="review-card w-[85vw] sm:w-[75vw] md:w-[calc((100%-2.5rem)/3)] flex-shrink-0 bg-white/5 backdrop-blur-md border border-white/10 p-5 sm:p-7 flex flex-col justify-between hover:border-cyan/30 transition-all duration-300 group shadow-lg hover:shadow-[0_8px_30px_rgba(0,168,225,0.06)] hover:-translate-y-1 rounded-xl">
+            <div class="review-card w-[85vw] sm:w-[75vw] md:w-[calc((100%-2.5rem)/3)] flex-shrink-0 bg-white/5 backdrop-blur-md border border-white/10 p-5 sm:p-7 flex flex-col justify-between hover:border-cyan/30 transition-all duration-300 group shadow-lg hover:shadow-[0_8px_30px_rgba(0,168,225,0.06)] hover:-translate-y-1 rounded-sm">
               <div>
                 <div class="flex text-yellow-400 mb-4">
                   {[...Array(r.stars)].map(() => (

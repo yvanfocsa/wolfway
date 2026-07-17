@@ -27,16 +27,11 @@ const benefits = [
 ---
 
 <BaseLayout
-  title="Drive With Us | WolfWay Logistics"
+  title="Drive With Us"
   description="Join WolfWay Logistics as an OTR driver or owner operator. Competitive pay and consistent open-deck freight."
 >
   <!-- Page Header -->
   <section class="bg-navy pt-36 pb-24 relative overflow-hidden">
-    <!-- Grid line background -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:3rem_3rem]" aria-hidden="true"></div>
-    <!-- Soft glow accent -->
-    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-cyan/5 rounded-full blur-[120px]" aria-hidden="true"></div>
-
     <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight">
         Drive With WolfWay
@@ -48,32 +43,24 @@ const benefits = [
   </section>
 
   <!-- Modern Spacious Content Section -->
-  <section class="bg-offwhite py-24 relative overflow-hidden" data-animate="fade-up">
-    <!-- Subtle light grid line background -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" aria-hidden="true"></div>
-    <!-- Soft light glow -->
-    <div class="absolute top-1/3 right-1/4 w-[350px] h-[350px] bg-cyan/5 rounded-full blur-[100px] pointer-events-none" aria-hidden="true"></div>
-
+  <section class="bg-offwhite py-20 sm:py-24 relative overflow-hidden animate-fade-in" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
       
-      <!-- Side-by-Side Layout (Benefits Left, Form Right) -->
+      <!-- Side-by-Side Layout -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         
-        <!-- Left Column: Benefits (col-span-5) -->
+        <!-- Left Column: Benefits -->
         <div class="lg:col-span-5 space-y-5">
           {benefits.map((b) => (
-            <div class="flex items-start gap-4 p-6 bg-white border border-slate-200/60 rounded-2xl hover:border-cyan/30 hover:shadow-[0_12px_40px_rgba(0,168,225,0.04)] transition-all duration-300 group relative overflow-hidden">
-              <!-- Glow corner element on hover -->
-              <div class="absolute top-0 right-0 w-24 h-24 bg-cyan/5 rounded-full blur-xl -mr-8 -mt-8 group-hover:bg-cyan/10 transition-all duration-500" aria-hidden="true"></div>
-              
+            <div class="flex items-start gap-4 p-6 bg-white border border-slate-200/40 rounded-sm hover:border-cyan/30 hover:shadow-sm transition-all duration-300 group">
               <!-- Icon Container -->
-              <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-lg border border-slate-200 bg-slate-50/50 text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors shadow-sm relative z-10">
+              <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-slate-50 text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d={b.icon} />
                 </svg>
               </div>
               
-              <div class="relative z-10">
+              <div>
                 <h2 class="font-heading text-base font-bold uppercase text-ink mb-2 tracking-tight">
                   {b.title}
                 </h2>
@@ -85,10 +72,10 @@ const benefits = [
           ))}
         </div>
 
-        <!-- Right Column: Application Form (col-span-7) -->
-        <div class="lg:col-span-7 bg-white p-8 sm:p-12 border border-slate-200/60 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 relative">
+        <!-- Right Column: Application Form -->
+        <div class="lg:col-span-7 bg-white p-8 sm:p-12 border border-slate-200/40 rounded-sm shadow-sm relative">
           <!-- Top highlight line -->
-          <div class="absolute top-0 left-0 right-0 h-1 bg-cyan rounded-t-2xl"></div>
+          <div class="absolute top-0 left-0 right-0 h-1 bg-cyan rounded-t-sm"></div>
           
           <div class="mb-8">
             <h3 class="font-heading text-2xl font-bold uppercase text-ink">

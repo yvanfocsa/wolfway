@@ -23,7 +23,7 @@ const freightTypes = [
         name="name"
         required
         autocomplete="name"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="John Doe"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your name.</p>
@@ -39,7 +39,7 @@ const freightTypes = [
         id="quote-company"
         name="company"
         autocomplete="organization"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="Company name"
       />
     </div>
@@ -55,7 +55,7 @@ const freightTypes = [
         name="phone"
         required
         autocomplete="tel"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="(555) 123-4567"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid phone number.</p>
@@ -72,7 +72,7 @@ const freightTypes = [
         name="email"
         required
         autocomplete="email"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="john@company.com"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid email address.</p>
@@ -88,7 +88,7 @@ const freightTypes = [
         id="quote-pickup"
         name="pickup_location"
         required
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="City, State"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the pickup location.</p>
@@ -104,7 +104,7 @@ const freightTypes = [
         id="quote-delivery"
         name="delivery_location"
         required
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
         placeholder="City, State"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the delivery location.</p>
@@ -120,7 +120,7 @@ const freightTypes = [
           id="quote-freight-type"
           name="freight_type"
           required
-          class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
+          class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
         >
           <option value="" disabled selected>Select type</option>
           {freightTypes.map((type) => (
@@ -145,7 +145,7 @@ const freightTypes = [
         type="date"
         id="quote-date"
         name="pickup_date"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
       />
     </div>
   </div>
@@ -159,7 +159,7 @@ const freightTypes = [
       id="quote-message"
       name="message"
       rows="4"
-      class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-lg text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y"
+      class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y"
       placeholder="Describe your freight, dimensions, weight, special requirements..."
     ></textarea>
   </div>
@@ -178,14 +178,14 @@ const freightTypes = [
   </div>
 
   <!-- Success -->
-  <div id="quote-success" class="hidden p-5 border border-green-500/20 bg-green-500/5 rounded-lg">
+  <div id="quote-success" class="hidden p-5 border border-green-500/20 bg-green-500/5 rounded-sm">
     <p class="text-sm font-medium text-green-700 font-body">
       Thank you! Your quote request has been submitted. We'll be in touch within one business day.
     </p>
   </div>
 
   <!-- Error -->
-  <div id="quote-error" class="hidden p-5 border border-red-500/20 bg-red-500/5 rounded-lg">
+  <div id="quote-error" class="hidden p-5 border border-red-500/20 bg-red-500/5 rounded-sm">
     <p class="text-sm font-medium text-red-600 font-body">
       Please fix the highlighted fields and try again.
     </p>

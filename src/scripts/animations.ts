@@ -224,9 +224,6 @@ function showEverythingInstantly() {
   }
 }
 
-// Initial run
-initAnimations();
-
 // Listen to Astro view transition page load events
 document.addEventListener('astro:page-load', () => {
   initAnimations();

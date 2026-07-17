@@ -25,16 +25,15 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       ogImage={ogImage}
     />
     <ClientRouter />
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
-    <style is:inline>
-      .js #hero-eyebrow,
-      .js #hero-heading,
-      .js #hero-body-content {
-        opacity: 0;
-      }
-    </style>
+    <noscript>
+      <style>
+        #hero-eyebrow,
+        #hero-heading,
+        #hero-body-content {
+          opacity: 1 !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body class="bg-offwhite text-ink antialiased">
     <Header transition:persist />

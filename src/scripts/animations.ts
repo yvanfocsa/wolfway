@@ -58,7 +58,7 @@ function initAnimations() {
           duration: 0.65,
           stagger: 0.10,
           ease: 'power3.out',
-          delay: 0.1
+          delay: 0
         });
 
         // 2. Eyebrow, description and CTA buttons fade in

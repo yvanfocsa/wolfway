@@ -12,11 +12,12 @@ const equipmentTypes = [
 
 <form id="carrier-form" class="space-y-6" novalidate>
   <input type="hidden" name="formType" value="carrier" />
+  
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <!-- Company Name -->
     <div>
-      <label for="carrier-company" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Company Name <span class="text-cyan">*</span>
+      <label for="carrier-company" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Company Name <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="text"
@@ -24,7 +25,7 @@ const equipmentTypes = [
         name="company_name"
         required
         autocomplete="organization"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="Your company name"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your company name.</p>
@@ -32,8 +33,8 @@ const equipmentTypes = [
 
     <!-- Contact Name -->
     <div>
-      <label for="carrier-contact" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Contact Name <span class="text-cyan">*</span>
+      <label for="carrier-contact" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Contact Name <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="text"
@@ -41,7 +42,7 @@ const equipmentTypes = [
         name="contact_name"
         required
         autocomplete="name"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="John Doe"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a contact name.</p>
@@ -49,8 +50,8 @@ const equipmentTypes = [
 
     <!-- Phone -->
     <div>
-      <label for="carrier-phone" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Phone <span class="text-cyan">*</span>
+      <label for="carrier-phone" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Phone <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="tel"
@@ -58,7 +59,7 @@ const equipmentTypes = [
         name="phone"
         required
         autocomplete="tel"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="(555) 123-4567"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid phone number.</p>
@@ -66,8 +67,8 @@ const equipmentTypes = [
 
     <!-- Email -->
     <div>
-      <label for="carrier-email" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Email <span class="text-cyan">*</span>
+      <label for="carrier-email" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Email <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="email"
@@ -75,7 +76,7 @@ const equipmentTypes = [
         name="email"
         required
         autocomplete="email"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="contact@company.com"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid email address.</p>
@@ -83,15 +84,15 @@ const equipmentTypes = [
 
     <!-- USDOT Number -->
     <div>
-      <label for="carrier-usdot" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        USDOT Number <span class="text-cyan">*</span>
+      <label for="carrier-usdot" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        USDOT Number <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="text"
         id="carrier-usdot"
         name="usdot"
         required
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="1234567"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your USDOT number.</p>
@@ -99,36 +100,36 @@ const equipmentTypes = [
 
     <!-- MC Number -->
     <div>
-      <label for="carrier-mc" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+      <label for="carrier-mc" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
         MC Number
       </label>
       <input
         type="text"
         id="carrier-mc"
         name="mc_number"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="MC-123456"
       />
     </div>
 
     <!-- Equipment Type -->
     <div>
-      <label for="carrier-equipment" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Equipment Type <span class="text-cyan">*</span>
+      <label for="carrier-equipment" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Equipment Type <span class="text-cyan font-bold">*</span>
       </label>
       <div class="relative">
         <select
           id="carrier-equipment"
           name="equipment_type"
           required
-          class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
+          class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 appearance-none cursor-pointer font-body"
         >
           <option value="" disabled selected>Select equipment</option>
           {equipmentTypes.map((type) => (
             <option value={type}>{type}</option>
           ))}
         </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400">
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500">
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
@@ -139,8 +140,8 @@ const equipmentTypes = [
 
     <!-- Truck Count -->
     <div>
-      <label for="carrier-trucks" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-        Number of Trucks <span class="text-cyan">*</span>
+      <label for="carrier-trucks" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        Number of Trucks <span class="text-cyan font-bold">*</span>
       </label>
       <input
         type="number"
@@ -148,7 +149,7 @@ const equipmentTypes = [
         name="truck_count"
         required
         min="1"
-        class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
+        class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
         placeholder="e.g. 5"
       />
       <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your truck count.</p>
@@ -157,15 +158,15 @@ const equipmentTypes = [
 
   <!-- States Covered -->
   <div>
-    <label for="carrier-states" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-      States Covered <span class="text-cyan">*</span>
+    <label for="carrier-states" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+      States Covered <span class="text-cyan font-bold">*</span>
     </label>
     <textarea
       id="carrier-states"
       name="states_covered"
       rows="2"
       required
-      class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y"
+      class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y font-body"
       placeholder="e.g. IL, IN, WI, MI, OH, TX"
     ></textarea>
     <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please list the states you cover.</p>
@@ -173,14 +174,14 @@ const equipmentTypes = [
 
   <!-- Message -->
   <div>
-    <label for="carrier-message" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+    <label for="carrier-message" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
       Additional Information
     </label>
     <textarea
       id="carrier-message"
       name="message"
       rows="3"
-      class="w-full border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y"
+      class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y font-body"
       placeholder="Any additional information about your fleet or services..."
     ></textarea>
   </div>
@@ -192,7 +193,7 @@ const equipmentTypes = [
       variant="primary"
       size="default"
       arrow={true}
-      class="group w-full sm:w-auto"
+      class="group w-full sm:w-auto rounded-sm justify-center uppercase font-heading tracking-wider"
     >
       Apply to Join Network
     </Button>

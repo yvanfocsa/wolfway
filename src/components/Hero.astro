@@ -5,6 +5,19 @@ import Button from './Button.astro';
 <section class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
   <!-- Video / Image background container -->
   <div class="absolute inset-0 z-0 bg-navy" id="hero-bg-container">
+    <!-- Inline Video element for instant browser parsing and preloading -->
+    <video
+      id="hero-video"
+      class="absolute inset-0 h-full w-full object-cover z-0"
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="/videos/hero.webm" type="video/webm" />
+      <source src="/videos/hero.mp4" type="video/mp4" />
+    </video>
     <!-- Dark overlay for text readability -->
     <div class="absolute inset-0 bg-navy/60 z-10" id="hero-overlay"></div>
   </div>
@@ -58,55 +71,23 @@ import Button from './Button.astro';
 </section>
 
 <script>
-  let videoEl: HTMLVideoElement | null = null;
-
   function initHeroVideo() {
-    const container = document.getElementById('hero-bg-container');
-
-    if (!container) return;
+    const videoEl = document.getElementById('hero-video') as HTMLVideoElement | null;
+    if (!videoEl) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = window.innerWidth < 768;
 
-    // Do not autoplay video on mobile or for reduced-motion users
-    const shouldAutoplay = !prefersReducedMotion && !isMobile;
-
-    // Clean up any existing video first
-    const existingVideo = container.querySelector('video');
-    if (existingVideo) existingVideo.remove();
-
-    if (shouldAutoplay) {
-      loadVideo();
-    }
-
-    function loadVideo() {
-      videoEl = document.createElement('video');
-      videoEl.className = 'absolute inset-0 h-full w-full object-cover z-0 opacity-0 transition-opacity duration-1000';
-      videoEl.autoplay = true;
-      videoEl.muted = true;
-      videoEl.loop = true;
-      videoEl.playsInline = true;
-      videoEl.setAttribute('webkit-playsinline', 'true');
-      videoEl.setAttribute('aria-hidden', 'true');
-      videoEl.preload = 'metadata';
-
-      // Fade in once video starts playing
-      videoEl.addEventListener('playing', () => {
-        videoEl?.classList.remove('opacity-0');
+    // Direct playback for instant display if autoplay is allowed
+    if (!prefersReducedMotion && !isMobile) {
+      videoEl.style.display = 'block';
+      videoEl.play().catch(() => {
+        // Fallback in case of browser strict autoplay policy
       });
-
-      // Sources
-      const webmSource = document.createElement('source');
-      webmSource.src = '/videos/hero.webm';
-      webmSource.type = 'video/webm';
-      videoEl.appendChild(webmSource);
-
-      const mp4Source = document.createElement('source');
-      mp4Source.src = '/videos/hero.mp4';
-      mp4Source.type = 'video/mp4';
-      videoEl.appendChild(mp4Source);
-
-      container!.appendChild(videoEl);
+    } else {
+      // Pause and hide video element on mobile or reduced motion to save resources
+      videoEl.pause();
+      videoEl.style.display = 'none';
     }
   }
 

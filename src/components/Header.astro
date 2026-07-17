@@ -4,10 +4,10 @@ import Button from '@/components/Button.astro';
 ---
 
 <header id="site-header" class="fixed top-0 left-0 z-50 w-full transition-all duration-300 py-3 lg:py-4">
-  <nav class="mx-auto max-w-7xl px-5 lg:px-10">
+  <nav class="mx-auto max-w-7xl px-4 sm:px-5 lg:px-10">
     <div
       id="header-inner"
-      class="flex items-center justify-between px-5 py-2 lg:px-6 lg:py-2 transition-all duration-300 bg-navy/35 border border-white/5 backdrop-blur-md rounded-xl shadow-lg"
+      class="flex items-center justify-between px-4 py-2 lg:px-6 lg:py-2 transition-all duration-300 bg-navy/35 border border-white/5 backdrop-blur-md rounded-xl shadow-lg"
     >
       <!-- Logo & Brand Name -->
       <a href="/" class="relative z-50 flex items-center gap-2.5 group" aria-label="WolfWay Logistics home">
@@ -15,11 +15,11 @@ import Button from '@/components/Button.astro';
           id="header-logo"
           src="/images/logo_icon.png"
           alt="WolfWay Logo"
-          class="h-16 w-16 md:h-18 md:w-18 object-contain transition-all duration-300 group-hover:scale-105"
+          class="h-14 w-14 sm:h-16 sm:w-16 object-contain transition-all duration-300 group-hover:scale-105"
         />
         <span
           id="header-title"
-          class="font-heading text-lg md:text-xl font-extrabold uppercase tracking-widest text-white group-hover:text-cyan transition-all duration-300"
+          class="font-heading text-base sm:text-lg md:text-xl font-extrabold uppercase tracking-widest text-white group-hover:text-cyan transition-all duration-300"
         >
           WolfWay
         </span>
@@ -53,47 +53,59 @@ import Button from '@/components/Button.astro';
       <!-- Mobile menu toggle -->
       <button
         id="mobile-menu-toggle"
-        class="relative z-50 flex h-8 w-8 items-center justify-center lg:hidden"
+        class="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-colors duration-200"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
         <span class="sr-only">Menu</span>
-        <div class="flex flex-col gap-1.5" id="hamburger-icon">
-          <span class="block h-0.5 w-5 bg-white transition-all duration-300 origin-center" id="bar-1"></span>
-          <span class="block h-0.5 w-5 bg-white transition-all duration-300" id="bar-2"></span>
-          <span class="block h-0.5 w-5 bg-white transition-all duration-300 origin-center" id="bar-3"></span>
+        <div class="flex flex-col gap-[5px]" id="hamburger-icon">
+          <span class="block h-[2px] w-5 bg-white transition-all duration-300 origin-center" id="bar-1"></span>
+          <span class="block h-[2px] w-5 bg-white transition-all duration-300" id="bar-2"></span>
+          <span class="block h-[2px] w-5 bg-white transition-all duration-300 origin-center" id="bar-3"></span>
         </div>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu — full screen slide-in -->
   <div
     id="mobile-menu"
-    class="fixed inset-0 z-40 flex flex-col bg-navy opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"
+    class="fixed inset-0 z-40 flex flex-col lg:hidden"
+    style="background: rgba(17,23,34,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.35s cubic-bezier(0.16,1,0.3,1);"
     aria-hidden="true"
   >
-    <div class="flex flex-col items-center justify-center flex-1 gap-6 px-6">
-      {mainNav.map((item) => (
+    <!-- Top padding for header clearance -->
+    <div class="h-20 flex-shrink-0"></div>
+
+    <!-- Nav links centered -->
+    <div class="flex flex-col items-center justify-center flex-1 gap-1 px-6">
+      {mainNav.map((item, i) => (
         <a
           href={item.href}
-          class="mobile-nav-link text-2xl font-heading font-semibold uppercase tracking-wider text-white/80 hover:text-white transition-colors duration-200"
+          class="mobile-nav-link w-full max-w-xs text-center py-4 border-b border-white/5 last:border-0 text-xl font-heading font-bold uppercase tracking-wider text-white/70 hover:text-white active:text-cyan transition-colors duration-200"
+          style={`--i: ${i};`}
         >
           {item.label}
         </a>
       ))}
-      <Button
-        href="/request-a-quote"
-        variant="primary"
-        size="lg"
-        class="mt-4"
-      >
-        Request a Quote
-      </Button>
+
+      <div class="pt-8 w-full max-w-xs">
+        <Button
+          href="/request-a-quote"
+          variant="primary"
+          size="lg"
+          class="w-full justify-center text-center"
+        >
+          Request a Quote
+        </Button>
+      </div>
     </div>
-    <div class="pb-8 text-center text-sm text-steel">
-      <a href="tel:+12244464256" class="text-white/60 hover:text-white transition-colors">+1 (224) 446-4256</a>
+
+    <!-- Bottom contact bar -->
+    <div class="pb-10 pt-6 text-center border-t border-white/5 mx-8">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-white/30 font-semibold mb-2">Call us</p>
+      <a href="tel:+12244464256" class="text-lg font-heading font-bold text-white hover:text-cyan transition-colors">+1 (224) 446-4256</a>
     </div>
   </div>
 </header>
@@ -103,7 +115,7 @@ import Button from '@/components/Button.astro';
   const logo = document.getElementById('header-logo');
   const title = document.getElementById('header-title');
   const toggle = document.getElementById('mobile-menu-toggle');
-  const menu = document.getElementById('mobile-menu');
+  const menu = document.getElementById('mobile-menu') as HTMLElement | null;
   const bar1 = document.getElementById('bar-1');
   const bar2 = document.getElementById('bar-2');
   const bar3 = document.getElementById('bar-3');
@@ -114,16 +126,16 @@ import Button from '@/components/Button.astro';
     if (!header) return;
     if (window.scrollY > 40) {
       header.classList.add('header-scrolled');
-      logo?.classList.remove('h-16', 'w-16', 'md:h-18', 'md:w-18');
-      logo?.classList.add('h-10', 'w-10', 'md:h-12', 'md:w-12');
-      title?.classList.remove('text-lg', 'text-xl', 'md:text-xl');
-      title?.classList.add('text-base', 'md:text-lg');
+      logo?.classList.remove('h-14', 'w-14', 'sm:h-16', 'sm:w-16');
+      logo?.classList.add('h-9', 'w-9');
+      title?.classList.remove('text-base', 'sm:text-lg', 'md:text-xl');
+      title?.classList.add('text-sm', 'md:text-base');
     } else {
       header.classList.remove('header-scrolled');
-      logo?.classList.add('h-16', 'w-16', 'md:h-18', 'md:w-18');
-      logo?.classList.remove('h-10', 'w-10', 'md:h-12', 'md:w-12');
-      title?.classList.add('text-lg', 'text-xl', 'md:text-xl');
-      title?.classList.remove('text-base', 'md:text-lg');
+      logo?.classList.add('h-14', 'w-14', 'sm:h-16', 'sm:w-16');
+      logo?.classList.remove('h-9', 'w-9');
+      title?.classList.add('text-base', 'sm:text-lg', 'md:text-xl');
+      title?.classList.remove('text-sm', 'md:text-base');
     }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -132,27 +144,33 @@ import Button from '@/components/Button.astro';
   // Mobile menu
   function openMenu() {
     menuOpen = true;
-    menu?.classList.remove('opacity-0', 'pointer-events-none');
-    menu?.classList.add('opacity-100', 'pointer-events-auto');
+    if (menu) {
+      menu.style.opacity = '1';
+      menu.style.pointerEvents = 'auto';
+      menu.style.transform = 'translateY(0)';
+    }
     menu?.setAttribute('aria-hidden', 'false');
     toggle?.setAttribute('aria-expanded', 'true');
     toggle?.setAttribute('aria-label', 'Close menu');
-    bar1?.classList.add('rotate-45', 'translate-y-[4px]');
-    bar2?.classList.add('opacity-0');
-    bar3?.classList.add('-rotate-45', '-translate-y-[4px]');
+    bar1?.classList.add('rotate-45', 'translate-y-[7px]');
+    bar2?.classList.add('opacity-0', 'scale-x-0');
+    bar3?.classList.add('-rotate-45', '-translate-y-[7px]');
     document.body.style.overflow = 'hidden';
   }
 
   function closeMenu() {
     menuOpen = false;
-    menu?.classList.add('opacity-0', 'pointer-events-none');
-    menu?.classList.remove('opacity-100', 'pointer-events-auto');
+    if (menu) {
+      menu.style.opacity = '0';
+      menu.style.pointerEvents = 'none';
+      menu.style.transform = 'translateY(-8px)';
+    }
     menu?.setAttribute('aria-hidden', 'true');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.setAttribute('aria-label', 'Open menu');
-    bar1?.classList.remove('rotate-45', 'translate-y-[4px]');
-    bar2?.classList.remove('opacity-0');
-    bar3?.classList.remove('-rotate-45', '-translate-y-[4px]');
+    bar1?.classList.remove('rotate-45', 'translate-y-[7px]');
+    bar2?.classList.remove('opacity-0', 'scale-x-0');
+    bar3?.classList.remove('-rotate-45', '-translate-y-[7px]');
     document.body.style.overflow = '';
   }
 
@@ -187,5 +205,15 @@ import Button from '@/components/Button.astro';
     background-color: rgba(17, 23, 34, 0.92);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Staggered mobile nav link animation */
+  @keyframes slideFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #mobile-menu[aria-hidden="false"] .mobile-nav-link {
+    animation: slideFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 60ms + 80ms);
   }
 </style>

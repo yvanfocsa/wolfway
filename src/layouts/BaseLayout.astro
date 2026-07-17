@@ -32,10 +32,66 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
         #hero-body-content {
           opacity: 1 !important;
         }
+        #splash-screen { display: none !important; }
       </style>
     </noscript>
+    <style is:inline>
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0B1526;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+      #splash-screen.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #splash-logo {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        margin-bottom: 28px;
+        animation: splash-pulse 1.8s ease-in-out infinite;
+      }
+      #splash-bar-track {
+        width: 120px;
+        height: 2px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      #splash-bar-fill {
+        width: 40%;
+        height: 100%;
+        background: #00D4FF;
+        border-radius: 2px;
+        animation: splash-slide 1.2s ease-in-out infinite;
+      }
+      @keyframes splash-pulse {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.04); }
+      }
+      @keyframes splash-slide {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(350%); }
+      }
+    </style>
   </head>
   <body class="bg-offwhite text-ink antialiased">
+    <!-- Splash Screen -->
+    <div id="splash-screen" aria-hidden="true">
+      <img id="splash-logo" src="/images/logo_icon.png" alt="" width="72" height="72" />
+      <div id="splash-bar-track">
+        <div id="splash-bar-fill"></div>
+      </div>
+    </div>
+
     <Header transition:persist />
     <main>
       <slot />
@@ -47,8 +103,19 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       import '@/scripts/smooth-scroll';
       import '@/scripts/animations';
 
+      function dismissSplash() {
+        const splash = document.getElementById('splash-screen');
+        if (splash && !splash.classList.contains('is-hidden')) {
+          splash.classList.add('is-hidden');
+          // Remove from DOM after fade-out transition completes
+          setTimeout(() => splash.remove(), 600);
+        }
+      }
+
       // Reset scroll position on page swap
       document.addEventListener('astro:after-swap', () => {
+        // Immediately dismiss splash on navigation (not initial load)
+        dismissSplash();
         window.scrollTo(0, 0);
         const lenis = (window as any).lenis;
         if (lenis) {
@@ -56,7 +123,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
         }
       });
 
-      // Double-check scroll position on page load, unless navigating to an anchor hash
+      // On page load: dismiss splash once video is playing or after timeout
       document.addEventListener('astro:page-load', () => {
         if (!window.location.hash) {
           window.scrollTo(0, 0);
@@ -64,6 +131,22 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
           if (lenis) {
             lenis.scrollTo(0, { immediate: true });
           }
+        }
+
+        const video = document.getElementById('hero-video') as HTMLVideoElement | null;
+        if (video) {
+          // If video is already playing, dismiss immediately
+          if (video.readyState >= 3) {
+            dismissSplash();
+          } else {
+            // Wait for the video to have enough data to play
+            video.addEventListener('canplay', () => dismissSplash(), { once: true });
+            // Safety timeout: dismiss after 2.5s max no matter what
+            setTimeout(() => dismissSplash(), 2500);
+          }
+        } else {
+          // No hero video on this page, dismiss immediately
+          dismissSplash();
         }
       });
     </script>

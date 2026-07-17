@@ -25,6 +25,9 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       ogImage={ogImage}
     />
     <ClientRouter />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body class="bg-offwhite text-ink antialiased">
     <Header transition:persist />

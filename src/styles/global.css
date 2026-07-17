@@ -102,3 +102,11 @@ textarea {
 ::view-transition-new(root) {
   animation-duration: 180ms !important;
 }
+
+/* ─── JS Enabled Initial State for Animations ─── */
+.js #hero-eyebrow,
+.js #hero-heading,
+.js #hero-body-content {
+  opacity: 0;
+}
+

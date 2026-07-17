@@ -73,7 +73,20 @@ import Button from './Button.astro';
 <script>
   function initHeroVideo() {
     const videoEl = document.getElementById('hero-video') as HTMLVideoElement | null;
-    if (!videoEl) return;
+    
+    // Reset state for page transitions
+    (window as any).heroVideoReady = false;
+
+    function triggerVideoReady() {
+      if ((window as any).heroVideoReady) return;
+      (window as any).heroVideoReady = true;
+      document.dispatchEvent(new CustomEvent('hero-video-ready'));
+    }
+
+    if (!videoEl) {
+      triggerVideoReady();
+      return;
+    }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = window.innerWidth < 768;
@@ -81,13 +94,26 @@ import Button from './Button.astro';
     // Direct playback for instant display if autoplay is allowed
     if (!prefersReducedMotion && !isMobile) {
       videoEl.style.display = 'block';
+
+      // Fallback timeout in case video loading is slow
+      const fallback = setTimeout(() => {
+        triggerVideoReady();
+      }, 700);
+
+      videoEl.addEventListener('playing', () => {
+        clearTimeout(fallback);
+        triggerVideoReady();
+      }, { once: true });
+
       videoEl.play().catch(() => {
-        // Fallback in case of browser strict autoplay policy
+        clearTimeout(fallback);
+        triggerVideoReady();
       });
     } else {
       // Pause and hide video element on mobile or reduced motion to save resources
       videoEl.pause();
       videoEl.style.display = 'none';
+      triggerVideoReady();
     }
   }
 

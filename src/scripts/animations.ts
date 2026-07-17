@@ -38,35 +38,43 @@ function initAnimations() {
 
         const headingSpans = heroHeading.querySelectorAll('.hero-line > span');
 
-        // Set parent heading to visible so its split children can animate in
-        gsap.set(heroHeading, { opacity: 1 });
+        const runReveal = () => {
+          // Set parent heading to visible so its split children can animate in
+          gsap.set(heroHeading, { opacity: 1 });
 
-        // Set eyebrow and bodyContent to hidden state dynamically for JS users
-        if (eyebrow) gsap.set(eyebrow, { opacity: 0, y: 15 });
-        if (bodyContent) gsap.set(bodyContent, { opacity: 0, y: 15 });
+          // Set eyebrow and bodyContent to hidden state dynamically for JS users
+          if (eyebrow) gsap.set(eyebrow, { opacity: 0, y: 15 });
+          if (bodyContent) gsap.set(bodyContent, { opacity: 0, y: 15 });
 
-        const tl = gsap.timeline({
-          onComplete: () => {
-            (window as any).heroAnimated = true;
+          const tl = gsap.timeline({
+            onComplete: () => {
+              (window as any).heroAnimated = true;
+            }
+          });
+
+          // 1. Heading lines slide-up
+          tl.to(headingSpans, {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            stagger: 0.10,
+            ease: 'power3.out',
+            delay: 0.1
+          });
+
+          // 2. Eyebrow, description and CTA buttons fade in
+          if (eyebrow) {
+            tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.3');
           }
-        });
+          if (bodyContent) {
+            tl.to(bodyContent, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+          }
+        };
 
-        // 1. Heading lines slide-up
-        tl.to(headingSpans, {
-          y: 0,
-          opacity: 1,
-          duration: 0.65,
-          stagger: 0.10,
-          ease: 'power3.out',
-          delay: 0.2
-        });
-
-        // 2. Eyebrow, description and CTA buttons fade in
-        if (eyebrow) {
-          tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.3');
-        }
-        if (bodyContent) {
-          tl.to(bodyContent, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+        if ((window as any).heroVideoReady) {
+          runReveal();
+        } else {
+          document.addEventListener('hero-video-ready', runReveal, { once: true });
         }
       } else {
         // If hero already animated, just show it

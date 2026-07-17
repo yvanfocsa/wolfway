@@ -27,6 +27,11 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     <ClientRouter />
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Synchronously inject style tag to prevent FOVT (Flash of Visible Text) before scripts parse
+      const style = document.createElement('style');
+      style.id = 'js-animation-fallback';
+      style.textContent = '#hero-eyebrow, #hero-heading, #hero-body-content { opacity: 0; }';
+      document.head.appendChild(style);
     </script>
   </head>
   <body class="bg-offwhite text-ink antialiased">

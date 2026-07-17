@@ -1,0 +1,225 @@
+---
+// src/components/RouteMap.astro
+---
+
+<div class="bg-navy border border-white/5 p-8 sm:p-10 rounded-sm shadow-sm relative overflow-hidden select-none">
+  <!-- Glowing background elements -->
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 space-y-8">
+    <div class="text-center lg:text-left">
+      <span class="block text-xs font-bold uppercase tracking-[0.2em] text-cyan mb-2">
+        ACTIVE SHIPPING CORRIDORS
+      </span>
+      <h3 class="font-heading text-2xl font-bold uppercase text-white tracking-tight">
+        Interactive Freight Network
+      </h3>
+      <p class="text-xs text-white/50 font-body font-light max-w-md mt-1">
+        Hover over the shipping lanes below to highlight our primary open-deck transport corridors.
+      </p>
+    </div>
+
+    <!-- The Map (Stylized Vector Network) -->
+    <div class="relative w-full aspect-[16/10] bg-navy-dark border border-white/5 rounded-sm overflow-hidden flex items-center justify-center p-4">
+      <!-- Grid Overlay Background -->
+      <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+
+      <svg viewBox="0 0 800 500" class="w-full h-full relative z-10" id="network-svg">
+        <!-- Abstract US Map Outline (Minimalist Dots) -->
+        <g class="opacity-15">
+          <!-- West Coast -->
+          <circle cx="100" cy="150" r="3" fill="#ffffff" />
+          <circle cx="120" cy="200" r="3" fill="#ffffff" />
+          <circle cx="110" cy="280" r="3" fill="#ffffff" />
+          <circle cx="140" cy="380" r="3" fill="#ffffff" />
+          <!-- Plains / Mountain -->
+          <circle cx="250" cy="180" r="3" fill="#ffffff" />
+          <circle cx="300" cy="320" r="3" fill="#ffffff" />
+          <!-- South -->
+          <circle cx="480" cy="420" r="3" fill="#ffffff" />
+          <circle cx="580" cy="440" r="3" fill="#ffffff" />
+          <!-- North -->
+          <circle cx="550" cy="100" r="3" fill="#ffffff" />
+          <circle cx="680" cy="120" r="3" fill="#ffffff" />
+        </g>
+
+        <!-- Connection Lanes (Dashed / Solid) -->
+        <!-- Midwest Lane -->
+        <line
+          x1="520" y1="180" x2="680" y2="180"
+          class="map-lane lane-midwest stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+        <line
+          x1="520" y1="180" x2="550" y2="280"
+          class="map-lane lane-midwest stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+        <!-- Southeast Lane -->
+        <line
+          x1="550" y1="280" x2="620" y2="350"
+          class="map-lane lane-southeast stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+        <line
+          x1="620" y1="350" x2="680" y2="260"
+          class="map-lane lane-southeast stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+        <!-- Gulf Coast Lane -->
+        <line
+          x1="420" y1="380" x2="550" y2="280"
+          class="map-lane lane-gulf stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+        <line
+          x1="420" y1="380" x2="620" y2="350"
+          class="map-lane lane-gulf stroke-white/10 stroke-[2] transition-all duration-300"
+        />
+
+        <!-- Active Lanes (Glowing Overlay) -->
+        <line
+          x1="520" y1="180" x2="680" y2="180"
+          class="map-glow glow-midwest stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+        <line
+          x1="520" y1="180" x2="550" y2="280"
+          class="map-glow glow-midwest stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+        
+        <line
+          x1="550" y1="280" x2="620" y2="350"
+          class="map-glow glow-southeast stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+        <line
+          x1="620" y1="350" x2="680" y2="260"
+          class="map-glow glow-southeast stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+
+        <line
+          x1="420" y1="380" x2="550" y2="280"
+          class="map-glow glow-gulf stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+        <line
+          x1="420" y1="380" x2="620" y2="350"
+          class="map-glow glow-gulf stroke-cyan/0 stroke-[4] transition-all duration-500 blur-[2px]"
+        />
+
+        <!-- Major Hub Dots -->
+        <!-- Dallas (Gulf) -->
+        <g class="hub-group" data-lane="gulf">
+          <circle cx="420" cy="380" r="10" class="fill-cyan/20 animate-ping" />
+          <circle cx="420" cy="380" r="5" class="fill-cyan transition-colors" />
+          <text x="420" y="405" fill="#ffffff" font-size="10" font-family="sans-serif" text-anchor="middle" font-weight="bold" class="opacity-60 uppercase tracking-wider">Dallas</text>
+        </g>
+        
+        <!-- Chicago (Midwest) -->
+        <g class="hub-group" data-lane="midwest">
+          <circle cx="520" cy="180" r="10" class="fill-cyan/20 animate-ping" />
+          <circle cx="520" cy="180" r="5" class="fill-cyan transition-colors" />
+          <text x="520" y="165" fill="#ffffff" font-size="10" font-family="sans-serif" text-anchor="middle" font-weight="bold" class="opacity-60 uppercase tracking-wider">Chicago</text>
+        </g>
+
+        <!-- Atlanta (Southeast) -->
+        <g class="hub-group" data-lane="southeast">
+          <circle cx="620" cy="350" r="10" class="fill-cyan/20 animate-ping" />
+          <circle cx="620" cy="350" r="5" class="fill-cyan transition-colors" />
+          <text x="620" y="375" fill="#ffffff" font-size="10" font-family="sans-serif" text-anchor="middle" font-weight="bold" class="opacity-60 uppercase tracking-wider">Atlanta</text>
+        </g>
+
+        <!-- Philadelphia (East Coast) -->
+        <g class="hub-group" data-lane="midwest">
+          <circle cx="680" cy="180" r="8" class="fill-cyan/10 animate-pulse" />
+          <circle cx="680" cy="180" r="4" class="fill-cyan/80 transition-colors" />
+          <text x="680" y="165" fill="#ffffff" font-size="10" font-family="sans-serif" text-anchor="middle" font-weight="bold" class="opacity-60 uppercase tracking-wider">Philadelphia</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Interactive Corridor Hover Cards -->
+    <div class="grid gap-3 sm:grid-cols-3">
+      <!-- Midwest Card -->
+      <div
+        id="card-midwest"
+        class="corridor-card p-4 border border-white/5 bg-white/5 hover:border-cyan/30 rounded-sm cursor-pointer transition-all duration-300"
+      >
+        <span class="block text-[9px] font-bold text-cyan uppercase tracking-widest mb-1">Region 01</span>
+        <h4 class="font-heading text-sm font-bold uppercase text-white mb-1">Midwest Lanes</h4>
+        <p class="text-[11px] text-white/50 font-body leading-relaxed font-light">IL, IN, WI, MI, OH, PA</p>
+      </div>
+
+      <!-- Gulf Coast Card -->
+      <div
+        id="card-gulf"
+        class="corridor-card p-4 border border-white/5 bg-white/5 hover:border-cyan/30 rounded-sm cursor-pointer transition-all duration-300"
+      >
+        <span class="block text-[9px] font-bold text-cyan uppercase tracking-widest mb-1">Region 02</span>
+        <h4 class="font-heading text-sm font-bold uppercase text-white mb-1">Gulf Coast Lanes</h4>
+        <p class="text-[11px] text-white/50 font-body leading-relaxed font-light">TX, OK, LA, AR, MS</p>
+      </div>
+
+      <!-- Southeast Card -->
+      <div
+        id="card-southeast"
+        class="corridor-card p-4 border border-white/5 bg-white/5 hover:border-cyan/30 rounded-sm cursor-pointer transition-all duration-300"
+      >
+        <span class="block text-[9px] font-bold text-cyan uppercase tracking-widest mb-1">Region 03</span>
+        <h4 class="font-heading text-sm font-bold uppercase text-white mb-1">Southeast Lanes</h4>
+        <p class="text-[11px] text-white/50 font-body leading-relaxed font-light">GA, NC, SC, TN, AL, FL</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initRouteMap() {
+    const cardMidwest = document.getElementById('card-midwest');
+    const cardGulf = document.getElementById('card-gulf');
+    const cardSoutheast = document.getElementById('card-southeast');
+
+    const lanesMidwest = document.querySelectorAll('.lane-midwest');
+    const glowsMidwest = document.querySelectorAll('.glow-midwest');
+    const lanesGulf = document.querySelectorAll('.lane-gulf');
+    const glowsGulf = document.querySelectorAll('.glow-gulf');
+    const lanesSoutheast = document.querySelectorAll('.lane-southeast');
+    const glowsSoutheast = document.querySelectorAll('.glow-southeast');
+
+    function highlight(lane: string) {
+      if (lane === 'midwest') {
+        lanesMidwest.forEach(el => el.classList.replace('stroke-white/10', 'stroke-cyan'));
+        glowsMidwest.forEach(el => el.classList.replace('stroke-cyan/0', 'stroke-cyan/60'));
+      } else if (lane === 'gulf') {
+        lanesGulf.forEach(el => el.classList.replace('stroke-white/10', 'stroke-cyan'));
+        glowsGulf.forEach(el => el.classList.replace('stroke-cyan/0', 'stroke-cyan/60'));
+      } else if (lane === 'southeast') {
+        lanesSoutheast.forEach(el => el.classList.replace('stroke-white/10', 'stroke-cyan'));
+        glowsSoutheast.forEach(el => el.classList.replace('stroke-cyan/0', 'stroke-cyan/60'));
+      }
+    }
+
+    function reset() {
+      // Midwest
+      lanesMidwest.forEach(el => el.classList.replace('stroke-cyan', 'stroke-white/10'));
+      glowsMidwest.forEach(el => el.classList.replace('stroke-cyan/60', 'stroke-cyan/0'));
+      // Gulf
+      lanesGulf.forEach(el => el.classList.replace('stroke-cyan', 'stroke-white/10'));
+      glowsGulf.forEach(el => el.classList.replace('stroke-cyan/60', 'stroke-cyan/0'));
+      // Southeast
+      lanesSoutheast.forEach(el => el.classList.replace('stroke-cyan', 'stroke-white/10'));
+      glowsSoutheast.forEach(el => el.classList.replace('stroke-cyan/60', 'stroke-cyan/0'));
+    }
+
+    if (cardMidwest) {
+      cardMidwest.addEventListener('mouseenter', () => highlight('midwest'));
+      cardMidwest.addEventListener('mouseleave', reset);
+    }
+    if (cardGulf) {
+      cardGulf.addEventListener('mouseenter', () => highlight('gulf'));
+      cardGulf.addEventListener('mouseleave', reset);
+    }
+    if (cardSoutheast) {
+      cardSoutheast.addEventListener('mouseenter', () => highlight('southeast'));
+      cardSoutheast.addEventListener('mouseleave', reset);
+    }
+  }
+
+  // Run on load and transitions
+  initRouteMap();
+  document.addEventListener('astro:page-load', initRouteMap);
+</script>

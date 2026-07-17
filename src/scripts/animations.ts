@@ -33,7 +33,7 @@ function initAnimations() {
         const text = heroHeading.innerHTML;
         const lines = text.split(/<br\s*\/?>/i);
         heroHeading.innerHTML = lines
-          .map(line => `<span class="hero-line block overflow-hidden py-1"><span class="inline-block translate-y-[18px] opacity-0">${line.trim()}</span></span>`)
+          .map(line => `<span class="hero-line block overflow-hidden py-1"><span class="inline-block" style="opacity: 0; transform: translateY(18px);">${line.trim()}</span></span>`)
           .join('');
 
         const headingSpans = heroHeading.querySelectorAll('.hero-line > span');

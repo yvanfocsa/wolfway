@@ -19,29 +19,33 @@ import Button from './Button.astro';
 
   <script>
     function loadHeroVideo() {
-      if (window.innerWidth >= 768) {
-        const container = document.getElementById('hero-bg-container');
-        if (container && !container.querySelector('video')) {
-          const video = document.createElement('video');
-          video.className = 'absolute inset-0 h-full w-full object-cover z-0';
-          video.autoplay = true;
-          video.muted = true;
-          video.loop = true;
-          video.playsInline = true;
-          video.setAttribute('aria-hidden', 'true');
-          
-          const source = document.createElement('source');
-          source.src = '/videos/hero.mp4';
-          source.type = 'video/mp4';
-          
-          video.appendChild(source);
-          
-          const overlay = document.createElement('div');
-          overlay.className = 'absolute inset-0 bg-navy/80 z-10';
-          
-          container.appendChild(video);
-          container.appendChild(overlay);
-        }
+      const container = document.getElementById('hero-bg-container');
+      if (container && !container.querySelector('video')) {
+        const video = document.createElement('video');
+        video.className = 'absolute inset-0 h-full w-full object-cover z-0 opacity-0 transition-opacity duration-1000';
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.setAttribute('webkit-playsinline', 'true');
+        video.setAttribute('aria-hidden', 'true');
+        
+        // Fade in video once it actually plays
+        video.onplaying = () => {
+          video.classList.remove('opacity-0');
+        };
+        
+        const source = document.createElement('source');
+        source.src = '/videos/hero.mp4';
+        source.type = 'video/mp4';
+        
+        video.appendChild(source);
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'absolute inset-0 bg-navy/80 z-10';
+        
+        container.appendChild(video);
+        container.appendChild(overlay);
       }
     }
 

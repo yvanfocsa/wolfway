@@ -1,93 +1,58 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
-import TrustBar from '@/components/TrustBar.astro';
-import StatsCounter from '@/components/StatsCounter.astro';
+import AudienceSelector from '@/components/AudienceSelector.astro';
+import ProcessRouteLine from '@/components/ProcessRouteLine.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import SplitAudience from '@/components/SplitAudience.astro';
-import ServiceCard from '@/components/ServiceCard.astro';
+import CTASection from '@/components/CTASection.astro';
 import { principles } from '@/content/company';
 import { services } from '@/content/services';
-
-const reviews = [
-  {
-    name: 'Marcus Vance',
-    role: 'Logistics Director, Steelworks Inc.',
-    text: 'WolfWay Logistics has moved over 120 loads of heavy flatbed and step-deck cargo for us this year. Their communication is hands-down the best in the industry.',
-    stars: 5,
-    date: '2 weeks ago',
-  },
-  {
-    name: 'Sarah Jennings',
-    role: 'Supply Chain Manager, Apex Energy',
-    text: 'Extremely dependable open-deck carrier. We ship high-value power equipment that requires specialized step decks. WolfWay handles every load with absolute safety.',
-    stars: 5,
-    date: '1 month ago',
-  },
-  {
-    name: 'David K. Miller',
-    role: 'Owner Operator, Miller Heavy Haul',
-    text: 'Hauling for WolfWay is great. Clear dispatch instructions, fast setup, and prompt weekly pay. They treat owner operators with respect and keep our trucks moving.',
-    stars: 5,
-    date: '3 weeks ago',
-  },
-  {
-    name: 'Robert Chen',
-    role: 'Vanguard Manufacturing',
-    text: 'Our previous broker constantly missed pickup windows. Since switching to WolfWay, our delivery success rate is at 99%. Extremely professional and reliable.',
-    stars: 5,
-    date: '4 days ago',
-  },
-  {
-    name: 'Elena Rostova',
-    role: 'Project Logistics Director',
-    text: 'Their carriers are top-tier. They arrive on time, understand proper flatbed load securement, and handle oversized freight with maximum care and safety.',
-    stars: 5,
-    date: '1 week ago',
-  },
-  {
-    name: 'Marcus Thorne',
-    role: 'Owner Operator',
-    text: 'Best broker I\'ve worked with in ten years of driving. Quick load dispatch, fair detention pay, and they don\'t play games with market rates.',
-    stars: 5,
-    date: '5 days ago',
-  },
-  {
-    name: 'Jonathan Hale',
-    role: 'GE Power Logistics',
-    text: 'WolfWay handled our oversized wind turbine shipment flawlessly. The permit coordination, route planning, and escorts were executed perfectly.',
-    stars: 5,
-    date: '3 days ago',
-  },
-  {
-    name: 'Amanda Ross',
-    role: 'Supply Chain Lead',
-    text: 'Outstanding customer service. Whenever there is a weather delay or route change, their dispatch team alerts us immediately. Highly recommend.',
-    stars: 5,
-    date: '1 month ago',
-  },
-  {
-    name: 'Kenji Sato',
-    role: 'Operations Manager, Sato Trucking',
-    text: 'Fair rates and reliable loads. They keep our fleet active all year round. Dispatch communicates clearly, is transparent, and pays on time.',
-    stars: 5,
-    date: '2 weeks ago',
-  },
-];
 ---
 
 <BaseLayout
   title="WolfWay Logistics LLC"
   description="Open-deck freight transportation, featuring flatbed, step deck, and open deck logistics built around safety, communication and dependable delivery."
 >
-  <!-- Hero -->
+  <!-- 1. Video Hero -->
   <Hero />
 
-  <!-- Trust Bar -->
-  <TrustBar />
+  <!-- 2. Audience Selector -->
+  <AudienceSelector />
 
-  <!-- Three Principles -->
-  <section class="bg-offwhite py-14 sm:py-20 lg:py-28" data-animate="fade-up">
+  <!-- 3. Process Route Line (Inline SVG) -->
+  <ProcessRouteLine />
+
+  <!-- 4. Services Section -->
+  <section class="bg-offwhite py-16 sm:py-20 lg:py-28 services-section" data-animate="fade-up">
+    <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
+        WHAT WE HAUL
+      </p>
+      <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-ink mb-12">
+        Our Services
+      </h2>
+
+      <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+        {services.map((s, idx) => (
+          <div class="service-card-reveal">
+            <ServiceCard
+              title={s.title}
+              description={s.description}
+              imageAlt={s.imageAlt}
+              imagePath={s.imagePath}
+              href={`/services#${s.slug}`}
+              index={idx + 1}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Brand Principles Section -->
+  <section class="bg-white py-16 sm:py-20 lg:py-28 border-b border-slate-100" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <div class="mb-12 sm:mb-16">
         <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
@@ -103,7 +68,7 @@ const reviews = [
             <h3 class="font-heading text-lg sm:text-xl font-semibold uppercase tracking-wide text-ink">
               {p.title}
             </h3>
-            <p class="mt-2.5 text-sm leading-relaxed text-slate-600">
+            <p class="mt-2.5 text-sm leading-relaxed text-slate-600 font-body font-light">
               {p.description}
             </p>
           </div>
@@ -112,93 +77,19 @@ const reviews = [
     </div>
   </section>
 
-  <!-- Services -->
-  <section class="bg-offwhite py-14 sm:py-20 lg:py-28" data-animate="fade-up">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
-        WHAT WE HAUL
-      </p>
-      <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-ink">
-        Our Services
-      </h2>
-
-      <div class="mt-8 sm:mt-12 grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-        {services.map((s) => (
-          <ServiceCard
-            title={s.title}
-            description={s.description}
-            imageAlt={s.imageAlt}
-            imagePath={s.imagePath}
-            href={`/services#${s.slug}`}
-          />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
+  <!-- 6. How It Works Section -->
   <HowItWorks />
 
-  <!-- Stats Counter Section -->
-  <StatsCounter />
-
-  <!-- Google Reviews Section (Static 3-Card Grid) -->
-  <section class="bg-navy py-14 sm:py-20 lg:py-28 text-white relative overflow-hidden" data-animate="fade-up">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
-          TRUSTED BY SHIPPERS & CARRIERS
-        </p>
-        <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase mb-4">What Our Partners Say</h2>
-        <div class="flex items-center justify-center gap-1.5 pt-1">
-          <span class="text-lg sm:text-xl font-bold text-cyan">5.0</span>
-          <div class="flex text-yellow-400">
-            {[...Array(5)].map(() => (
-              <svg class="h-4 w-4 sm:h-5 sm:w-5 fill-current" viewBox="0 0 20 20" aria-hidden="true">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-              </svg>
-            ))}
-          </div>
-          <span class="text-sm text-steel ml-2 font-body font-medium">Google Reviews</span>
-        </div>
-      </div>
-
-      <!-- Static Grid of 3 reviews -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-        {reviews.slice(0, 3).map((r) => (
-          <div class="review-card flex flex-col justify-between bg-white/5 border border-white/10 p-6 sm:p-8 rounded-sm hover:border-cyan/30 hover:shadow-[0_8px_30px_rgba(0,168,225,0.04)] hover:-translate-y-0.5 transition-all duration-300 group">
-            <div>
-              <div class="flex text-yellow-400 mb-4">
-                {[...Array(r.stars)].map(() => (
-                  <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                ))}
-              </div>
-              <p class="text-sm leading-relaxed text-white/80 italic font-body font-light">
-                "{r.text}"
-              </p>
-            </div>
-            <div class="mt-6 pt-5 border-t border-white/5 flex items-center justify-between">
-              <div>
-                <p class="font-heading text-sm sm:text-base font-bold uppercase tracking-wider text-white">
-                  {r.name}
-                </p>
-                <p class="text-xs text-steel font-body mt-0.5">
-                  {r.role}
-                </p>
-              </div>
-              <span class="text-[10px] uppercase tracking-wider text-white/30 font-semibold font-body">
-                {r.date}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Split Audience Section (Shippers / Drivers CTAs) -->
+  <!-- 7. Recruitment & Carrier CTA -->
   <SplitAudience />
+
+  <!-- 8. Final Freight Quote CTA -->
+  <CTASection
+    variant="dark"
+    eyebrow="READY TO SHIP?"
+    heading="Ready to Move Your Freight?"
+    description="Get a competitive rate quote for flatbed, step deck, or specialized open-deck transportation from pickup to delivery."
+    buttonText="REQUEST A FREIGHT QUOTE"
+    buttonHref="/request-a-quote"
+  />
 </BaseLayout>

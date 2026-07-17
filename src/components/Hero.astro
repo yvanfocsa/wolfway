@@ -2,85 +2,54 @@
 import Button from './Button.astro';
 ---
 
-<section class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy">
+<section class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
   <!-- Video / Image background container -->
   <div class="absolute inset-0 z-0 bg-navy" id="hero-bg-container">
-    <!-- Static image background for mobile / fallback -->
+    <!-- Static image background for mobile / fallback (Eager load LCP) -->
     <img
       src="/images/services/flatbed.jpg"
-      alt=""
+      alt="Heavy flatbed trailer hauling industrial cargo on a highway"
       class="absolute inset-0 h-full w-full object-cover opacity-25"
       aria-hidden="true"
       loading="eager"
+      id="hero-poster"
     />
-    <!-- Dark overlay for static image -->
-    <div class="absolute inset-0 bg-navy/60"></div>
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-navy/60 z-10" id="hero-overlay"></div>
   </div>
-
-  <script>
-    function loadHeroVideo() {
-      const container = document.getElementById('hero-bg-container');
-      if (container && !container.querySelector('video')) {
-        const video = document.createElement('video');
-        video.className = 'absolute inset-0 h-full w-full object-cover z-0 opacity-0 transition-opacity duration-1000';
-        video.autoplay = true;
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.setAttribute('webkit-playsinline', 'true');
-        video.setAttribute('aria-hidden', 'true');
-        
-        // Fade in video once it actually plays
-        video.onplaying = () => {
-          video.classList.remove('opacity-0');
-        };
-        
-        const source = document.createElement('source');
-        source.src = '/videos/hero.mp4';
-        source.type = 'video/mp4';
-        
-        video.appendChild(source);
-        
-        const overlay = document.createElement('div');
-        overlay.className = 'absolute inset-0 bg-navy/80 z-10';
-        
-        container.appendChild(video);
-        container.appendChild(overlay);
-      }
-    }
-
-    // Run on load and page transition
-    loadHeroVideo();
-    document.addEventListener('astro:page-load', loadHeroVideo);
-  </script>
 
   <!-- Content -->
   <div class="relative z-10 mx-auto max-w-7xl px-5 lg:px-10 pt-28 sm:pt-24 pb-10 w-full flex flex-col justify-center h-full">
     <div class="max-w-3xl">
+      <!-- Eyebrow -->
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-4 animate-fade-in" id="hero-eyebrow">
+        OPEN-DECK FREIGHT TRANSPORTATION
+      </p>
+
       <!-- H1 -->
       <div class="overflow-hidden mb-5 lg:mb-8">
         <h1
           id="hero-heading"
           class="font-heading text-[2.6rem] leading-[0.93] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase text-white tracking-tight"
         >
-          Open-deck freight,<br />handled right.
+          When the load demands more, the details matter.
         </h1>
       </div>
 
       <!-- Body content -->
-      <div class="space-y-5 lg:space-y-8">
+      <div class="space-y-6 lg:space-y-8 animate-fade-in" id="hero-body-content">
         <!-- Description -->
         <p class="text-sm sm:text-base md:text-lg leading-relaxed text-white/75 max-w-xl font-body font-light">
-          Reliable flatbed, step deck and open-deck transportation built around safety, communication and dependable delivery.
+          Flatbed, step deck and open-deck freight handled with clear communication from pickup to delivery.
         </p>
 
         <!-- CTAs -->
         <div class="flex flex-col xs:flex-row sm:flex-row gap-3 sm:gap-4 pt-1">
           <Button variant="primary" href="/request-a-quote" size="lg" arrow={true} class="group w-full sm:w-auto justify-center">
-            Request a Quote
+            REQUEST A FREIGHT QUOTE
           </Button>
-          <Button variant="secondary" href="/drive-with-us" size="lg" class="w-full sm:w-auto justify-center">
-            Drive With Us
+          <Button variant="outline" href="/carrier" size="lg" class="w-full sm:w-auto justify-center">
+            BECOME A CARRIER PARTNER
           </Button>
         </div>
 
@@ -96,3 +65,63 @@ import Button from './Button.astro';
     </div>
   </div>
 </section>
+
+<script>
+  let videoEl: HTMLVideoElement | null = null;
+
+  function initHeroVideo() {
+    const container = document.getElementById('hero-bg-container');
+
+    if (!container) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
+
+    // Do not autoplay video on mobile or for reduced-motion users
+    const shouldAutoplay = !prefersReducedMotion && !isMobile;
+
+    // Clean up any existing video first
+    const existingVideo = container.querySelector('video');
+    if (existingVideo) existingVideo.remove();
+
+    if (shouldAutoplay) {
+      loadVideo();
+    }
+
+    function loadVideo() {
+      videoEl = document.createElement('video');
+      videoEl.className = 'absolute inset-0 h-full w-full object-cover z-0 opacity-0 transition-opacity duration-1000';
+      videoEl.autoplay = true;
+      videoEl.muted = true;
+      videoEl.loop = true;
+      videoEl.playsInline = true;
+      videoEl.setAttribute('webkit-playsinline', 'true');
+      videoEl.setAttribute('aria-hidden', 'true');
+      videoEl.preload = 'metadata';
+
+      // Fade in once video starts playing
+      videoEl.addEventListener('playing', () => {
+        videoEl?.classList.remove('opacity-0');
+      });
+
+      // Sources
+      const webmSource = document.createElement('source');
+      webmSource.src = '/videos/hero.webm';
+      webmSource.type = 'video/webm';
+      videoEl.appendChild(webmSource);
+
+      const mp4Source = document.createElement('source');
+      mp4Source.src = '/videos/hero.mp4';
+      mp4Source.type = 'video/mp4';
+      videoEl.appendChild(mp4Source);
+
+      container!.appendChild(videoEl);
+    }
+  }
+
+  // Initial load
+  initHeroVideo();
+
+  // Re-run on View Transitions page nav
+  document.addEventListener('astro:page-load', initHeroVideo);
+</script>

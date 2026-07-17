@@ -1,8 +1,11 @@
 ---
 /**
- * Astro Button Component
- * Replicates the structure, variants, and sizes of the shadcn React button
- * but adapted as a lightweight, zero-js-runtime Astro component with WolfWay colors.
+ * Reusable Button Component for WolfWay Brand
+ * Strict editorial geometry: max 2px border radius (rounded-sm)
+ * Uppercase text, 13px, semibold, tracking 0.08em
+ * Focus-visible: 3px accessible outline with offset
+ * Active state: translateY(1px)
+ * No scaling, bounce or glow effects.
  */
 
 export interface Props {
@@ -31,23 +34,23 @@ const Tag = href ? 'a' : 'button';
 const activeVariant = variant === 'primary' ? 'default' : variant;
 
 const baseClasses =
-  'inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium transition-colors outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 cursor-pointer select-none';
+  'inline-flex items-center justify-center whitespace-nowrap rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer select-none active:translate-y-[1px] group/btn';
 
 // Adapting variant colors to the WolfWay Brand Palette
 const variantClasses = {
-  default: 'bg-cyan text-navy shadow-sm hover:bg-cyan/90 active:scale-[0.98] transition-transform duration-100',
-  destructive: 'bg-red-600 text-white shadow-sm hover:bg-red-700 active:scale-[0.98] transition-transform duration-100',
-  outline: 'border border-white/20 bg-transparent text-white shadow-sm hover:bg-white/10 hover:text-white active:scale-[0.98] transition-transform duration-100',
-  secondary: 'bg-navy-light text-white border border-white/10 shadow-sm hover:bg-navy-light/85 active:scale-[0.98] transition-transform duration-100',
+  default: 'bg-cyan text-navy hover:bg-[#00D4E0] border border-transparent',
+  destructive: 'bg-red-600 text-white hover:bg-red-700 border border-transparent',
+  outline: 'border border-white/20 bg-transparent text-white hover:bg-white/10',
+  secondary: 'bg-navy-light text-white border border-white/10 hover:bg-navy-light/80',
   ghost: 'text-white/80 hover:bg-white/10 hover:text-white',
-  link: 'text-cyan underline-offset-4 hover:underline',
+  link: 'text-cyan underline-offset-4 hover:underline lowercase normal-case tracking-normal',
 };
 
 const sizeClasses = {
-  default: 'h-9 px-4 py-2',
-  sm: 'h-8 rounded-sm px-3 text-xs',
-  lg: 'h-10 rounded-sm px-8',
-  icon: 'h-9 w-9',
+  default: 'h-10 px-6 text-[13px]',
+  sm: 'h-8.5 px-4 text-[12px]',
+  lg: 'h-11.5 px-8 text-[13px]',
+  icon: 'h-10 w-10',
 };
 
 const classes = [
@@ -66,7 +69,7 @@ const classes = [
   <slot />
   {arrow && (
     <svg
-      class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+      class="ml-2 h-3.5 w-3.5 transition-transform duration-180 ease-out group-hover/btn:translate-x-1"
       viewBox="0 0 16 16"
       fill="none"
       aria-hidden="true"
@@ -74,7 +77,7 @@ const classes = [
       <path
         d="M3 8h10M9 4l4 4-4 4"
         stroke="currentColor"
-        stroke-width="1.5"
+        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

@@ -2,8 +2,32 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/CTASection.astro';
 import Button from '@/components/Button.astro';
+import EquipmentFitHelper from '@/components/EquipmentFitHelper.astro';
+import FAQ from '@/components/FAQ.astro';
 import { services } from '@/content/services';
-import RouteMap from '@/components/RouteMap.astro';
+
+const faqItems = [
+  {
+    question: "What details do I need to request a freight quote?",
+    answer: "You will need to provide the pickup and delivery locations, cargo weight, dimensions (length, width, height), commodity description, preferred pickup date, and requested trailer configuration."
+  },
+  {
+    question: "What open-deck equipment does WolfWay Logistics offer?",
+    answer: "We coordinate transport across standard flatbeds, step decks, double drop trailers, and open-deck logistics configurations equipped with chains, straps, binders, and proper tarps."
+  },
+  {
+    question: "How do I apply as a carrier partner?",
+    answer: "You can submit an application via our Carrier page. Requirements include active authority for 6 months, a satisfactory FMCSA safety rating, and minimum liability/cargo insurance coverages."
+  },
+  {
+    question: "Can owner operators apply?",
+    answer: "Yes, we welcome applications from both fleet operators and independent owner operators with Class A CDL credentials and open-deck securement experience."
+  },
+  {
+    question: "What happens after I submit an application?",
+    answer: "Our team reviews submitted credentials. Valid carrier relations applications are reviewed within 2 hours, and driver applications are typically followed up within 24 hours."
+  }
+];
 ---
 
 <BaseLayout
@@ -11,13 +35,16 @@ import RouteMap from '@/components/RouteMap.astro';
   description="Flatbed freight, step deck transport, and open deck logistics services. Reliable open-deck transportation across the United States."
 >
   <!-- Page Header -->
-  <section class="bg-navy pt-32 pb-16">
+  <section class="bg-navy pt-36 pb-16">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
+        LOGISTICS DECK
+      </p>
       <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase text-white max-w-3xl">
         Open-Deck Transportation Services
       </h1>
-      <p class="mt-4 max-w-2xl text-base leading-relaxed text-white/60">
-        WolfWay Logistics provides specialized open-deck transportation solutions across the United States. From standard flatbed loads to complex step deck shipments, our team delivers the capacity, expertise, and reliability your freight demands.
+      <p class="mt-4 max-w-2xl text-base leading-relaxed text-white/60 font-body font-light">
+        WolfWay Logistics coordinates specialized flatbed, step deck, and open-deck transport. From standard cargo lanes to oversized permits, our team matches the right trailer configurations for secure, safe delivery.
       </p>
     </div>
   </section>
@@ -28,19 +55,19 @@ import RouteMap from '@/components/RouteMap.astro';
     return (
       <section
         id={service.slug}
-        class="py-20 lg:py-28 bg-offwhite"
+        class="py-16 sm:py-20 bg-offwhite border-b border-slate-100/50"
         data-animate="fade-up"
       >
         <div
           class:list={[
-            'mx-auto max-w-7xl px-5 lg:px-10 grid gap-12 lg:gap-16 items-center',
+            'mx-auto max-w-7xl px-5 lg:px-10 grid gap-10 lg:gap-16 items-center',
             'grid-cols-1 lg:grid-cols-2',
           ]}
         >
           {/* Image */}
           <div
             class:list={[
-              'aspect-[16/9] overflow-hidden rounded-sm border border-slate-200/40 bg-slate-100 shadow-sm relative group',
+              'aspect-[16/10] overflow-hidden rounded-sm border border-slate-200/40 bg-slate-100 shadow-sm relative group',
               !isOdd && 'lg:order-2',
             ]}
           >
@@ -48,16 +75,19 @@ import RouteMap from '@/components/RouteMap.astro';
               src={service.imagePath}
               alt={service.imageAlt}
               loading="lazy"
-              class="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+              class="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           </div>
 
           {/* Content */}
           <div class:list={[!isOdd && 'lg:order-1']}>
+            <p class="font-heading text-xs font-bold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
+              SERVICE CONFIGURATION
+            </p>
             <h2 class="font-heading text-3xl font-bold uppercase text-ink">
               {service.title}
             </h2>
-            <p class="mt-4 text-base leading-relaxed text-slate-600">
+            <p class="mt-4 text-sm leading-relaxed text-slate-600 font-body font-light">
               {service.longDescription}
             </p>
 
@@ -77,7 +107,7 @@ import RouteMap from '@/components/RouteMap.astro';
                       clip-rule="evenodd"
                     />
                   </svg>
-                  <span class="text-slate-600 text-sm leading-relaxed">{feature}</span>
+                  <span class="text-slate-600 text-sm leading-relaxed font-body font-light">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -98,48 +128,17 @@ import RouteMap from '@/components/RouteMap.astro';
     );
   })}
 
-  <!-- Section: Interactive Routing Map -->
-  <section class="py-20 lg:py-28 bg-white border-t border-b border-slate-100">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <!-- Left Side: Copy -->
-        <div class="lg:col-span-5 space-y-6">
-          <div>
-            <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
-              GEOGRAPHIC COVERAGE
-            </p>
-            <h2 class="font-heading text-3xl font-bold uppercase text-ink">
-              Where We Haul
-            </h2>
-            <p class="text-sm leading-relaxed text-slate-600 font-body font-light mt-4">
-              WolfWay Logistics coordinates reliable shipping across all lower 48 states, with heavy regional density in major manufacturing and agricultural hubs.
-            </p>
-          </div>
-          <div class="space-y-4">
-            <div>
-              <h4 class="font-heading text-sm font-bold uppercase text-ink mb-1">
-                Regional Fleet Concentration
-              </h4>
-              <p class="text-xs text-slate-600 font-body font-light leading-relaxed">
-                By maintaining hubs in Chicago, Dallas, and Atlanta, we connect industrial corridors smoothly with consistent trailer capacity.
-              </p>
-            </div>
-            <div>
-              <h4 class="font-heading text-sm font-bold uppercase text-ink mb-1">
-                Oversized Load Planning
-              </h4>
-              <p class="text-xs text-slate-600 font-body font-light leading-relaxed">
-                Our operations coordinators secure state permits and plan precise routes for machinery and structural components.
-              </p>
-            </div>
-          </div>
-        </div>
+  <!-- Equipment Fit Helper Section -->
+  <section class="bg-offwhite py-16 border-b border-slate-100" data-animate="fade-up">
+    <div class="mx-auto max-w-3xl px-5 lg:px-0">
+      <EquipmentFitHelper />
+    </div>
+  </section>
 
-        <!-- Right Side: SVG Map Component -->
-        <div class="lg:col-span-7">
-          <RouteMap />
-        </div>
-      </div>
+  <!-- FAQ Section -->
+  <section class="bg-white py-20 border-b border-slate-100" data-animate="fade-up">
+    <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <FAQ items={faqItems} title="Services FAQ" eyebrow="EQUIPMENT & CAPABILITIES" />
     </div>
   </section>
 
@@ -147,7 +146,7 @@ import RouteMap from '@/components/RouteMap.astro';
   <CTASection
     variant="dark"
     heading="Need a Custom Solution?"
-    description="Every load is different. Whether you need specialized equipment, multi-stop routing, or dedicated capacity, our team will build a transportation plan tailored to your freight."
+    description="Every load is different. Whether you need specialized equipment, permit coordination, or dedicated carrier lanes, our team will coordinate a secure open-deck transportation plan."
     buttonText="Contact Us"
     buttonHref="/contact"
   />

@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* ─── Brand Theme ─── */
+/* ─── Brand Theme (Light Theme Config) ─── */
 @theme {
   --color-navy: #111722;
   --color-navy-light: #202938;
@@ -24,6 +24,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  background-color: var(--color-offwhite);
 }
 
 body {
@@ -94,4 +95,10 @@ textarea {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ─── Page View Transitions ─── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms !important;
 }

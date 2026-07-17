@@ -1,0 +1,112 @@
+---
+// src/components/EquipmentFitHelper.astro
+---
+
+<div class="bg-white p-8 border border-slate-200/50 rounded-sm shadow-sm select-none">
+  <div class="mb-6">
+    <p class="font-heading text-xs font-bold uppercase tracking-[0.25em] text-[#005F8A] mb-2">
+      EQUIPMENT SELECTOR
+    </p>
+    <h3 class="font-heading text-2xl font-bold uppercase text-ink">
+      Equipment Fit Helper
+    </h3>
+    <p class="text-xs text-slate-500 font-body font-light mt-1">
+      Select your cargo type below to find the suitable open-deck trailer configuration.
+    </p>
+  </div>
+
+  <div class="equipment-fit-container font-body">
+    <!-- Pure CSS State Radio Inputs -->
+    <input 
+      type="radio" 
+      id="fit-general" 
+      name="fit-option" 
+      class="peer/general hidden" 
+      checked 
+    />
+    <input 
+      type="radio" 
+      id="fit-taller" 
+      name="fit-option" 
+      class="peer/taller hidden" 
+    />
+    <input 
+      type="radio" 
+      id="fit-notsure" 
+      name="fit-option" 
+      class="peer/notsure hidden" 
+    />
+
+    <!-- Radio selectors triggers -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+      <label 
+        for="fit-general" 
+        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-xs uppercase tracking-wider text-slate-700 peer-checked/general:border-cyan peer-checked/general:bg-cyan/5 peer-checked/general:text-[#005F8A]"
+      >
+        General Freight
+      </label>
+      <label 
+        for="fit-taller" 
+        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-xs uppercase tracking-wider text-slate-700 peer-checked/taller:border-cyan peer-checked/taller:bg-cyan/5 peer-checked/taller:text-[#005F8A]"
+      >
+        Taller Freight
+      </label>
+      <label 
+        for="fit-notsure" 
+        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-xs uppercase tracking-wider text-slate-700 peer-checked/notsure:border-cyan peer-checked/notsure:bg-cyan/5 peer-checked/notsure:text-[#005F8A]"
+      >
+        Not Sure
+      </label>
+    </div>
+
+    <!-- Output Recommendation Blocks (Pure CSS Toggle) -->
+    <!-- 1. General Freight -->
+    <div class="hidden peer-checked/general:block bg-slate-50/50 p-5 border border-slate-200/40 rounded-sm">
+      <div class="flex items-start gap-3">
+        <svg class="h-5 w-5 text-[#005F8A] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h4 class="font-heading text-sm font-bold uppercase text-ink">Flatbed may be suitable.</h4>
+          <p class="text-xs text-slate-600 font-body font-light mt-1.5 leading-relaxed">
+            Standard flatbed trailers are ideal for steel, machinery, pipe, construction materials, and general cargo that can be loaded from the side or top, up to 8.5 feet in height.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Taller Freight -->
+    <div class="hidden peer-checked/taller:block bg-slate-50/50 p-5 border border-slate-200/40 rounded-sm">
+      <div class="flex items-start gap-3">
+        <svg class="h-5 w-5 text-[#005F8A] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h4 class="font-heading text-sm font-bold uppercase text-ink">Step deck may be suitable.</h4>
+          <p class="text-xs text-slate-600 font-body font-light mt-1.5 leading-relaxed">
+            Step deck (single drop) trailers have a lowered rear bed designed to carry taller cargo (up to 10 feet) without requiring special over-height permits.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Not Sure -->
+    <div class="hidden peer-checked/notsure:block bg-slate-50/50 p-5 border border-slate-200/40 rounded-sm">
+      <div class="flex items-start gap-3">
+        <svg class="h-5 w-5 text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h4 class="font-heading text-sm font-bold uppercase text-ink">Let our dispatch team help.</h4>
+          <p class="text-xs text-slate-600 font-body font-light mt-1.5 leading-relaxed">
+            Tell us about your load specifications (length, width, height, and weight) and we will help identify the safest and most cost-effective open-deck trailer option.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-[10px] text-slate-400 font-body text-center mt-5 pt-3 border-t border-slate-100/60">
+    Final equipment selection is confirmed by WolfWay Logistics.
+  </p>
+</div>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DriverForm from '@/components/DriverForm.astro';
-import PayCalculator from '@/components/PayCalculator.astro';
+import FAQ from '@/components/FAQ.astro';
 
 const benefits = [
   {
@@ -32,6 +32,25 @@ const requirements = [
   'Clean Motor Vehicle Record (MVR) & PSP safety reports',
   'Open-deck/flatbed securement and tarping experience',
   'Minimum 22 years of age',
+];
+
+const faqItems = [
+  {
+    question: "What are the driver qualifications to join WolfWay?",
+    answer: "You must have a valid Class A CDL license, be at least 22 years old, have a minimum of 2 years of verifiable OTR experience, and demonstrate flatbed/open-deck load securement experience."
+  },
+  {
+    question: "Do you hire owner operators?",
+    answer: "Yes, we welcome applications from independent owner operators. We offer competitive load dispatch, fuel card programs, and prompt weekly payouts."
+  },
+  {
+    question: "What happens after I submit a driver application?",
+    answer: "Our recruiting team reviews your safe driving records (MVR & PSP). A coordinator will follow up with you within 24 hours to discuss route availability and pay rate offers."
+  },
+  {
+    question: "What is your typical driver home time schedule?",
+    answer: "We plan regional and national routing lanes with drivers ahead of schedule to ensure reliable, consistent home time that respects your family life."
+  }
 ];
 ---
 
@@ -133,49 +152,8 @@ const requirements = [
     </div>
   </section>
 
-  <!-- Section 2.5: Income Potential Calculator -->
-  <section class="bg-white py-16 sm:py-20 border-b border-slate-100">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        <!-- Left details -->
-        <div class="lg:col-span-6 space-y-5">
-          <div>
-            <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
-              EXPECTED REVENUE
-            </p>
-            <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase text-ink">
-              Calculate Your Income
-            </h2>
-            <p class="text-sm text-slate-600 font-body font-light mt-2 leading-relaxed">
-              We offer highly competitive mileage rates for company drivers and percentage-based earnings for owner-operators. Adjust the slider to see your potential weekly and annual gross revenue with WolfWay.
-            </p>
-          </div>
-          <div class="space-y-3 font-body text-sm text-slate-600 font-light">
-            <p class="flex items-center gap-2">
-              <span class="h-1.5 w-1.5 bg-cyan rounded-full"></span>
-              Company Drivers: $0.68 per mile flat rate
-            </p>
-            <p class="flex items-center gap-2">
-              <span class="h-1.5 w-1.5 bg-cyan rounded-full"></span>
-              Owner Operators: Averaging $2.55 net per mile
-            </p>
-            <p class="flex items-center gap-2">
-              <span class="h-1.5 w-1.5 bg-cyan rounded-full"></span>
-              Weekly home time & transparent settlements
-            </p>
-          </div>
-        </div>
-
-        <!-- Right Calculator card -->
-        <div class="lg:col-span-6">
-          <PayCalculator />
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Section 3: The Form (Centered, Focused Box) -->
-  <section id="driver-form-container" class="bg-[#F5F7FA] py-20 sm:py-24">
+  <section class="bg-white py-20 sm:py-24 border-b border-slate-100">
     <div class="mx-auto max-w-3xl px-5 lg:px-0 relative">
       <!-- Top highlight line -->
       <div class="absolute top-0 left-5 right-5 h-[2px] bg-cyan/30"></div>
@@ -189,9 +167,16 @@ const requirements = [
         </p>
       </div>
 
-      <div class="border border-slate-200/60 p-8 sm:p-12 rounded-sm shadow-sm bg-white">
+      <div class="border border-slate-200/60 p-8 sm:p-12 rounded-sm shadow-sm bg-slate-50/10">
         <DriverForm />
       </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Recruitment FAQ -->
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <FAQ items={faqItems} title="Driver Careers FAQ" eyebrow="DRIVER RECRUITMENT" />
     </div>
   </section>
 </BaseLayout>

@@ -80,15 +80,25 @@ import Button from '@/components/Button.astro';
                 </svg>
               </div>
               <div class="flex-grow">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-2.5 font-body">Office Hours</span>
-                <div class="space-y-1.5 text-sm font-body">
+                <div class="flex items-center justify-between mb-3.5">
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block font-body">Office Hours</span>
+                  <!-- Dynamic Open/Closed Status Badge -->
+                  <div id="office-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50">
+                    <span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>Status Checking</span>
+                  </div>
+                </div>
+                
+                <div class="space-y-2 text-xs font-body">
                   <div class="flex justify-between items-center text-slate-600">
-                    <span class="font-light">Monday – Friday</span>
-                    <span class="font-semibold text-slate-800">7:00 AM – 6:00 PM CST</span>
+                    <span class="font-semibold text-slate-700">Monday – Friday</span>
+                    <span class="h-px bg-slate-200/60 flex-grow mx-3 border-dashed border-t"></span>
+                    <span class="font-bold text-slate-900">7:00 AM – 6:00 PM <span class="text-slate-400 font-normal">CST</span></span>
                   </div>
                   <div class="flex justify-between items-center text-slate-600">
-                    <span class="font-light">Saturday</span>
-                    <span class="font-semibold text-slate-800">8:00 AM – 12:00 PM CST</span>
+                    <span class="font-semibold text-slate-700">Saturday</span>
+                    <span class="h-px bg-slate-200/60 flex-grow mx-3 border-dashed border-t"></span>
+                    <span class="font-bold text-slate-900">8:00 AM – 12:00 PM <span class="text-slate-400 font-normal">CST</span></span>
                   </div>
                 </div>
               </div>
@@ -238,6 +248,63 @@ import Button from '@/components/Button.astro';
 
 <script>
   import { validateForm } from '@/scripts/forms';
+  
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) validateForm(form, 'contact-success', 'contact-error');
+
+  function updateOfficeStatus() {
+    const statusEl = document.getElementById('office-status');
+    if (!statusEl) return;
+
+    try {
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Chicago',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false,
+        weekday: 'short'
+      });
+      const parts = formatter.formatToParts(now);
+      const getValue = (type: string) => parts.find(p => p.type === type)?.value;
+      
+      const weekday = getValue('weekday');
+      const hour = parseInt(getValue('hour') || '0', 10);
+      const minute = parseInt(getValue('minute') || '0', 10);
+      const timeVal = hour + minute / 60;
+
+      let isOpen = false;
+
+      if (weekday && ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].includes(weekday)) {
+        if (timeVal >= 7 && timeVal < 18) {
+          isOpen = true;
+        }
+      } else if (weekday === 'Sat') {
+        if (timeVal >= 8 && timeVal < 12) {
+          isOpen = true;
+        }
+      }
+
+      if (isOpen) {
+        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-emerald-50 text-emerald-700 border border-emerald-500/15';
+        statusEl.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span><span>Open Now</span>';
+      } else {
+        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50';
+        statusEl.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span><span>Closed</span>';
+      }
+    } catch (err) {
+      statusEl.style.display = 'none';
+    }
+  }
+
+  // Initial runs
+  updateOfficeStatus();
+  setInterval(updateOfficeStatus, 60000);
+
+  // Astro transitions support
+  document.addEventListener('astro:page-load', () => {
+    const freshForm = document.getElementById('contact-form') as HTMLFormElement | null;
+    if (freshForm) validateForm(freshForm, 'contact-success', 'contact-error');
+    updateOfficeStatus();
+  });
 </script>

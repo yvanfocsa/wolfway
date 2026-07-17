@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CarrierForm from '@/components/CarrierForm.astro';
+import FAQ from '@/components/FAQ.astro';
 
 const reasons = [
   {
@@ -26,6 +27,25 @@ const requirements = [
   'Minimum $1,000,000 Auto Liability insurance coverage',
   'Minimum $100,000 Cargo Insurance coverage',
   'Proper load securement equipment (chains, straps, binders, tarps)',
+];
+
+const faqItems = [
+  {
+    question: "How do I apply as a carrier partner?",
+    answer: "Complete our quick onboarding form below. Our compliance team will review your USDOT safety rating, MC authority history, and active insurance coverage."
+  },
+  {
+    question: "What equipment configurations does WolfWay coordinate?",
+    answer: "We primarily move flatbeds, step decks, double drops, and conestogas. All dispatched carriers must carry proper chains, straps, edge protectors, and steel or lumber tarps."
+  },
+  {
+    question: "What are your payment terms?",
+    answer: "We offer prompt carrier payment options upon receipt of clean proof of delivery (POD) documents. Standard payment schedules and quick-pay terms are available."
+  },
+  {
+    question: "Are owner operators welcome in the network?",
+    answer: "Yes, we coordinate shipments for both fleet carriers and independent owner operators holding active authority and meeting our FMCSA safety requirements."
+  }
 ];
 ---
 
@@ -125,7 +145,7 @@ const requirements = [
   </section>
 
   <!-- Section 3: The Form (Centered, Focused Box) -->
-  <section class="bg-white py-20 sm:py-24">
+  <section class="bg-white py-20 sm:py-24 border-b border-slate-100">
     <div class="mx-auto max-w-3xl px-5 lg:px-0 relative">
       <!-- Top highlight line -->
       <div class="absolute top-0 left-5 right-5 h-[2px] bg-cyan/30"></div>
@@ -135,13 +155,20 @@ const requirements = [
           Apply to Join Network
         </h2>
         <p class="text-slate-600 text-sm mt-2 font-body font-light max-w-lg mx-auto">
-          Complete the form below and our onboarding team will review your authority and insurance credentials within 2 hours.
+          Complete the form below and our onboarding team will review your authority and insurance credentials.
         </p>
       </div>
 
       <div class="border border-slate-200/60 p-8 sm:p-12 rounded-sm shadow-sm bg-slate-50/10">
         <CarrierForm />
       </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Onboarding FAQ -->
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <FAQ items={faqItems} title="Carrier Partner FAQ" eyebrow="CARRIER ONBOARDING" />
     </div>
   </section>
 </BaseLayout>

@@ -1,21 +1,25 @@
 ---
 import { mainNav } from '@/content/navigation';
 import Button from '@/components/Button.astro';
+
+const pathname = new URL(Astro.request.url).pathname;
+// Normalize pathname (strip trailing slash if any, except for root)
+const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname;
 ---
 
-<header id="site-header" class="fixed top-0 left-0 z-50 w-full bg-[#F5F7FA]/95 backdrop-blur-md border-b border-slate-200/50 py-3 transition-all duration-300 select-none">
+<header id="site-header" class="fixed top-0 left-0 z-50 w-full transition-all duration-200 border-b select-none py-5 border-transparent bg-transparent text-white group is-transparent">
   <nav class="mx-auto max-w-7xl px-5 lg:px-10 flex items-center justify-between">
     <!-- Logo & Brand Name -->
-    <a href="/" class="flex items-center gap-2.5 group" aria-label="WolfWay Home">
+    <a href="/" class="flex items-center gap-2.5 group/logo" aria-label="WolfWay Home" focus-visible>
       <img
         id="header-logo"
         src="/images/logo_icon.png"
         alt="WolfWay Logo"
-        class="h-11 w-11 object-contain transition-transform duration-300 group-hover:scale-105"
+        class="h-10 w-10 object-contain transition-transform duration-300 group-hover/logo:scale-105"
       />
       <span
         id="header-title"
-        class="font-heading text-lg sm:text-xl font-extrabold uppercase tracking-widest text-ink group-hover:text-cyan transition-colors duration-300"
+        class="font-heading text-lg sm:text-xl font-extrabold uppercase tracking-widest transition-colors duration-300 text-white group-hover/logo:text-cyan group-[.is-scrolled]:text-ink"
       >
         WolfWay
       </span>
@@ -24,17 +28,31 @@ import Button from '@/components/Button.astro';
     <!-- Desktop Nav Links & CTA -->
     <div class="hidden lg:flex items-center gap-8">
       <div class="flex items-center gap-5">
-        {mainNav.map((item) => (
-          <a
-            href={item.href}
-            class="text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-ink px-2 py-1 transition-colors duration-300 relative group/link"
-          >
-            {item.label}
-            <span class="absolute bottom-0 left-2 right-2 h-[2px] bg-cyan scale-x-0 group-hover/link:scale-x-100 transition-transform duration-300 origin-left" aria-hidden="true"></span>
-          </a>
-        ))}
+        {mainNav.map((item) => {
+          const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+          return (
+            <a
+              href={item.href}
+              class="text-xs font-semibold uppercase tracking-wider transition-colors duration-200 relative py-1.5 px-2 group/link text-white/85 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70 rounded-sm group-[.is-scrolled]:text-slate-600 group-[.is-scrolled]:hover:text-ink"
+            >
+              {item.label}
+              <span 
+                class:list={[
+                  "absolute bottom-0 left-2 right-2 h-[2px] bg-cyan transition-transform duration-300 origin-left",
+                  isActive ? "scale-x-100" : "scale-x-0 group-hover/link:scale-x-100"
+                ]} 
+                aria-hidden="true"
+              ></span>
+            </a>
+          );
+        })}
       </div>
-      <Button href="/request-a-quote" variant="primary" size="sm" class="rounded-sm font-heading tracking-wider uppercase">
+      <Button 
+        href="/request-a-quote" 
+        variant="primary" 
+        size="sm" 
+        class="rounded-sm font-heading tracking-wider uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70"
+      >
         Request a Quote
       </Button>
     </div>
@@ -42,178 +60,191 @@ import Button from '@/components/Button.astro';
     <!-- Mobile Menu Open Toggle -->
     <button
       id="mobile-menu-open"
-      class="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden rounded-sm bg-slate-100 border border-slate-200 hover:bg-slate-200/60 active:scale-95 transition-all duration-200"
+      class="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden rounded-sm transition-all duration-200 text-white bg-white/5 border border-white/10 hover:bg-white/10 focus-visible:outline-cyan/70 group-[.is-scrolled]:text-ink group-[.is-scrolled]:bg-slate-100 group-[.is-scrolled]:border-slate-200 group-[.is-scrolled]:hover:bg-slate-200/60"
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
       <span class="sr-only">Open menu</span>
       <div class="flex flex-col gap-[5px]">
-        <span class="block h-[2px] w-[18px] bg-ink rounded-full"></span>
-        <span class="block h-[2px] w-[12px] bg-ink/70 rounded-full self-end"></span>
-        <span class="block h-[2px] w-[18px] bg-ink rounded-full"></span>
+        <span class="block h-[2px] w-[18px] bg-current rounded-full transition-transform"></span>
+        <span class="block h-[2px] w-[12px] bg-current rounded-full transition-all self-end group-hover:w-[18px]"></span>
+        <span class="block h-[2px] w-[18px] bg-current rounded-full transition-transform"></span>
       </div>
     </button>
   </nav>
 </header>
 
-<!-- Mobile menu overlay -->
+<!-- Mobile menu overlay (Full-Screen Navy Overlay) -->
 <div
   id="mobile-menu-overlay"
-  class="fixed inset-0 z-[60] lg:hidden"
+  class="fixed inset-0 z-[60] lg:hidden bg-navy flex flex-col justify-between"
   aria-hidden="true"
-  style="display: none;"
+  style="display: none; opacity: 0; transition: opacity 0.25s ease;"
 >
-  <!-- Backdrop -->
-  <div
-    id="menu-backdrop"
-    class="absolute inset-0 bg-navy/60 backdrop-blur-sm"
-    style="opacity:0; transition: opacity 0.4s ease;"
-  ></div>
+  <!-- Panel header: logo + close button -->
+  <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/5">
+    <a href="/" class="flex items-center gap-2.5" id="menu-logo-link" aria-label="Home">
+      <img src="/images/logo_icon.png" alt="WolfWay" class="h-10 w-10 object-contain" />
+      <span class="font-heading text-lg font-extrabold uppercase tracking-widest text-white">WolfWay</span>
+    </a>
 
-  <!-- Panel — slides in from the right -->
-  <div
-    id="menu-panel"
-    class="absolute top-0 right-0 h-full w-[82vw] max-w-xs flex flex-col"
-    style="
-      background: #111722;
-      border-left: 1px solid rgba(255,255,255,0.06);
-      transform: translateX(100%);
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-    "
-  >
-    <!-- Panel header: logo + close button -->
-    <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/5">
-      <a href="/" class="flex items-center gap-2.5" id="menu-logo-link" aria-label="Home">
-        <img src="/images/logo_icon.png" alt="WolfWay" class="h-10 w-10 object-contain" />
-        <span class="font-heading text-base font-extrabold uppercase tracking-widest text-white">WolfWay</span>
+    <!-- Close button -->
+    <button
+      id="mobile-menu-close"
+      class="flex h-10 w-10 items-center justify-center rounded-sm bg-white/5 border border-white/10 hover:bg-red-500/10 hover:border-red-400/30 active:scale-95 transition-all duration-200 group focus-visible:outline-cyan/70"
+      aria-label="Close menu"
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M2 2l14 14M16 2L2 16" stroke="white" stroke-width="2" stroke-linecap="round" class="group-hover:stroke-red-400 transition-colors duration-200"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Nav links (Large Stacked Centered Links) -->
+  <nav class="flex-1 flex flex-col justify-center items-center px-6 py-6 gap-6" aria-label="Mobile navigation">
+    {mainNav.map((item, i) => (
+      <a
+        href={item.href}
+        class="mobile-nav-link group py-2"
+        style={`--i: ${i};`}
+      >
+        <span class="font-heading text-3xl font-extrabold uppercase tracking-widest text-white/70 group-hover:text-cyan transition-colors duration-200">
+          {item.label}
+        </span>
       </a>
+    ))}
+  </nav>
 
-      <!-- Close button -->
-      <button
-        id="mobile-menu-close"
-        class="flex h-10 w-10 items-center justify-center rounded-sm bg-white/5 border border-white/10 hover:bg-red-500/10 hover:border-red-400/30 active:scale-95 transition-all duration-200 group"
-        aria-label="Close menu"
-      >
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-          <path d="M2 2l14 14M16 2L2 16" stroke="white" stroke-width="2" stroke-linecap="round" class="group-hover:stroke-red-400 transition-colors duration-200"/>
-        </svg>
-      </button>
-    </div>
+  <!-- CTA + Contact (At Bottom) -->
+  <div class="px-6 pb-12 pt-6 border-t border-white/5 space-y-5 bg-navy-light/20">
+    <Button
+      id="menu-cta"
+      href="/request-a-quote"
+      variant="primary"
+      size="lg"
+      arrow={true}
+      class="w-full justify-center rounded-sm uppercase tracking-wider font-heading text-base py-4"
+    >
+      Request a Quote
+    </Button>
 
-    <!-- Nav links -->
-    <nav class="flex-1 flex flex-col justify-center px-6 py-4 gap-0.5" aria-label="Mobile navigation">
-      {mainNav.map((item, i) => (
-        <a
-          href={item.href}
-          class="mobile-nav-link group flex items-center justify-between py-4 border-b border-white/5 last:border-0"
-          style={`--i: ${i};`}
-        >
-          <span class="font-heading text-lg font-bold uppercase tracking-wider text-white/70 group-hover:text-white group-active:text-cyan transition-colors duration-200">
-            {item.label}
-          </span>
-          <svg class="h-4 w-4 text-white/20 group-hover:text-cyan group-hover:translate-x-1 transition-all duration-200" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      ))}
-    </nav>
-
-    <!-- CTA + Contact -->
-    <div class="px-6 pb-8 pt-4 border-t border-white/5 space-y-4">
-      <Button
-        id="menu-cta"
-        href="/request-a-quote"
-        variant="primary"
-        size="lg"
-        arrow={true}
-        class="w-full justify-center rounded-sm"
-      >
-        Request a Quote
-      </Button>
-
-      <div class="text-center pt-2">
-        <p class="text-[10px] uppercase tracking-[0.2em] text-white/25 font-semibold mb-1.5">Call us anytime</p>
-        <a href="tel:+12244464256" class="text-base font-heading font-bold text-white/80 hover:text-cyan transition-colors">
-          +1 (224) 446-4256
-        </a>
-      </div>
+    <div class="text-center pt-2">
+      <p class="text-[9px] uppercase tracking-[0.25em] text-white/30 font-bold mb-1.5 font-body">Speak with dispatch</p>
+      <a href="tel:+12244464256" class="text-lg font-heading font-extrabold uppercase tracking-wider text-white/95 hover:text-cyan transition-colors">
+        +1 (224) 446-4256
+      </a>
     </div>
   </div>
 </div>
 
 <script>
-  /* ── Elements ── */
-  const openBtn  = document.getElementById('mobile-menu-open')  as HTMLButtonElement | null;
-  const closeBtn = document.getElementById('mobile-menu-close') as HTMLButtonElement | null;
-  const overlay  = document.getElementById('mobile-menu-overlay') as HTMLElement | null;
-  const backdrop = document.getElementById('menu-backdrop')     as HTMLElement | null;
-  const panel    = document.getElementById('menu-panel')        as HTMLElement | null;
+  function setupHeaderScroll() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
 
-  let menuOpen = false;
+    // Check if the current page has a Hero section
+    const hero = document.querySelector('section.relative.h-\\[100svh\\], section.relative.h-\\[100dvh\\], #hero-bg-container');
+    
+    if (hero) {
+      // Use IntersectionObserver to track scroll state dynamically
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            header.classList.remove('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
+            header.classList.add('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
+          } else {
+            header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
+            header.classList.add('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-80px 0px 0px 0px' // Trigger slightly before scrolling past header height
+      });
 
-  /* ── Open ── */
-  function openMenu() {
-    menuOpen = true;
-    if (overlay) {
-      overlay.style.display = 'block';
-      overlay.offsetHeight; // Force reflow
+      observer.observe(hero);
+      
+      // Save observer reference to disconnect on view transitions
+      (window as any).headerObserver = observer;
+    } else {
+      // No hero exists: immediately set scrolled state
+      header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
+      header.classList.add('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
     }
-    overlay?.setAttribute('aria-hidden','false');
-    openBtn?.setAttribute('aria-expanded','true');
-    if (backdrop) backdrop.style.opacity = '1';
-    if (panel)    panel.style.transform  = 'translateX(0)';
-    document.body.style.overflow = 'hidden';
   }
 
-  /* ── Close ── */
-  function closeMenu() {
-    menuOpen = false;
-    if (backdrop) backdrop.style.opacity = '0';
-    if (panel)    panel.style.transform  = 'translateX(100%)';
-    openBtn?.setAttribute('aria-expanded','false');
-    overlay?.setAttribute('aria-hidden','true');
-    setTimeout(() => {
-      if (!menuOpen && overlay) {
-        overlay.style.display = 'none';
-      }
-    }, 450);
-    document.body.style.overflow = '';
+  function setupMobileMenu() {
+    const openBtn  = document.getElementById('mobile-menu-open')  as HTMLButtonElement | null;
+    const closeBtn = document.getElementById('mobile-menu-close') as HTMLButtonElement | null;
+    const overlay  = document.getElementById('mobile-menu-overlay') as HTMLElement | null;
+
+    if (!openBtn || !overlay) return;
+
+    let menuOpen = false;
+
+    function openMenu() {
+      menuOpen = true;
+      overlay!.style.display = 'flex';
+      // Force layout reflow
+      overlay!.offsetHeight;
+      overlay!.style.opacity = '1';
+      
+      overlay!.setAttribute('aria-hidden', 'false');
+      openBtn!.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOpen = false;
+      overlay!.style.opacity = '0';
+      
+      openBtn!.setAttribute('aria-expanded', 'false');
+      overlay!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      
+      setTimeout(() => {
+        if (!menuOpen) {
+          overlay!.style.display = 'none';
+        }
+      }, 250);
+    }
+
+    openBtn.addEventListener('click', openMenu);
+    closeBtn?.addEventListener('click', closeMenu);
+
+    overlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && menuOpen) closeMenu();
+    });
   }
 
-  /* ── Bind ── */
-  openBtn?.addEventListener('click',  openMenu);
-  closeBtn?.addEventListener('click', closeMenu);
-  backdrop?.addEventListener('click', closeMenu);
+  // Initial setup
+  setupHeaderScroll();
+  setupMobileMenu();
 
-  overlay?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && menuOpen) closeMenu();
+  // Astro page-load trigger for persistent header initialization
+  document.addEventListener('astro:page-load', () => {
+    // Disconnect old observer if any
+    if ((window as any).headerObserver) {
+      (window as any).headerObserver.disconnect();
+    }
+    setupHeaderScroll();
+    setupMobileMenu();
   });
 </script>
 
 <style>
-  /* Staggered nav links when panel opens */
-  @keyframes linkIn {
-    from { opacity: 0; transform: translateX(20px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-  #menu-panel[style*="translateX(0)"] .mobile-nav-link {
-    animation: linkIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
-    animation-delay: calc(var(--i) * 55ms + 200ms);
-  }
-
-  /* CTA fade-in */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
+  /* Mobile stacked link animations */
+  @keyframes mobileLinkIn {
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  #menu-panel[style*="translateX(0)"] #menu-cta {
-    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
-    animation-delay: 420ms;
+  #mobile-menu-overlay[style*="opacity: 1"] .mobile-nav-link {
+    animation: mobileLinkIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 60ms + 100ms);
   }
 </style>

@@ -10,207 +10,227 @@ import Button from '@/components/Button.astro';
   <!-- Page Header -->
   <section class="bg-navy pt-36 pb-20 relative overflow-hidden">
     <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
+      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
+        GET IN TOUCH
+      </p>
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight">
-        Get in Touch
+        Contact WolfWay
       </h1>
       <p class="mt-4 max-w-2xl text-base md:text-lg text-white/60 font-body font-light leading-relaxed">
-        Have a question about a shipment, want to join our team, or ready to partner? Reach out below.
+        Ready to move your cargo, join our driver team, or partner as a carrier? Choose a path below or drop us a message.
       </p>
     </div>
   </section>
 
-  <!-- Modern Boxed Contact Section -->
-  <section class="bg-offwhite py-24 animate-fade-in" data-animate="fade-up">
+  <!-- Modern Spacious Contact Section -->
+  <section class="bg-offwhite py-20 sm:py-24 animate-fade-in" data-animate="fade-up">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       
-      <!-- Card Container Wrapper -->
-      <div class="relative bg-white border border-slate-200 shadow-sm max-w-6xl mx-auto rounded-sm">
+      <!-- Split Layout (Uncluttered, Editorial Flow) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Side: Company Contact Info & Quick Actions -->
+        <div class="lg:col-span-5 space-y-8">
+          <div>
+            <h2 class="font-heading text-2xl font-bold uppercase text-ink leading-tight">
+              Connect With Us
+            </h2>
+            <p class="text-slate-600 font-body font-light text-sm mt-1">
+              Direct channels for logistics coordination and support.
+            </p>
+          </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
-          
-          <!-- Left: Contact Info -->
-          <div class="lg:col-span-7 p-8 sm:p-12 lg:p-16 flex flex-col justify-between">
-            <div>
-              <!-- Info Cards Stack -->
-              <div class="space-y-5 max-w-lg">
-                <!-- Email -->
-                <div class="flex items-start gap-4 p-5 border border-slate-100 rounded-sm bg-slate-50/10 hover:bg-slate-50/40 hover:border-cyan/20 transition-all duration-300 group">
-                  <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-white text-slate-500 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1 font-body">Email</span>
-                    <a href="mailto:wolfwaylogistics@gmail.com" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
-                      wolfwaylogistics@gmail.com
-                    </a>
-                  </div>
-                </div>
+          <!-- Contact Cards -->
+          <div class="space-y-4">
+            <!-- Email -->
+            <div class="flex items-start gap-4 p-5 bg-white border border-slate-200/40 rounded-sm hover:border-cyan/20 hover:shadow-sm transition-all duration-300 group">
+              <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-slate-50 text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Email Dispatch</span>
+                <a href="mailto:wolfwaylogistics@gmail.com" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
+                  wolfwaylogistics@gmail.com
+                </a>
+              </div>
+            </div>
 
-                <!-- Phone -->
-                <div class="flex items-start gap-4 p-5 border border-slate-100 rounded-sm bg-slate-50/10 hover:bg-slate-50/40 hover:border-cyan/20 transition-all duration-300 group">
-                  <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-white text-slate-500 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1 font-body">Phone</span>
-                    <a href="tel:+12244464256" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
-                      +1 (224) 446-4256
-                    </a>
-                  </div>
-                </div>
+            <!-- Phone -->
+            <div class="flex items-start gap-4 p-5 bg-white border border-slate-200/40 rounded-sm hover:border-cyan/20 hover:shadow-sm transition-all duration-300 group">
+              <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-slate-50 text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Direct Phone</span>
+                <a href="tel:+12244464256" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
+                  +1 (224) 446-4256
+                </a>
+              </div>
+            </div>
 
-                <!-- Office Hours -->
-                <div class="flex items-start gap-4 p-5 border border-slate-100 rounded-sm bg-slate-50/10 hover:bg-slate-50/40 hover:border-cyan/20 transition-all duration-300 group">
-                  <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-white text-slate-500 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+            <!-- Office Hours -->
+            <div class="flex items-start gap-4 p-5 bg-white border border-slate-200/40 rounded-sm hover:border-cyan/20 hover:shadow-sm transition-all duration-300 group">
+              <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-slate-50 text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="flex-grow">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-2.5 font-body">Office Hours</span>
+                <div class="space-y-1.5 text-sm font-body">
+                  <div class="flex justify-between items-center text-slate-600">
+                    <span class="font-light">Monday – Friday</span>
+                    <span class="font-semibold text-slate-800">7:00 AM – 6:00 PM CST</span>
                   </div>
-                  <div class="flex-grow">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2.5 font-body">Office Hours</span>
-                    <div class="space-y-1.5 text-sm font-body">
-                      <div class="flex justify-between items-center text-slate-700">
-                        <span class="text-slate-500 font-light">Monday – Friday</span>
-                        <span class="font-semibold text-slate-800">7:00 AM – 6:00 PM CST</span>
-                      </div>
-                      <div class="flex justify-between items-center text-slate-700">
-                        <span class="text-slate-500 font-light">Saturday</span>
-                        <span class="font-semibold text-slate-800">8:00 AM – 12:00 PM CST</span>
-                      </div>
-                    </div>
+                  <div class="flex justify-between items-center text-slate-600">
+                    <span class="font-light">Saturday</span>
+                    <span class="font-semibold text-slate-800">8:00 AM – 12:00 PM CST</span>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Quick Links -->
-            <div class="border-t border-slate-100 pt-8 mt-12">
-              <p class="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-4 font-body">Quick Actions</p>
-              <div class="flex flex-wrap gap-3">
-                <a href="/request-a-quote" class="group inline-flex items-center gap-2 px-4 py-2.5 border border-slate-200 bg-slate-50/30 hover:bg-white hover:border-cyan/30 rounded-sm text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-cyan transition-all duration-300">
-                  Request a quote
-                  <svg class="h-3 w-3 text-slate-600 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-                <a href="/drive-with-us" class="group inline-flex items-center gap-2 px-4 py-2.5 border border-slate-200 bg-slate-50/30 hover:bg-white hover:border-cyan/30 rounded-sm text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-cyan transition-all duration-300">
-                  Apply to drive
-                  <svg class="h-3 w-3 text-slate-600 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-                <a href="/carrier" class="group inline-flex items-center gap-2 px-4 py-2.5 border border-slate-200 bg-slate-50/30 hover:bg-white hover:border-cyan/30 rounded-sm text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-cyan transition-all duration-300">
-                  Carrier Network
-                  <svg class="h-3 w-3 text-slate-600 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
+          <!-- Quick Actions -->
+          <div class="bg-white p-6 border border-slate-200/40 rounded-sm shadow-sm">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] mb-4 font-body">Quick Actions</p>
+            <div class="flex flex-col gap-2">
+              <a href="/request-a-quote" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Request a freight quote</span>
+                <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="/drive-with-us" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Apply to drive (OTR / Owner Op)</span>
+                <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="/carrier" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Join Carrier network</span>
+                <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
           </div>
-
-          <!-- Right: Contact Form -->
-          <div class="lg:col-span-5 p-8 sm:p-12 flex flex-col justify-center bg-slate-50/30">
-            <form id="contact-form" class="space-y-5" novalidate>
-              <input type="hidden" name="formType" value="contact" />
-              <!-- Name -->
-              <div>
-                <label for="contact-name" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-body">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="contact-name"
-                  name="name"
-                  required
-                  autocomplete="name"
-                  class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
-                  placeholder="Your Name"
-                />
-                <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter your name.</p>
-              </div>
-
-              <!-- Email -->
-              <div>
-                <label for="contact-email" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-body">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="contact-email"
-                  name="email"
-                  required
-                  autocomplete="email"
-                  class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
-                  placeholder="Your Email"
-                />
-                <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter a valid email address.</p>
-              </div>
-
-              <!-- Phone -->
-              <div>
-                <label for="contact-phone" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-body">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  id="contact-phone"
-                  name="phone"
-                  autocomplete="tel"
-                  class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300"
-                  placeholder="Your Phone Number"
-                />
-              </div>
-
-              <!-- Message -->
-              <div>
-                <label for="contact-message" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-body">
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  rows="4"
-                  required
-                  class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y"
-                  placeholder="Your Message"
-                ></textarea>
-                <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter a message.</p>
-              </div>
-
-              <!-- Submit Button -->
-              <div class="pt-2">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="default"
-                  class="w-full"
-                >
-                  Submit
-                </Button>
-              </div>
-
-              <!-- Success Card -->
-              <div id="contact-success" class="hidden p-5 border border-green-500/20 bg-green-500/5 rounded-sm">
-                <p class="text-sm font-medium text-green-700 font-body">
-                  Thank you! We'll get back to you within 1 business day.
-                </p>
-              </div>
-
-              <!-- Error Card -->
-              <div id="contact-error" class="hidden p-5 border border-red-500/20 bg-red-500/5 rounded-sm">
-                <p class="text-sm font-medium text-red-600 font-body">
-                  Please fix highlighted fields.
-                </p>
-              </div>
-            </form>
-          </div>
-
         </div>
+
+        <!-- Right Side: Contact Form -->
+        <div class="lg:col-span-7 bg-white p-8 sm:p-12 border border-slate-200/40 rounded-sm shadow-sm relative">
+          <!-- Top highlight line -->
+          <div class="absolute top-0 left-0 right-0 h-1 bg-cyan rounded-t-sm"></div>
+          
+          <div class="mb-8">
+            <h3 class="font-heading text-2xl font-bold uppercase text-ink">
+              Drop Us a Message
+            </h3>
+            <p class="text-slate-600 text-xs mt-1.5 font-body">
+              Complete the form below and we will get back to you within 1 business day.
+            </p>
+          </div>
+          
+          <form id="contact-form" class="space-y-5" novalidate>
+            <input type="hidden" name="formType" value="contact" />
+            
+            <!-- Name -->
+            <div>
+              <label for="contact-name" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 font-body">
+                Name
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                required
+                autocomplete="name"
+                class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+                placeholder="Your Name"
+              />
+              <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter your name.</p>
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label for="contact-email" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 font-body">
+                Email
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                required
+                autocomplete="email"
+                class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+                placeholder="Your Email"
+              />
+              <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter a valid email address.</p>
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label for="contact-phone" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 font-body">
+                Phone
+              </label>
+              <input
+                type="tel"
+                id="contact-phone"
+                name="phone"
+                autocomplete="tel"
+                class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+                placeholder="Your Phone Number"
+              />
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label for="contact-message" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 font-body">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="5"
+                required
+                class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4 py-3 rounded-sm text-sm text-slate-800 placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 resize-y font-body"
+                placeholder="Your Message"
+              ></textarea>
+              <p class="form-error mt-1 text-xs text-red-500 hidden">Please enter a message.</p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <Button
+                type="submit"
+                variant="primary"
+                size="default"
+                class="w-full rounded-sm justify-center font-heading tracking-wider uppercase"
+              >
+                Submit Message
+              </Button>
+            </div>
+
+            <!-- Success Card -->
+            <div id="contact-success" class="hidden p-5 border border-green-500/20 bg-green-500/5 rounded-sm">
+              <p class="text-sm font-medium text-green-700 font-body">
+                Thank you! We'll get back to you within 1 business day.
+              </p>
+            </div>
+
+            <!-- Error Card -->
+            <div id="contact-error" class="hidden p-5 border border-red-500/20 bg-red-500/5 rounded-sm">
+              <p class="text-sm font-medium text-red-600 font-body">
+                Please fix highlighted fields.
+              </p>
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
   </section>

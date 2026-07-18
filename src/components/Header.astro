@@ -180,11 +180,11 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            header.classList.remove('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
+            header.classList.remove('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
             header.classList.add('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
           } else {
             header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
-            header.classList.add('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
+            header.classList.add('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
           }
         });
       }, {
@@ -199,7 +199,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     } else {
       // No hero exists: immediately set scrolled state
       header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
-      header.classList.add('is-scrolled', 'bg-[#F5F7FA]', 'py-3', 'border-[#DCE3EA]', 'text-ink');
+      header.classList.add('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
     }
   }
 

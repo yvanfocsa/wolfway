@@ -103,7 +103,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       }
     </style>
   </head>
-  <body class="bg-offwhite text-ink antialiased">
+  <body class="bg-offwhite text-ink antialiased flex flex-col min-h-screen">
     <!-- Splash Screen -->
     <div id="splash-screen" aria-hidden="true">
       <div class="splash-mark">
@@ -116,7 +116,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     </div>
 
     <Header transition:persist />
-    <main>
+    <main class="flex-1 flex flex-col min-h-[100dvh]">
       <slot />
     </main>
     <Footer />

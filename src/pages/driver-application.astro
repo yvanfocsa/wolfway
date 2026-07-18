@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DriverForm from '@/components/DriverForm.astro';
+---
+
+<BaseLayout
+  title="Driver Recruitment Portal | WolfWay Logistics LLC"
+  description="Official CDL-A Driver Application Portal for WolfWay Logistics LLC. Complete your 30-second pre-qualification and DOT driver application."
+>
+  <!-- Portal Header Bar -->
+  <section class="bg-navy pt-32 pb-16 border-b border-white/10 select-none">
+    <div class="mx-auto max-w-5xl px-5 lg:px-10 text-center">
+      <p class="font-heading text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-cyan mb-2">
+        WolfWay Driver Recruitment
+      </p>
+      <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase text-white leading-tight">
+        WolfWay Employment Application
+      </h1>
+      <p class="mt-3 text-sm sm:text-base text-white/70 font-body font-light max-w-xl mx-auto">
+        Complete your quick pre-qualification below. A dedicated recruiter will review your safe driving records and contact you within 24 hours.
+      </p>
+
+      <!-- Portal Recruiter Line -->
+      <div class="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs font-body text-white/80">
+        <span>Need assistance? Call Recruitment directly:</span>
+        <a href="tel:+12244464256" class="font-bold text-cyan hover:underline">+1 (224) 446-4256</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Standalone Portal Application Container -->
+  <section class="bg-offwhite py-16 sm:py-20 border-b border-slate-200/60 select-none">
+    <div class="mx-auto max-w-3xl px-5 lg:px-0">
+      <div class="bg-white border border-slate-200/80 p-6 sm:p-10 rounded-2xl shadow-sm">
+        <DriverForm />
+      </div>
+
+      <!-- Trust Disclosures Footer -->
+      <div class="mt-8 text-center text-xs text-slate-500 font-body leading-relaxed max-w-2xl mx-auto space-y-2">
+        <p>&copy; 2026 WolfWay Logistics LLC. All information collected is protected under FMCSA DOT equal opportunity standards.</p>
+        <p class="text-[11px] text-slate-400">WolfWay Logistics LLC operates in the United States. This portal is available to US drivers only.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

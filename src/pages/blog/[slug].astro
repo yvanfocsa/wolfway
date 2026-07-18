@@ -1,0 +1,90 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/Button.astro';
+import CTASection from '@/components/CTASection.astro';
+import { blogPosts, type BlogPost } from '@/content/blog';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+export interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<BaseLayout
+  title={`${post.title} | WolfWay Logistics LLC`}
+  description={post.excerpt}
+>
+  <!-- Page Header -->
+  <section class="bg-navy pt-36 pb-20 relative overflow-hidden select-none">
+    <div class="mx-auto max-w-4xl px-5 lg:px-10 relative z-10 text-center">
+      <div class="inline-flex items-center gap-3 mb-4">
+        <span class="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-cyan text-navy rounded">
+          {post.category}
+        </span>
+        <span class="text-xs text-white/60 font-body">
+          {post.date} &bull; {post.readTime}
+        </span>
+      </div>
+      <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase text-white leading-tight tracking-tight">
+        {post.title}
+      </h1>
+      <p class="mt-4 text-xs font-heading font-semibold uppercase tracking-wider text-white/50">
+        By {post.author}
+      </p>
+    </div>
+  </section>
+
+  <!-- Article Body -->
+  <section class="bg-white py-16 sm:py-20 border-b border-slate-200/60">
+    <div class="mx-auto max-w-3xl px-5 lg:px-10">
+      
+      <!-- Back Link -->
+      <div class="mb-8">
+        <a href="/blog" class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-[#005F8A] hover:text-cyan transition-colors">
+          &larr; Back to all articles
+        </a>
+      </div>
+
+      <!-- Article Content -->
+      <div class="prose prose-slate max-w-none font-body font-light text-slate-700 leading-relaxed text-base space-y-6">
+        <p class="text-lg font-normal text-slate-900 leading-relaxed border-l-4 border-cyan pl-4 italic">
+          {post.excerpt}
+        </p>
+        
+        <div class="whitespace-pre-line">
+          {post.content}
+        </div>
+      </div>
+
+      <!-- Bottom Author & Share Box -->
+      <div class="mt-12 pt-8 border-t border-slate-200 flex items-center justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 font-bold font-heading">Published By</p>
+          <p class="text-sm font-bold text-ink font-heading uppercase">{post.author}</p>
+        </div>
+        <Button href="/contact" variant="primary" size="sm">
+          Contact Us
+        </Button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTASection
+    variant="dark"
+    eyebrow="READY TO SHIP?"
+    heading="Move Your Freight With WolfWay"
+    description="Get a fast, transparent freight quote or speak with our 24/7 dispatch team today."
+    buttonText="REQUEST A FREIGHT QUOTE"
+    buttonHref="/request-a-quote"
+  />
+</BaseLayout>

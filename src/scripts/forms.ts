@@ -1,13 +1,19 @@
 /**
  * Client-side form validation utility.
  * Validates required fields, email format, and phone format.
+ * Integrates anti-spam protection (honeypot, timing, JS token, rate limiting).
  * Shows success/error state on submit.
  */
+import { initAntiSpam, validateAntiSpam, recordSubmission } from './anti-spam';
+
 export function validateForm(
   form: HTMLFormElement,
   successId: string,
   errorId: string
 ): void {
+  // Initialize anti-spam protections on this form
+  initAntiSpam(form);
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -21,6 +27,20 @@ export function validateForm(
     form.querySelectorAll('.border-red-500').forEach((el) => {
       el.classList.remove('border-red-500');
     });
+
+    // --- ANTI-SPAM CHECK (runs before field validation) ---
+    const spamCheck = validateAntiSpam(form);
+    if (!spamCheck.valid) {
+      // Silently block spam: show generic error, do not reveal reason
+      if (errorEl) {
+        const errorText = errorEl.querySelector('p');
+        if (errorText) {
+          errorText.textContent = 'Unable to process your submission. Please try again in a moment.';
+        }
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
 
     let isValid = true;
 
@@ -40,6 +60,17 @@ export function validateForm(
           isValid = false;
           const fieldset = input.closest('fieldset');
           const error = fieldset?.querySelector('.form-error');
+          error?.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Handle checkboxes
+      if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+        if (!input.checked) {
+          isValid = false;
+          const wrapper = input.closest('div')?.parentElement;
+          const error = wrapper?.querySelector('.form-error');
           error?.classList.remove('hidden');
         }
         return;
@@ -79,6 +110,8 @@ export function validateForm(
     });
 
     if (isValid) {
+      // Record submission for rate limiting
+      recordSubmission();
       successEl?.classList.remove('hidden');
       form.reset();
       successEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

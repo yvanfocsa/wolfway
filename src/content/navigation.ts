@@ -5,8 +5,8 @@ export interface NavItem {
 
 export const mainNav: NavItem[] = [
   { label: 'Services', href: '/services' },
-  { label: 'Drive With Us', href: '/drive-with-us' },
-  { label: 'Carriers', href: '/carrier' },
+  { label: 'Shippers', href: '/request-a-quote' },
+  { label: 'Drivers', href: '/drive-with-us' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -15,6 +15,8 @@ export const footerNav: NavItem[] = [
   { label: 'Request a Quote', href: '/request-a-quote' },
   { label: 'Drive With Us', href: '/drive-with-us' },
   { label: 'Carriers', href: '/carrier' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Blog Insights', href: '/blog' },
   { label: 'Contact', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy-policy' },
   { label: 'Terms', href: '/terms' },

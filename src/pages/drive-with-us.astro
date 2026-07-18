@@ -1,125 +1,205 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DriverForm from '@/components/DriverForm.astro';
+import Button from '@/components/Button.astro';
 import FAQ from '@/components/FAQ.astro';
 
-const benefits = [
+const driverBenefits = [
   {
-    title: 'Top-Tier Competitive Pay',
-    description: 'Generous CPM or percentage pay models with fuel surcharges, layover pay, and quarterly safety bonuses.',
+    title: 'Competitive Per-Mile Rates',
+    description: 'Generous per-mile pay, tarp pay, detention compensation, and quarterly safety bonuses with guaranteed miles.',
     icon: 'M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   },
   {
-    title: 'Consistent Open-Deck Freight',
-    description: 'Never sit around. Steady, high-paying flatbed and step-deck shipments across the lower 48 keep your wheels rolling.',
+    title: 'Modern Air-Ride Fleet',
+    description: 'Late-model open-deck & flatbed rigs equipped with APUs, inverters, and well-maintained air-ride suspension.',
     icon: 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12',
   },
   {
-    title: 'Dedicated 1-on-1 Dispatcher',
-    description: 'We respect drivers. Work with a dedicated dispatch coordinator who knows you by name, plans ahead, and answers calls.',
+    title: '24/7 Human Dispatch Support',
+    description: 'A dedicated dispatch coordinator on call day or night who knows your name, route, and equipment.',
     icon: 'M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155',
   },
   {
-    title: 'Reliable Home Time',
-    description: 'Family comes first. We coordinate routing schedules to ensure you return home on time, consistently.',
-    icon: 'M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25',
+    title: 'Dedicated Open-Deck Corridors',
+    description: 'Steady, high-volume open-deck lanes built around predictable home-time schedules for your region.',
+    icon: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7',
+  },
+  {
+    title: '1-Day Streamlined Orientation',
+    description: 'Get on the road and earn fast. 1 day of orientation so you can start rolling without sitting in a classroom for a week.',
+    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+  {
+    title: 'Drop & Hook Opportunities',
+    description: 'High-volume pre-loaded trailers that keep your wheels moving and minimize loading dock downtime.',
+    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+  },
+  {
+    title: 'Pre-Pass & Fuel Discount Program',
+    description: 'Nationwide fuel discount cards, automated scale bypass, and travel reimbursement allowances included.',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  },
+  {
+    title: 'Path to Owner-Operator',
+    description: 'Clear, structured support for experienced CDL-A drivers looking to transition to independent owner-operators.',
+    icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
   },
 ];
 
-const requirements = [
+const driverRequirements = [
   'Valid Class A CDL license',
-  'Minimum 2 years of verifiable OTR trucking experience',
+  '1 to 2+ years of verifiable OTR trucking experience',
   'Clean Motor Vehicle Record (MVR) & PSP safety reports',
-  'Open-deck/flatbed securement and tarping experience',
-  'Minimum 22 years of age',
+  'Open-deck or flatbed securement experience preferred',
+  'Minimum 22 years of age (US Drivers Only)',
 ];
 
-const faqItems = [
+const driverFAQItems = [
   {
-    question: "What are the driver qualifications to join WolfWay?",
-    answer: "You must have a valid Class A CDL license, be at least 22 years old, have a minimum of 2 years of verifiable OTR experience, and demonstrate flatbed/open-deck load securement experience."
+    question: "What qualifications do I need to apply as a driver?",
+    answer: "You need a valid Class A CDL license, at least 1 to 2 years of verifiable OTR experience, a clean safe driving record, and basic open-deck/flatbed securement knowledge."
   },
   {
-    question: "Do you hire owner operators?",
-    answer: "Yes, we welcome applications from independent owner operators. We offer competitive load dispatch, fuel card programs, and prompt weekly payouts."
+    question: "How long is the orientation process?",
+    answer: "Our orientation takes 1 single day. We handle paperwork, safety equipment inspection, and load assignment quickly so you can start earning immediately."
   },
   {
-    question: "What happens after I submit a driver application?",
-    answer: "Our recruiting team reviews your safe driving records (MVR & PSP). A coordinator will follow up with you within 24 hours to discuss route availability and pay rate offers."
+    question: "Do you hire owner operators as well as company drivers?",
+    answer: "Yes! We welcome both company CDL-A drivers and independent owner-operators. We offer competitive load dispatch and weekly direct deposit payouts."
   },
   {
-    question: "What is your typical driver home time schedule?",
-    answer: "We plan regional and national routing lanes with drivers ahead of schedule to ensure reliable, consistent home time that respects your family life."
+    question: "How does dispatch communication work?",
+    answer: "You are assigned a dedicated 1-on-1 dispatch coordinator who knows your route, plans ahead, and is available 24/7/365."
   }
 ];
 ---
 
 <BaseLayout
-  title="Drive With Us"
-  description="Join WolfWay Logistics LLC as an OTR driver or owner operator. Competitive pay and consistent open-deck freight."
+  title="Drive With Us | CDL-A Driver Careers"
+  description="Apply to drive with WolfWay Logistics LLC. Competitive per-mile pay, modern air-ride open-deck fleet, 1-day orientation, and 24/7 dispatch support."
 >
   <!-- Page Header -->
-  <section class="bg-navy pt-36 pb-24 relative overflow-hidden">
+  <section class="bg-navy pt-36 pb-24 relative overflow-hidden select-none">
     <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10">
-      <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-cyan mb-3">
-        CAREERS
+      <p class="font-heading text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-cyan mb-3">
+        Now Hiring CDL-A Drivers
       </p>
-      <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight">
-        Drive With WolfWay Logistics LLC
+      
+      <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight max-w-4xl">
+        Drive for a company that gets the road.
       </h1>
-      <p class="mt-5 max-w-2xl text-base md:text-lg text-white/60 font-body font-light leading-relaxed">
-        OTR Drivers & Owner Operators: Partner with a team that values your time, pays competitively, and keeps you loaded with steady open-deck freight.
+      
+      <p class="mt-5 max-w-2xl text-base md:text-lg text-white/75 font-body font-light leading-relaxed">
+        Competitive rates, modern air-ride equipment, dedicated open-deck corridors, and a 24/7 team that has your back every mile.
       </p>
 
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+        <a href="#pre-qualify-form" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer bg-cyan text-navy hover:bg-[#00D4E0] border border-transparent h-12 px-8 text-sm group/btn">
+          Pre-Qualify in 30 Sec
+          <svg class="ml-2 h-4 w-4 transition-transform duration-180 ease-out group-hover/btn:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="tel:+12244464256" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer border border-white/20 bg-transparent text-white hover:bg-white/10 h-12 px-8 text-sm">
+          Talk to a Recruiter: +1 (224) 446-4256
+        </a>
+      </div>
+
       <!-- Proof Chips -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t border-white/10 max-w-4xl">
-        <div class="bg-white/5 border border-white/10 p-3.5 rounded-lg">
-          <p class="font-heading text-lg font-bold text-white">Modern Fleet</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-medium">Air-Ride Equipment</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-10 border-t border-white/10 max-w-4xl">
+        <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+          <p class="font-heading text-xl font-extrabold text-white">Modern Fleet</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Air-Ride Equipment</p>
         </div>
-        <div class="bg-white/5 border border-white/10 p-3.5 rounded-lg">
-          <p class="font-heading text-lg font-bold text-white">24/7</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-medium">Driver Support Team</p>
+        <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+          <p class="font-heading text-xl font-extrabold text-white">24/7</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Human Dispatch Support</p>
         </div>
-        <div class="bg-white/5 border border-white/10 p-3.5 rounded-lg">
-          <p class="font-heading text-lg font-bold text-white">1-Day</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-medium">Fast Orientation</p>
+        <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+          <p class="font-heading text-xl font-extrabold text-white">1-Day</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Fast Orientation</p>
         </div>
-        <div class="bg-white/5 border border-white/10 p-3.5 rounded-lg">
-          <p class="font-heading text-lg font-bold text-cyan">Drop &amp; Hook</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-medium">No-Touch Freight</p>
+        <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+          <p class="font-heading text-xl font-extrabold text-cyan">US Only</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">US CDL-A Drivers</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 1: Benefits (2x2 Grid) -->
+  <!-- 3-Step Workflow ("From Qualified to Rolling Fast") -->
   <section class="bg-white py-16 sm:py-20 border-b border-slate-100 select-none">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <div class="mb-12">
+      <div class="text-center mb-12">
         <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
-          DRIVER REWARDS
+          HOW IT WORKS
         </p>
-        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase text-ink">
-          Company Driver & Owner Op Benefits
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold uppercase text-ink">
+          From Application to Rolling Fast
+        </h2>
+        <p class="text-slate-600 text-sm mt-2 font-body font-light max-w-xl mx-auto">
+          No 30-minute forms to find out if you qualify. Start in seconds.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="bg-slate-50/60 border border-slate-200/80 p-8 rounded-xl relative">
+          <span class="font-heading text-5xl font-extrabold text-cyan block mb-4">01</span>
+          <h3 class="font-heading text-xl font-bold uppercase text-ink mb-2">Pre-qualify in 30 Seconds</h3>
+          <p class="text-sm text-slate-600 font-body font-light leading-relaxed">
+            A few quick taps for CDL experience, location, and trailer preference. No long forms to start.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-slate-50/60 border border-slate-200/80 p-8 rounded-xl relative">
+          <span class="font-heading text-5xl font-extrabold text-cyan block mb-4">02</span>
+          <h3 class="font-heading text-xl font-bold uppercase text-ink mb-2">Talk to a Real Recruiter</h3>
+          <p class="text-sm text-slate-600 font-body font-light leading-relaxed">
+            A real coordinator (never a call center) calls or texts to answer your questions and confirm details.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-slate-50/60 border border-slate-200/80 p-8 rounded-xl relative">
+          <span class="font-heading text-5xl font-extrabold text-cyan block mb-4">03</span>
+          <h3 class="font-heading text-xl font-bold uppercase text-ink mb-2">1-Day Orientation &amp; Roll</h3>
+          <p class="text-sm text-slate-600 font-body font-light leading-relaxed">
+            Complete your quick onboarding, inspect your equipment, and lock in your start date to begin earning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section (Why Drive With Us - 8 Cards) -->
+  <section class="bg-offwhite py-16 sm:py-24 border-b border-slate-100 select-none">
+    <div class="mx-auto max-w-7xl px-5 lg:px-10">
+      <div class="mb-14 text-center">
+        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
+          WHY DRIVE WITH WOLFWAY
+        </p>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold uppercase text-ink">
+          Built Around The People Behind The Wheel
         </h2>
       </div>
 
-      <div class="grid gap-8 sm:grid-cols-2">
-        {benefits.map((b) => (
-          <div class="flex items-start gap-4 p-5 bg-slate-50/50 border border-slate-100 rounded-sm hover:border-cyan/20 hover:shadow-sm transition-all duration-300 group">
-            <!-- Icon Container -->
-            <div class="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-sm border border-slate-200 bg-white text-slate-600 group-hover:border-cyan/30 group-hover:text-cyan transition-colors">
-              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d={b.icon} />
-              </svg>
-            </div>
-            
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {driverBenefits.map((b) => (
+          <div class="flex flex-col justify-between p-6 bg-white border border-slate-200/80 rounded-xl shadow-xs hover:border-cyan/40 transition-all duration-300 group">
             <div>
-              <h3 class="font-heading text-base font-bold uppercase text-ink mb-1 tracking-tight">
+              <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-cyan/10 text-cyan mb-4 group-hover:bg-cyan group-hover:text-navy transition-colors">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d={b.icon} />
+                </svg>
+              </div>
+              <h3 class="font-heading text-lg font-bold uppercase text-ink mb-2 leading-tight">
                 {b.title}
               </h3>
-              <p class="text-slate-600 font-body font-light text-sm leading-relaxed">
+              <p class="text-slate-600 font-body font-light text-xs sm:text-sm leading-relaxed">
                 {b.description}
               </p>
             </div>
@@ -129,12 +209,12 @@ const faqItems = [
     </div>
   </section>
 
-  <!-- Section 2: Qualifications (Split Layout) -->
-  <section class="bg-[#F5F7FA] py-16 sm:py-20 border-b border-slate-100">
+  <!-- Requirements & Checklist Section -->
+  <section class="bg-white py-16 sm:py-20 border-b border-slate-100">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <!-- Image Box (Left) -->
-        <div class="lg:col-span-6 relative overflow-hidden border border-slate-200/40 rounded-sm shadow-sm aspect-[16/10] bg-slate-200">
+        <div class="lg:col-span-6 relative overflow-hidden border border-slate-200/60 rounded-xl shadow-sm aspect-[16/10] bg-slate-200">
           <img
             src="/images/services/flatbed.jpg"
             alt="WolfWay OTR driver hauling commercial flatbed freight on the highway"
@@ -147,22 +227,24 @@ const faqItems = [
         <div class="lg:col-span-6 space-y-6">
           <div>
             <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-3">
-              MINIMUM QUALIFICATIONS
+              QUALIFICATIONS
             </p>
             <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase text-ink">
-              Requirements to Drive
+              Driver Criteria to Join
             </h2>
             <p class="text-sm text-slate-600 font-body font-light mt-2 leading-relaxed">
-              We maintain a high safety rating. All applicants must meet the following driver criteria to be considered:
+              We maintain high safety standards across the lower 48. Applicants must meet the following criteria:
             </p>
           </div>
 
-          <ul class="space-y-3">
-            {requirements.map((req) => (
-              <li class="flex items-start gap-3 text-sm text-slate-600 font-body font-light">
-                <svg class="h-5 w-5 text-cyan shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
+          <ul class="space-y-3.5">
+            {driverRequirements.map((req) => (
+              <li class="flex items-start gap-3 text-sm text-slate-700 font-body font-medium">
+                <div class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan/20 text-[#005F8A] mt-0.5">
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
                 <span>{req}</span>
               </li>
             ))}
@@ -172,31 +254,31 @@ const faqItems = [
     </div>
   </section>
 
-  <!-- Section 3: The Form (Centered, Focused Box) -->
-  <section class="bg-white py-20 sm:py-24 border-b border-slate-100">
+  <!-- Pre-Qualify Form Section -->
+  <section id="pre-qualify-form" class="bg-offwhite py-20 sm:py-24 border-b border-slate-100">
     <div class="mx-auto max-w-3xl px-5 lg:px-0 relative">
-      <!-- Top highlight line -->
-      <div class="absolute top-0 left-5 right-5 h-[2px] bg-cyan/30"></div>
-
-      <div class="text-center mb-12 pt-8">
-        <h2 class="font-heading text-3xl font-bold uppercase text-ink">
-          Quick Driver Application
+      <div class="text-center mb-10">
+        <p class="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-[#005F8A] mb-2">
+          30-SECOND PRE-QUALIFICATION
+        </p>
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold uppercase text-ink">
+          Pre-Qualify to Drive
         </h2>
         <p class="text-slate-600 text-sm mt-2 font-body font-light max-w-lg mx-auto">
-          Please fill out the quick application below. Our recruitment coordinator will review your safe driving record and get in touch with you within 24 hours.
+          Start rolling fast. Fill out your details below and a recruiter will reach out directly.
         </p>
       </div>
 
-      <div class="border border-slate-200/60 p-8 sm:p-12 rounded-sm shadow-sm bg-slate-50/10">
+      <div class="border border-slate-200/80 p-8 sm:p-12 rounded-xl shadow-xs bg-white">
         <DriverForm />
       </div>
     </div>
   </section>
 
-  <!-- Section 4: Recruitment FAQ -->
-  <section class="bg-white py-20">
+  <!-- Driver FAQ Section -->
+  <section class="bg-white py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <FAQ items={faqItems} title="Driver Careers FAQ" eyebrow="DRIVER RECRUITMENT" />
+      <FAQ items={driverFAQItems} title="Driver Careers FAQ" eyebrow="DRIVER RECRUITMENT" />
     </div>
   </section>
 </BaseLayout>

@@ -2,6 +2,7 @@
 import SeoHead from '@/components/SeoHead.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import DriverAppModal from '@/components/DriverAppModal.astro';
 import { ClientRouter } from 'astro:transitions';
 import '@/styles/global.css';
 
@@ -25,27 +26,28 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       ogImage={ogImage}
     />
     <ClientRouter />
-    <noscript>
-      <style>
-        #hero-eyebrow,
-        #hero-heading,
-        #hero-body-content {
-          opacity: 1 !important;
-        }
-        #splash-screen { display: none !important; }
-      </style>
-    </noscript>
-    <style is:inline>
+
+    <!-- Forced Light Mode & Color Scheme Lock -->
+    <meta name="color-scheme" content="light only" />
+    <style is:global>
+      :root {
+        color-scheme: light only;
+      }
+      body {
+        background-color: #F6F5F3 !important;
+        color: #0F172A !important;
+      }
+      /* Modern Glassmorphic Light Splash Screen */
       #splash-screen {
         position: fixed;
         inset: 0;
-        z-index: 9999;
+        z-index: 999999;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         background: #F6F5F3;
-        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 0.5s ease, visibility 0.5s ease;
       }
       #splash-screen.is-hidden {
         opacity: 0;
@@ -54,48 +56,43 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
       }
       .splash-mark {
         position: relative;
-        width: 80px;
-        height: 80px;
-        margin-bottom: 24px;
-      }
-      .splash-mark img {
-        width: 52px;
-        height: 52px;
-        object-fit: contain;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
       }
       .splash-ring {
         position: absolute;
         inset: 0;
         border-radius: 50%;
-        border: 1.5px solid transparent;
-        border-top-color: #0B1526;
-        animation: splash-spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        border: 2px solid transparent;
+        border-top-color: #00B8D9;
+        border-right-color: #005F8A;
+        animation: splash-spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
       .splash-ring-outer {
         position: absolute;
         inset: -6px;
         border-radius: 50%;
-        border: 1px solid rgba(11, 21, 38, 0.06);
+        border: 1px solid rgba(0, 184, 217, 0.2);
       }
       .splash-name {
-        font-family: 'Inter', 'Outfit', system-ui, sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.25em;
+        margin-top: 1.5rem;
+        font-family: var(--font-heading, sans-serif);
+        font-size: 0.875rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: #0B1526;
-        opacity: 0.4;
+        color: #0F172A;
       }
       .splash-shimmer {
-        width: 48px;
-        height: 1px;
-        margin-top: 20px;
-        background: linear-gradient(90deg, transparent, rgba(11, 21, 38, 0.15), transparent);
-        animation: splash-shimmer 1.6s ease-in-out infinite;
+        margin-top: 0.75rem;
+        width: 120px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00B8D9, transparent);
+        border-radius: 2px;
+        animation: splash-shimmer 1.5s ease-in-out infinite;
       }
       @keyframes splash-spin {
         to { transform: rotate(360deg); }
@@ -124,10 +121,14 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     </main>
     <Footer />
 
+    <!-- Official Multi-Step Driver Application Modal -->
+    <DriverAppModal />
+
     <!-- Client-side scripts -->
     <script>
       import '@/scripts/smooth-scroll';
       import '@/scripts/animations';
+      import '@/scripts/form-helpers';
 
       function dismissSplash() {
         const splash = document.getElementById('splash-screen');

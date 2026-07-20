@@ -1,6 +1,5 @@
 ---
 // src/components/DriverForm.astro
-import Button from './Button.astro';
 ---
 
 <div class="space-y-6">
@@ -15,7 +14,7 @@ import Button from './Button.astro';
     </div>
   </div>
 
-  <form id="driver-form" class="space-y-6" novalidate>
+  <form id="driver-form" class="space-y-6 min-h-[500px]" novalidate>
     <input type="hidden" name="formType" value="full_driver_app" />
 
     <!-- SUCCESS MESSAGE CARD WITH CELEBRATORY ANIMATION -->
@@ -83,31 +82,36 @@ import Button from './Button.astro';
         </div>
 
         <div>
-          <label for="driver-ssn" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
-            Social Security Number (SSN) <span class="text-cyan font-bold">*</span>
+          <label for="driver-age-eligible" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+            Age Eligibility <span class="text-cyan font-bold">*</span>
           </label>
-          <input
-            type="password"
-            id="driver-ssn"
-            name="ssn"
+          <select
+            id="driver-age-eligible"
+            name="age_eligibility"
             required
-            maxlength="11"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
-            placeholder="XXX-XX-XXXX"
-          />
+            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+          >
+            <option value="">Select eligibility</option>
+            <option value="22_or_older">I am 22 or older</option>
+            <option value="under_22">I am under 22</option>
+          </select>
         </div>
 
         <div>
-          <label for="driver-dob" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
-            Date of Birth (MM/DD/YYYY) <span class="text-cyan font-bold">*</span>
+          <label for="driver-contact-pref" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+            Preferred Contact Method <span class="text-cyan font-bold">*</span>
           </label>
-          <input
-            type="date"
-            id="driver-dob"
-            name="dob"
+          <select
+            id="driver-contact-pref"
+            name="preferred_contact"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
-          />
+            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+          >
+            <option value="">Select method</option>
+            <option value="Phone">Phone</option>
+            <option value="Text">Text</option>
+            <option value="Email">Email</option>
+          </select>
         </div>
 
         <div>
@@ -142,6 +146,10 @@ import Button from './Button.astro';
           />
         </div>
       </div>
+
+      <p class="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm leading-relaxed text-slate-700">
+        For privacy, this public form does not collect SSN, full date of birth, or full CDL number. Those details are handled later through direct onboarding.
+      </p>
 
 
     </div>
@@ -214,16 +222,19 @@ import Button from './Button.astro';
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label for="driver-cdl" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
-            CDL Class A License Number <span class="text-cyan font-bold">*</span>
+            CDL-A License Status <span class="text-cyan font-bold">*</span>
           </label>
-          <input
-            type="text"
+          <select
             id="driver-cdl"
-            name="cdl_number"
+            name="cdl_status"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
-            placeholder="A123456789"
-          />
+            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+          >
+            <option value="">Select status</option>
+            <option value="Active CDL-A">Active CDL-A</option>
+            <option value="CDL-A permit">CDL-A permit</option>
+            <option value="Not currently licensed">Not currently licensed</option>
+          </select>
         </div>
 
         <div>
@@ -309,6 +320,8 @@ import Button from './Button.astro';
     const footerControls = document.getElementById('page-footer-controls');
 
     if (!prevBtn || !nextBtn || !form) return;
+    if (form.dataset.driverFormBound === 'true') return;
+    form.dataset.driverFormBound = 'true';
 
     // Initialize anti-spam protections
     initAntiSpam(form);
@@ -375,7 +388,8 @@ import Button from './Button.astro';
       return isValid;
     }
 
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (!validateCurrentStep()) return;
 
       if (step < 3) {
@@ -408,12 +422,13 @@ import Button from './Button.astro';
         document.getElementById('page-step-1')?.classList.add('hidden');
         document.getElementById('page-step-2')?.classList.add('hidden');
         document.getElementById('page-step-3')?.classList.add('hidden');
-        if (footerControls) footerControls.classList.add('hidden');
         if (successCard) successCard.classList.remove('hidden');
+        footerControls?.classList.add('hidden');
       }
     });
 
-    prevBtn.addEventListener('click', () => {
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (step > 1) {
         step--;
         updatePageStepUI();

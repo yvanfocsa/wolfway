@@ -30,6 +30,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   background-color: var(--color-offwhite);
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
   background-color: var(--color-offwhite);
   line-height: 1.6;
   margin: 0;
+  font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -77,6 +79,99 @@ textarea {
   font-size: inherit;
 }
 
+input,
+select,
+textarea,
+button {
+  min-height: 44px;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+:target {
+  scroll-margin-top: 96px;
+}
+
+/* ─── Premium utility layer ─── */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 1000000;
+  transform: translateY(-150%);
+  border-radius: 0.25rem;
+  background: var(--color-cyan);
+  color: var(--color-navy);
+  padding: 0.75rem 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.premium-card {
+  position: relative;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.98)),
+    radial-gradient(circle at top left, rgba(0, 168, 225, 0.09), transparent 34%);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+}
+
+.premium-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.6), transparent 80%);
+  transform: translateX(-30%);
+  transition: opacity 240ms ease, transform 600ms ease;
+}
+
+@media (hover: hover) {
+  .premium-card:hover::after {
+    opacity: 1;
+    transform: translateX(30%);
+  }
+}
+
+.readable-kicker {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .text-\[9px\],
+  .text-\[10px\],
+  .text-\[11px\],
+  .text-xs {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 1rem !important;
+  }
+
+  .mobile-readable {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -114,4 +209,3 @@ textarea {
 .js #hero-body-content {
   opacity: 0;
 }
-

@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
 import CTASection from '@/components/CTASection.astro';
 import { blogPosts, type BlogPost } from '@/content/blog';
+import { absoluteUrl } from '@/content/seo';
 
 export function getStaticPaths() {
   return blogPosts.map((post) => ({
@@ -16,22 +17,59 @@ export interface Props {
 }
 
 const { post } = Astro.props;
+const publishedDate = new Date(post.date).toISOString();
+const contentBlocks = post.content
+  .trim()
+  .split('\n')
+  .map((line) => line.trim())
+  .filter(Boolean)
+  .map((line) => ({
+    type: line.startsWith('### ') ? 'heading' : 'paragraph',
+    text: line.replace(/^###\s+/, ''),
+  }));
+
+const articleStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      '@type': 'Organization',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'WolfWay Logistics LLC',
+      logo: {
+        '@type': 'ImageObject',
+        url: absoluteUrl('/images/logo_icon.png'),
+      },
+    },
+    datePublished: publishedDate,
+    dateModified: publishedDate,
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    image: absoluteUrl('/images/og-default.jpg'),
+  },
+];
 ---
 
 <BaseLayout
-  title={`${post.title} | WolfWay Logistics LLC`}
+  title={post.title}
   description={post.excerpt}
+  canonicalUrl={absoluteUrl(`/blog/${post.slug}`)}
+  structuredData={articleStructuredData}
 >
   <!-- Page Header -->
   <section class="bg-navy pt-36 pb-20 relative overflow-hidden select-none">
     <div class="mx-auto max-w-4xl px-5 lg:px-10 relative z-10 text-center">
       <div class="inline-flex items-center gap-3 mb-4">
-        <span class="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-cyan text-navy rounded">
+        <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-cyan text-navy rounded">
           {post.category}
         </span>
-        <span class="text-xs text-white/60 font-body">
+        <time datetime={publishedDate} class="text-sm text-white/70 font-body">
           {post.date} &bull; {post.readTime}
-        </span>
+        </time>
       </div>
       <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase text-white leading-tight tracking-tight">
         {post.title}
@@ -59,8 +97,12 @@ const { post } = Astro.props;
           {post.excerpt}
         </p>
         
-        <div class="whitespace-pre-line">
-          {post.content}
+        <div class="space-y-6">
+          {contentBlocks.map((block) => (
+            block.type === 'heading'
+              ? <h2 class="font-heading text-2xl font-bold uppercase leading-tight text-ink">{block.text}</h2>
+              : <p class="text-base leading-8 text-slate-700">{block.text}</p>
+          ))}
         </div>
       </div>
 

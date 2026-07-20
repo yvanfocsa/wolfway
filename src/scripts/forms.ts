@@ -6,11 +6,37 @@
  */
 import { initAntiSpam, validateAntiSpam, recordSubmission } from './anti-spam';
 
+function getFieldError(
+  input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+): Element | null {
+  const describedBy = input.getAttribute('aria-describedby')?.split(/\s+/) ?? [];
+  const linkedError = describedBy
+    .map((id) => document.getElementById(id))
+    .find((el) => el?.classList.contains('form-error'));
+
+  return linkedError
+    ?? input.parentElement?.querySelector('.form-error')
+    ?? input.closest('div')?.querySelector('.form-error')
+    ?? null;
+}
+
+function setFieldInvalid(
+  input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+  isInvalid: boolean
+): void {
+  input.classList.toggle('border-red-500', isInvalid);
+  input.setAttribute('aria-invalid', isInvalid ? 'true' : 'false');
+  getFieldError(input)?.classList.toggle('hidden', !isInvalid);
+}
+
 export function validateForm(
   form: HTMLFormElement,
   successId: string,
   errorId: string
 ): void {
+  if (form.dataset.validationBound === 'true') return;
+  form.dataset.validationBound = 'true';
+
   // Initialize anti-spam protections on this form
   initAntiSpam(form);
 
@@ -26,6 +52,9 @@ export function validateForm(
     form.querySelectorAll('.form-error').forEach((el) => el.classList.add('hidden'));
     form.querySelectorAll('.border-red-500').forEach((el) => {
       el.classList.remove('border-red-500');
+    });
+    form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[aria-invalid]').forEach((input) => {
+      input.setAttribute('aria-invalid', 'false');
     });
 
     // --- ANTI-SPAM CHECK (runs before field validation) ---
@@ -48,6 +77,7 @@ export function validateForm(
     const requiredInputs = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
       '[required]'
     );
+    const invalidFields: HTMLElement[] = [];
 
     requiredInputs.forEach((input) => {
       // Handle radio buttons
@@ -58,6 +88,7 @@ export function validateForm(
         );
         if (!checked) {
           isValid = false;
+          invalidFields.push(input);
           const fieldset = input.closest('fieldset');
           const error = fieldset?.querySelector('.form-error');
           error?.classList.remove('hidden');
@@ -69,8 +100,10 @@ export function validateForm(
       if (input instanceof HTMLInputElement && input.type === 'checkbox') {
         if (!input.checked) {
           isValid = false;
+          invalidFields.push(input);
+          input.setAttribute('aria-invalid', 'true');
           const wrapper = input.closest('div')?.parentElement;
-          const error = wrapper?.querySelector('.form-error');
+          const error = getFieldError(input) ?? wrapper?.querySelector('.form-error');
           error?.classList.remove('hidden');
         }
         return;
@@ -80,9 +113,8 @@ export function validateForm(
 
       if (!value) {
         isValid = false;
-        input.classList.add('border-red-500');
-        const error = input.parentElement?.querySelector('.form-error');
-        error?.classList.remove('hidden');
+        invalidFields.push(input);
+        setFieldInvalid(input, true);
         return;
       }
 
@@ -91,9 +123,8 @@ export function validateForm(
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
           isValid = false;
-          input.classList.add('border-red-500');
-          const error = input.parentElement?.querySelector('.form-error');
-          error?.classList.remove('hidden');
+          invalidFields.push(input);
+          setFieldInvalid(input, true);
         }
       }
 
@@ -102,9 +133,8 @@ export function validateForm(
         const phoneRegex = /^[+]?[\d\s().-]{7,}$/;
         if (!phoneRegex.test(value)) {
           isValid = false;
-          input.classList.add('border-red-500');
-          const error = input.parentElement?.querySelector('.form-error');
-          error?.classList.remove('hidden');
+          invalidFields.push(input);
+          setFieldInvalid(input, true);
         }
       }
     });
@@ -117,8 +147,7 @@ export function validateForm(
       successEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } else {
       errorEl?.classList.remove('hidden');
-      const firstError = form.querySelector('.border-red-500') as HTMLElement | null;
-      firstError?.focus();
+      invalidFields[0]?.focus();
     }
   });
 
@@ -127,8 +156,8 @@ export function validateForm(
     const target = e.target as HTMLElement;
     if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) {
       target.classList.remove('border-red-500');
-      const error = target.parentElement?.querySelector('.form-error');
-      error?.classList.add('hidden');
+      target.setAttribute('aria-invalid', 'false');
+      getFieldError(target)?.classList.add('hidden');
     }
   });
 }

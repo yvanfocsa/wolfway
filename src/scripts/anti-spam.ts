@@ -19,6 +19,9 @@ const RATE_LIMIT_KEY = 'ww_form_submissions';
 const MAX_SUBMISSIONS_PER_HOUR = 5;
 
 export function initAntiSpam(form: HTMLFormElement): void {
+  if (form.dataset.antiSpamInitialized === 'true') return;
+  form.dataset.antiSpamInitialized = 'true';
+
   const honeypot = document.createElement('input');
   honeypot.type = 'text';
   honeypot.name = HONEYPOT_FIELD_NAME;

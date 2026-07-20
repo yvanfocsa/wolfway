@@ -9,7 +9,7 @@ const equipmentTypes = [
 ];
 ---
 
-<form id="quote-form" class="space-y-6" novalidate>
+<form id="quote-form" class="space-y-6 min-h-[500px]" novalidate>
   <input type="hidden" name="formType" value="quote" />
 
   <!-- SUCCESS MESSAGE CARD -->
@@ -35,8 +35,26 @@ const equipmentTypes = [
   </div>
 
   <div id="quote-form-content">
+    <div class="mb-8 rounded-sm border border-slate-200 bg-slate-50/60 p-4" aria-label="Quote request progress">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <p id="quote-step-label" class="font-body text-xs font-bold uppercase tracking-[0.18em] text-cyan" aria-live="polite">
+            Step 1 of 2
+          </p>
+          <p id="quote-step-title" class="mt-1 font-heading text-lg font-bold uppercase leading-none text-ink">
+            Shipment Details
+          </p>
+        </div>
+        <div class="flex items-center gap-2" aria-hidden="true">
+          <span id="quote-progress-step-1" class="h-2.5 w-2.5 rounded-full bg-cyan"></span>
+          <span id="quote-progress-line" class="h-px w-10 bg-slate-300"></span>
+          <span id="quote-progress-step-2" class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- STEP 1: LOAD DETAILS -->
-    <div id="quote-step-1" class="space-y-6">
+    <div id="quote-step-1" class="space-y-6" role="group" aria-labelledby="quote-step-title">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <!-- Pickup City/State -->
         <div>
@@ -48,10 +66,14 @@ const equipmentTypes = [
             id="quote-pickup"
             name="pickup_location"
             required
+            maxlength="80"
+            autocomplete="address-level2"
+            aria-describedby="quote-pickup-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
             placeholder="e.g. Chicago, IL"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the pickup location.</p>
+          <p id="quote-pickup-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the pickup location.</p>
         </div>
 
         <!-- Delivery City/State -->
@@ -64,10 +86,14 @@ const equipmentTypes = [
             id="quote-delivery"
             name="delivery_location"
             required
+            maxlength="80"
+            autocomplete="address-level2"
+            aria-describedby="quote-delivery-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
             placeholder="e.g. Houston, TX"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the delivery location.</p>
+          <p id="quote-delivery-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter the delivery location.</p>
         </div>
 
         <!-- Pickup Date -->
@@ -80,9 +106,11 @@ const equipmentTypes = [
             id="quote-date"
             name="pickup_date"
             required
+            aria-describedby="quote-date-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please select a pickup date.</p>
+          <p id="quote-date-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please select a pickup date.</p>
         </div>
 
         <!-- Equipment Needed -->
@@ -95,6 +123,8 @@ const equipmentTypes = [
               id="quote-equipment"
               name="equipment_type"
               required
+              aria-describedby="quote-equipment-error"
+              aria-invalid="false"
               class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 appearance-none cursor-pointer font-body"
             >
               <option value="" disabled selected>Select trailer configuration</option>
@@ -108,7 +138,7 @@ const equipmentTypes = [
               </svg>
             </div>
           </div>
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please select equipment type.</p>
+          <p id="quote-equipment-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please select equipment type.</p>
         </div>
       </div>
 
@@ -127,14 +157,14 @@ const equipmentTypes = [
     </div>
 
     <!-- STEP 2: FREIGHT & CONTACT -->
-    <div id="quote-step-2" class="space-y-6 hidden">
+    <div id="quote-step-2" class="space-y-6 hidden" role="group" aria-labelledby="quote-step-title" aria-hidden="true">
       <!-- Freight Specs Grid -->
       <div class="bg-slate-50/50 p-5 border border-slate-200/40 rounded-sm">
         <h4 class="font-heading text-xs font-bold uppercase tracking-wider text-slate-700 mb-4 font-body">Freight Specifications</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <!-- Commodity -->
           <div class="sm:col-span-2">
-            <label for="quote-commodity" class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
+            <label for="quote-commodity" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
               Commodity <span class="text-cyan font-bold">*</span>
             </label>
             <input
@@ -142,15 +172,18 @@ const equipmentTypes = [
               id="quote-commodity"
               name="commodity"
               required
+              maxlength="120"
+              aria-describedby="quote-commodity-error"
+              aria-invalid="false"
               class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-3 py-2 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
               placeholder="e.g. Steel Pipes, Machinery"
             />
-            <p class="form-error mt-1 text-[11px] text-red-500 hidden">Enter commodity details.</p>
+            <p id="quote-commodity-error" class="form-error mt-1 text-xs text-red-500 hidden">Enter commodity details.</p>
           </div>
 
           <!-- Weight -->
           <div>
-            <label for="quote-weight" class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
+            <label for="quote-weight" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
               Weight (lbs) <span class="text-cyan font-bold">*</span>
             </label>
             <input
@@ -158,15 +191,19 @@ const equipmentTypes = [
               id="quote-weight"
               name="weight"
               required
+              maxlength="8"
+              inputmode="numeric"
+              aria-describedby="quote-weight-error"
+              aria-invalid="false"
               class="w-full border border-slate-200 bg-white hover:bg-slate-50 focus:bg-white px-3 py-2 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
               placeholder="e.g. 45000"
             />
-            <p class="form-error mt-1 text-[11px] text-red-500 hidden">Enter cargo weight.</p>
+            <p id="quote-weight-error" class="form-error mt-1 text-xs text-red-500 hidden">Enter cargo weight.</p>
           </div>
 
           <!-- Dimensions (Length x Width x Height) -->
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 font-body">
               Dims (L x W x H)
             </label>
             <div class="grid grid-cols-3 gap-1">
@@ -209,10 +246,12 @@ const equipmentTypes = [
             name="name"
             required
             autocomplete="name"
+            aria-describedby="quote-name-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
             placeholder="John Doe"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your name.</p>
+          <p id="quote-name-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter your name.</p>
         </div>
 
         <!-- Company -->
@@ -241,10 +280,12 @@ const equipmentTypes = [
             name="phone"
             required
             autocomplete="tel"
+            aria-describedby="quote-phone-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
             placeholder="(555) 123-4567"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid phone number.</p>
+          <p id="quote-phone-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid phone number.</p>
         </div>
 
         <!-- Email -->
@@ -258,26 +299,28 @@ const equipmentTypes = [
             name="email"
             required
             autocomplete="email"
+            aria-describedby="quote-email-error"
+            aria-invalid="false"
             class="w-full border border-slate-200 bg-slate-50/30 hover:bg-slate-50 focus:bg-white px-4.5 py-3.5 rounded-sm text-sm text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
             placeholder="john@company.com"
           />
-          <p class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid email address.</p>
+          <p id="quote-email-error" class="form-error mt-1.5 text-xs text-red-500 hidden">Please enter a valid email address.</p>
         </div>
       </div>
 
       <!-- File Upload Placeholder -->
       <div>
-        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+        <label for="quote-file" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
           Upload Photo / Specs Sheet <span class="text-slate-400 font-normal font-sans">(Optional)</span>
         </label>
         <div class="relative flex items-center justify-center border-2 border-dashed border-slate-200 hover:border-cyan/50 rounded-sm p-6 bg-slate-50/10 transition-colors cursor-pointer group/file">
-          <input type="file" id="quote-file" name="attachment" class="absolute inset-0 opacity-0 cursor-pointer" />
+          <input type="file" id="quote-file" name="attachment" accept=".png,.jpg,.jpeg,.pdf" class="absolute inset-0 opacity-0 cursor-pointer" />
           <div class="text-center">
             <svg class="mx-auto h-8 w-8 text-slate-400 group-hover/file:text-cyan transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
             </svg>
             <span class="mt-2 block text-xs font-semibold text-slate-700 font-body">Click to upload or drag & drop</span>
-            <span class="mt-0.5 block text-[10px] text-slate-400 font-body">PNG, JPG, PDF up to 10MB</span>
+            <span class="mt-0.5 block text-xs text-slate-500 font-body">PNG, JPG, PDF up to 10MB</span>
           </div>
         </div>
       </div>
@@ -304,6 +347,8 @@ const equipmentTypes = [
             name="consent"
             type="checkbox"
             required
+            aria-describedby="quote-consent-error"
+            aria-invalid="false"
             class="h-4 w-4 rounded-sm text-cyan border-slate-300 focus:ring-cyan cursor-pointer"
           />
         </div>
@@ -311,7 +356,7 @@ const equipmentTypes = [
           <label for="quote-consent" class="font-light text-slate-500 font-body cursor-pointer">
             I agree to receive shipping status updates via email or phone. <span class="text-cyan font-bold">*</span>
           </label>
-          <p class="form-error mt-0.5 text-xs text-red-500 hidden">Consent is required to submit a request.</p>
+          <p id="quote-consent-error" class="form-error mt-0.5 text-xs text-red-500 hidden">Consent is required to submit a request.</p>
         </div>
       </div>
 
@@ -338,7 +383,7 @@ const equipmentTypes = [
   </div>
 
   <!-- Final equipment confirmation notice -->
-  <p class="text-[10px] text-slate-400 text-center font-body mt-6 pt-2 border-t border-slate-100/40">
+  <p class="text-xs text-slate-500 text-center font-body mt-6 pt-2 border-t border-slate-100/40">
     Final equipment selection is confirmed by WolfWay Logistics LLC.
   </p>
 </form>
@@ -353,51 +398,102 @@ const equipmentTypes = [
     const nextBtn = document.getElementById('quote-btn-next');
     const backBtn = document.getElementById('quote-btn-back');
     const formContent = document.getElementById('quote-form-content');
+    const stepLabel = document.getElementById('quote-step-label');
+    const stepTitle = document.getElementById('quote-step-title');
+    const progressStep1 = document.getElementById('quote-progress-step-1');
+    const progressStep2 = document.getElementById('quote-progress-step-2');
+    const progressLine = document.getElementById('quote-progress-line');
 
     if (!form || !step1 || !step2 || !nextBtn || !backBtn) return;
+    if (form.dataset.progressiveBound === 'true') return;
+    form.dataset.progressiveBound = 'true';
+    const formEl = form;
+    const stepOne = step1;
+    const stepTwo = step2;
+
+    function getFieldError(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+      if (input.id) {
+        const describedBy = input.getAttribute('aria-describedby')?.split(/\s+/) ?? [];
+        const linkedError = describedBy
+          .map((id) => document.getElementById(id))
+          .find((el) => el?.classList.contains('form-error'));
+        if (linkedError) return linkedError;
+      }
+
+      return input.parentElement?.querySelector('.form-error')
+        ?? input.closest('div')?.querySelector('.form-error')
+        ?? null;
+    }
+
+    function setFieldInvalid(
+      input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+      isInvalid: boolean
+    ) {
+      input.classList.toggle('border-red-500', isInvalid);
+      input.setAttribute('aria-invalid', isInvalid ? 'true' : 'false');
+      getFieldError(input)?.classList.toggle('hidden', !isInvalid);
+    }
+
+    function updateProgress(stepNumber: 1 | 2) {
+      const isStep2 = stepNumber === 2;
+      if (stepLabel) stepLabel.textContent = isStep2 ? 'Step 2 of 2' : 'Step 1 of 2';
+      if (stepTitle) stepTitle.textContent = isStep2 ? 'Freight & Contact' : 'Shipment Details';
+      progressStep1?.classList.toggle('bg-cyan', true);
+      progressStep1?.classList.toggle('bg-slate-300', false);
+      progressStep2?.classList.toggle('bg-cyan', isStep2);
+      progressStep2?.classList.toggle('bg-slate-300', !isStep2);
+      progressLine?.classList.toggle('bg-cyan', isStep2);
+      progressLine?.classList.toggle('bg-slate-300', !isStep2);
+    }
+
+    function showStep(stepNumber: 1 | 2) {
+      const isStep2 = stepNumber === 2;
+      stepOne.classList.toggle('hidden', isStep2);
+      stepTwo.classList.toggle('hidden', !isStep2);
+      stepOne.setAttribute('aria-hidden', isStep2 ? 'true' : 'false');
+      stepTwo.setAttribute('aria-hidden', isStep2 ? 'false' : 'true');
+      updateProgress(stepNumber);
+
+      const nextFocus = document.getElementById(isStep2 ? 'quote-commodity' : 'quote-pickup') as HTMLElement | null;
+      requestAnimationFrame(() => nextFocus?.focus());
+    }
 
     // Next Step handler
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       let isStep1Valid = true;
-      const step1Inputs = step1.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]');
+      const invalidFields: Array<HTMLInputElement | HTMLSelectElement> = [];
+      const step1Inputs = stepOne.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]');
       
       step1Inputs.forEach(input => {
         const val = input.value.trim();
-        if (!val) {
+        const isInvalid = !val;
+        setFieldInvalid(input, isInvalid);
+
+        if (isInvalid) {
           isStep1Valid = false;
-          input.classList.add('border-red-500');
-          const error = input.parentElement?.querySelector('.form-error');
-          error?.classList.remove('hidden');
-        } else {
-          input.classList.remove('border-red-500');
-          const error = input.parentElement?.querySelector('.form-error');
-          error?.classList.add('hidden');
+          invalidFields.push(input);
         }
       });
 
       if (isStep1Valid) {
-        step1.classList.add('hidden');
-        step2.classList.remove('hidden');
-        // Scroll to top of form smoothly
-        form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        // Focus first field in step 2
-        const firstField = step2.querySelector('input') as HTMLInputElement | null;
-        firstField?.focus();
+        showStep(2);
+      } else {
+        invalidFields[0]?.focus();
       }
     });
 
     // Back button handler
-    backBtn.addEventListener('click', () => {
-      step2.classList.add('hidden');
-      step1.classList.remove('hidden');
-      form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showStep(1);
     });
 
     // Validate the final submit
-    validateForm(form, 'quote-success', 'quote-error');
+    validateForm(formEl, 'quote-success', 'quote-error');
 
     // On successful submit, hide the form content wrapper
-    form.addEventListener('submit', (e) => {
+    formEl.addEventListener('submit', () => {
       // Check if validation succeeded by observing if success is visible
       setTimeout(() => {
         const successCard = document.getElementById('quote-success');
@@ -405,6 +501,13 @@ const equipmentTypes = [
           formContent.classList.add('hidden');
         }
       }, 50);
+    });
+
+    formEl.addEventListener('input', (e) => {
+      const target = e.target;
+      if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) {
+        setFieldInvalid(target, false);
+      }
     });
   }
 

@@ -5,6 +5,7 @@ import Button from '@/components/Button.astro';
 import EquipmentFitHelper from '@/components/EquipmentFitHelper.astro';
 import FAQ from '@/components/FAQ.astro';
 import { services } from '@/content/services';
+import { absoluteUrl } from '@/content/seo';
 
 const faqItems = [
   {
@@ -28,11 +29,49 @@ const faqItems = [
     answer: "Our team reviews submitted credentials. Valid carrier relations applications are reviewed within 2 hours, and driver applications are typically followed up within 24 hours."
   }
 ];
+
+const servicesStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'WolfWay Logistics open-deck transportation services',
+    itemListElement: services.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.longDescription,
+        serviceType: service.title,
+        areaServed: 'United States',
+        provider: {
+          '@type': 'Organization',
+          name: 'WolfWay Logistics LLC',
+          url: absoluteUrl('/'),
+        },
+        url: absoluteUrl(`/services#${service.slug}`),
+      },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
 ---
 
 <BaseLayout
   title="Services"
   description="Flatbed freight, step deck transport, and open deck logistics services. Reliable open-deck transportation across the United States."
+  structuredData={servicesStructuredData}
 >
   <!-- Page Header -->
   <section class="bg-navy pt-36 pb-16">

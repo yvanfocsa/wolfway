@@ -4,7 +4,7 @@
  * Features:
  * 1. All 50 US States + DC
  * 2. 250+ Major US Cities covering every state
- * 3. Live API fallback via OpenStreetMap Nominatim for small towns & zip codes
+ * 3. Privacy-first local matching with no third-party lookup calls
  * 4. Custom interactive dropdown UI with 1-tap selection
  */
 
@@ -50,32 +50,7 @@ export const POPULAR_US_CITIES = [
 ];
 
 let activeDropdown: HTMLDivElement | null = null;
-let debounceTimer: ReturnType<typeof setTimeout> | null = null;
-
-async function fetchLiveUSLocations(query: string): Promise<string[]> {
-  try {
-    const url = `https://nominatim.openstreetmap.org/search?countrycodes=us&format=json&addressdetails=1&limit=6&q=${encodeURIComponent(query)}`;
-    const res = await fetch(url, { headers: { 'Accept-Language': 'en-US,en' } });
-    if (!res.ok) return [];
-    const data = await res.json();
-    const results: string[] = [];
-
-    data.forEach((item: any) => {
-      const addr = item.address;
-      const city = addr.city || addr.town || addr.village || addr.county || item.display_name.split(',')[0];
-      const state = addr.state_code ? addr.state_code.toUpperCase() : (addr.state || '');
-      if (city && state) {
-        const formatted = `${city.trim()}, ${state.trim()}`;
-        if (!results.includes(formatted)) {
-          results.push(formatted);
-        }
-      }
-    });
-    return results;
-  } catch (e) {
-    return [];
-  }
-}
+const MIN_LOCATION_QUERY_LENGTH = 2;
 
 function removeDropdown() {
   if (activeDropdown) {
@@ -124,18 +99,25 @@ export function attachUSLocationAutocomplete() {
   );
 
   inputs.forEach((input) => {
+    if (input.dataset.locationAutocompleteBound === 'true') return;
+    input.dataset.locationAutocompleteBound = 'true';
     input.setAttribute('autocomplete', 'off');
 
     input.addEventListener('focus', () => {
       const val = input.value.trim().toLowerCase();
+      if (val.length < MIN_LOCATION_QUERY_LENGTH) {
+        removeDropdown();
+        return;
+      }
+
       const matches = POPULAR_US_CITIES.filter((c) => c.toLowerCase().includes(val));
       renderDropdown(input, matches.length > 0 ? matches : POPULAR_US_CITIES.slice(0, 6));
     });
 
     input.addEventListener('input', () => {
       const val = input.value.trim().toLowerCase();
-      if (!val) {
-        renderDropdown(input, POPULAR_US_CITIES.slice(0, 6));
+      if (val.length < MIN_LOCATION_QUERY_LENGTH) {
+        removeDropdown();
         return;
       }
 
@@ -143,17 +125,6 @@ export function attachUSLocationAutocomplete() {
       const localMatches = POPULAR_US_CITIES.filter((c) => c.toLowerCase().includes(val));
       renderDropdown(input, localMatches);
 
-      // Debounce live API query for full US coverage
-      if (debounceTimer) clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(async () => {
-        if (val.length >= 3) {
-          const apiMatches = await fetchLiveUSLocations(val);
-          const combined = Array.from(new Set([...localMatches, ...apiMatches]));
-          if (document.activeElement === input) {
-            renderDropdown(input, combined);
-          }
-        }
-      }, 250);
     });
 
     input.addEventListener('blur', () => {
@@ -164,6 +135,8 @@ export function attachUSLocationAutocomplete() {
   // State inputs handling
   const stateInputs = document.querySelectorAll<HTMLInputElement>('input[name*="state"], input[id*="state"]');
   stateInputs.forEach((input) => {
+    if (input.dataset.stateAutocompleteBound === 'true') return;
+    input.dataset.stateAutocompleteBound = 'true';
     input.setAttribute('autocomplete', 'off');
     input.addEventListener('focus', () => {
       const val = input.value.trim().toLowerCase();
@@ -183,33 +156,9 @@ export function attachUSLocationAutocomplete() {
   // Zip Code inputs handling
   const zipInputs = document.querySelectorAll<HTMLInputElement>('input[name*="zip"], input[id*="zip"]');
   zipInputs.forEach((input) => {
+    if (input.dataset.zipAutocompleteBound === 'true') return;
+    input.dataset.zipAutocompleteBound = 'true';
     input.setAttribute('autocomplete', 'postal-code');
-    input.addEventListener('input', () => {
-      const val = input.value.trim();
-      if (val.length >= 2 && !isNaN(Number(val))) {
-        if (debounceTimer) clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(async () => {
-          try {
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?countrycodes=us&postalcode=${val}&format=json&limit=5`);
-            if (res.ok) {
-              const data = await res.json();
-              const zipMatches: string[] = [];
-              data.forEach((item: any) => {
-                if (item.display_name) {
-                  const parts = item.display_name.split(',');
-                  const city = parts[0]?.trim();
-                  const state = parts[1]?.trim();
-                  zipMatches.push(`${val} (${city}, ${state})`);
-                }
-              });
-              if (document.activeElement === input && zipMatches.length > 0) {
-                renderDropdown(input, zipMatches);
-              }
-            }
-          } catch (e) {}
-        }, 300);
-      }
-    });
     input.addEventListener('blur', () => {
       setTimeout(removeDropdown, 200);
     });

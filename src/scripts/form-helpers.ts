@@ -4,7 +4,7 @@ import { attachUSLocationAutocomplete } from './us-locations';
 /**
  * Smart Form Helpers for WolfWay Logistics
  * Provides:
- * 1. Complete US City & State Autocomplete (Offline dataset + Live API query)
+ * 1. Privacy-first US City & State Autocomplete (offline dataset only)
  * 2. Email Domain Suggestions
  * 3. Live US Phone Number Auto-Formatter ((XXX) XXX-XXXX)
  */
@@ -21,7 +21,10 @@ const EMAIL_DOMAINS = [
 function initEmailDomainSuggestions() {
   const emailInputs = document.querySelectorAll<HTMLInputElement>('input[type="email"], input[name="email"], input[id*="email"]');
   emailInputs.forEach((input) => {
-    const listId = `email-list-${Math.random().toString(36).substr(2, 5)}`;
+    if (input.dataset.emailSuggestionsBound === 'true') return;
+    input.dataset.emailSuggestionsBound = 'true';
+
+    const listId = `email-list-${Math.random().toString(36).slice(2, 7)}`;
     let datalist = document.getElementById(listId) as HTMLDataListElement | null;
     if (!datalist) {
       datalist = document.createElement('datalist');
@@ -64,6 +67,9 @@ function formatPhoneNumber(val: string): string {
 function initPhoneFormatting() {
   const phoneInputs = document.querySelectorAll<HTMLInputElement>('input[type="tel"], input[name*="phone"], input[id*="phone"]');
   phoneInputs.forEach((input) => {
+    if (input.dataset.phoneFormatterBound === 'true') return;
+    input.dataset.phoneFormatterBound = 'true';
+
     input.addEventListener('input', (e) => {
       const target = e.target as HTMLInputElement;
       const formatted = formatPhoneNumber(target.value);

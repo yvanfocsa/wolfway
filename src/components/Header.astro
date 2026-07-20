@@ -7,6 +7,8 @@ const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname;
 ---
 
+<div id="scroll-progress" class="fixed left-0 top-0 z-[80] h-0.5 w-full origin-left scale-x-0 bg-cyan shadow-[0_0_20px_rgba(0,168,225,0.45)]" aria-hidden="true"></div>
+
 <header id="site-header" class="fixed top-0 left-0 z-50 w-full transition-all duration-200 border-b select-none py-5 border-transparent bg-transparent text-white group is-transparent">
   <nav class="mx-auto max-w-7xl px-5 lg:px-10 flex items-center justify-between">
     <!-- Logo & Brand Name -->
@@ -15,6 +17,8 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
         id="header-logo"
         src="/images/logo_icon.png"
         alt="WolfWay Logo"
+        width="40"
+        height="40"
         class="h-10 w-10 object-contain transition-transform duration-300 group-hover/logo:scale-105"
       />
       <span
@@ -91,6 +95,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
   id="mobile-menu"
   class="fixed inset-0 z-[60] lg:hidden pointer-events-none"
   aria-hidden="true"
+  inert
 >
   <!-- Backdrop (dimmer overlay) -->
   <div
@@ -102,9 +107,13 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
   <div
     id="menu-panel"
     class="absolute top-0 right-0 bottom-0 w-[80vw] max-w-[300px] bg-white/90 backdrop-blur-2xl border-l border-slate-200/50 shadow-2xl flex flex-col justify-between translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mobile-menu-title"
   >
     <!-- Drawer Header -->
-    <div class="flex items-center justify-end px-5 pt-6 pb-4 border-b border-slate-100">
+    <div class="flex items-center justify-between px-5 pt-6 pb-4 border-b border-slate-100">
+      <h2 id="mobile-menu-title" class="sr-only">Mobile navigation</h2>
       <!-- Close button -->
       <button
         id="mobile-menu-close"
@@ -158,7 +167,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
       </Button>
 
       <div class="text-center">
-        <p class="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-bold mb-1 font-body">Speak with dispatch</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold mb-1 font-body">Speak with dispatch</p>
         <a href="tel:+12244464256" class="text-sm font-heading font-bold uppercase tracking-wider text-ink hover:text-cyan transition-colors">
           +1 (224) 446-4256
         </a>
@@ -211,14 +220,30 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     const closeBtn = document.getElementById('mobile-menu-close') as HTMLButtonElement | null;
 
     if (!menu || !backdrop || !panel || !openBtn) return;
+    if (openBtn.dataset.menuBound === 'true') return;
+    openBtn.dataset.menuBound = 'true';
 
     let isOpen = false;
+    const focusableSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    function getFocusableMenuItems() {
+      return Array.from(panel!.querySelectorAll<HTMLElement>(focusableSelector))
+        .filter((item) => item.offsetParent !== null);
+    }
 
     function openMenu() {
       isOpen = true;
       menu!.classList.remove('pointer-events-none');
       menu!.classList.add('pointer-events-auto');
       menu!.setAttribute('aria-hidden', 'false');
+      menu!.removeAttribute('inert');
       openBtn!.setAttribute('aria-expanded', 'true');
       
       // Animate backdrop
@@ -230,12 +255,14 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
       panel!.classList.add('translate-x-0');
 
       document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => closeBtn?.focus());
     }
 
-    function closeMenu() {
+    function closeMenu(restoreFocus = true) {
       isOpen = false;
       openBtn!.setAttribute('aria-expanded', 'false');
       menu!.setAttribute('aria-hidden', 'true');
+      menu!.setAttribute('inert', '');
       
       // Animate backdrop out
       backdrop!.classList.remove('opacity-100', 'pointer-events-auto');
@@ -246,6 +273,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
       panel!.classList.add('translate-x-full');
 
       document.body.style.overflow = '';
+      if (restoreFocus) openBtn!.focus();
 
       setTimeout(() => {
         if (!isOpen) {
@@ -256,21 +284,59 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     }
 
     openBtn.addEventListener('click', openMenu);
-    closeBtn?.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
+    closeBtn?.addEventListener('click', () => closeMenu());
+    backdrop.addEventListener('click', () => closeMenu());
 
     menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
+      link.addEventListener('click', () => closeMenu(false));
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && isOpen) closeMenu();
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        closeMenu();
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+
+      const focusableItems = getFocusableMenuItems();
+      const firstItem = focusableItems[0];
+      const lastItem = focusableItems[focusableItems.length - 1];
+      if (!firstItem || !lastItem) return;
+
+      if (e.shiftKey && document.activeElement === firstItem) {
+        e.preventDefault();
+        lastItem.focus();
+      } else if (!e.shiftKey && document.activeElement === lastItem) {
+        e.preventDefault();
+        firstItem.focus();
+      }
     });
+  }
+
+  function setupScrollProgress() {
+    const progress = document.getElementById('scroll-progress') as HTMLElement | null;
+    if (!progress || progress.dataset.progressBound === 'true') return;
+    progress.dataset.progressBound = 'true';
+
+    function updateProgress() {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const amount = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+      progress!.style.transform = `scaleX(${amount})`;
+    }
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress, { passive: true });
+    document.addEventListener('astro:page-load', updateProgress);
   }
 
   // Initial setup
   setupHeaderScroll();
   setupMobileMenu();
+  setupScrollProgress();
 
   // Astro page-load trigger for persistent header initialization
   document.addEventListener('astro:page-load', () => {
@@ -280,6 +346,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     }
     setupHeaderScroll();
     setupMobileMenu();
+    setupScrollProgress();
   });
 </script>
 

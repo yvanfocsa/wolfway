@@ -47,11 +47,27 @@ const faqItems = [
     answer: "Yes, we coordinate shipments for both fleet carriers and independent owner operators holding active authority and meeting our FMCSA safety requirements."
   }
 ];
+
+const carrierStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
 ---
 
 <BaseLayout
   title="Carrier Partners"
   description="Apply to join the WolfWay Logistics LLC carrier network. Consistent loads and fair rates for flatbed and open-deck carriers."
+  structuredData={carrierStructuredData}
 >
   <!-- Page Header -->
   <section class="bg-navy pt-36 pb-20 relative overflow-hidden">

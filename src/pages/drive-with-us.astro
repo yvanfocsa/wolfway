@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DriverForm from '@/components/DriverForm.astro';
-import Button from '@/components/Button.astro';
 import FAQ from '@/components/FAQ.astro';
 
 const driverBenefits = [
@@ -53,11 +52,27 @@ const driverFAQItems = [
     answer: "You are assigned a dedicated 1-on-1 dispatch coordinator who knows your route, plans ahead, and is available 24/7/365."
   }
 ];
+
+const driverStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: driverFAQItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
 ---
 
 <BaseLayout
   title="Drive With Us | CDL-A Driver Careers"
   description="Apply to drive with WolfWay Logistics LLC. Competitive per-mile pay, modern air-ride open-deck fleet, 1-day orientation, and 24/7 dispatch support."
+  structuredData={driverStructuredData}
 >
   <!-- Page Header -->
   <section class="bg-navy pt-32 sm:pt-36 pb-16 sm:pb-20 relative select-none">
@@ -72,14 +87,14 @@ const driverFAQItems = [
 
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row gap-4 mt-8">
-        <a href="#pre-qualify-form" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer bg-cyan text-navy hover:bg-[#00D4E0] border border-transparent h-12 px-8 text-sm group/btn">
+        <a href="#pre-qualify-form" class="inline-flex min-h-12 items-center justify-center rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer bg-cyan text-navy hover:bg-[#00D4E0] border border-transparent px-8 py-3 text-sm text-center group/btn">
           Pre-Qualify in 30 Sec
           <svg class="ml-2 h-4 w-4 transition-transform duration-180 ease-out group-hover/btn:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href="tel:+12244464256" class="inline-flex items-center justify-center whitespace-nowrap rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer border border-white/20 bg-transparent text-white hover:bg-white/10 h-12 px-8 text-sm">
-          Talk to a Recruiter: +1 (224) 446-4256
+        <a href="tel:+12244464256" class="inline-flex min-h-12 items-center justify-center rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer border border-white/20 bg-transparent text-white hover:bg-white/10 px-8 py-3 text-sm text-center">
+          Call Recruiter: +1 (224) 446-4256
         </a>
       </div>
 
@@ -87,19 +102,19 @@ const driverFAQItems = [
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-10 border-t border-white/10 max-w-4xl">
         <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
           <p class="font-heading text-xl font-extrabold text-white">Modern Fleet</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Air-Ride Equipment</p>
+          <p class="text-xs uppercase tracking-wider text-white/60 font-bold mt-0.5">Air-Ride Equipment</p>
         </div>
         <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
           <p class="font-heading text-xl font-extrabold text-white">24/7</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Human Dispatch Support</p>
+          <p class="text-xs uppercase tracking-wider text-white/60 font-bold mt-0.5">Human Dispatch Support</p>
         </div>
         <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
           <p class="font-heading text-xl font-extrabold text-white">1-Day</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">Fast Orientation</p>
+          <p class="text-xs uppercase tracking-wider text-white/60 font-bold mt-0.5">Fast Orientation</p>
         </div>
         <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
           <p class="font-heading text-xl font-extrabold text-cyan">US Only</p>
-          <p class="text-[10px] uppercase tracking-wider text-white/50 font-bold mt-0.5">US CDL-A Drivers</p>
+          <p class="text-xs uppercase tracking-wider text-white/60 font-bold mt-0.5">US CDL-A Drivers</p>
         </div>
       </div>
     </div>

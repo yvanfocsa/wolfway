@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import DriverAppModal from '@/components/DriverAppModal.astro';
 import { ClientRouter } from 'astro:transitions';
+import { SITE_URL } from '@/content/seo';
 import '@/styles/global.css';
 
 export interface Props {
@@ -11,9 +12,12 @@ export interface Props {
   description: string;
   canonicalUrl?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, canonicalUrl, ogImage } = Astro.props;
+const { title, description, canonicalUrl, ogImage, ogImageAlt, structuredData } = Astro.props;
+const resolvedCanonicalUrl = canonicalUrl ?? new URL(Astro.url.pathname, SITE_URL).toString();
 ---
 
 <!doctype html>
@@ -22,8 +26,10 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     <SeoHead
       title={title}
       description={description}
-      canonicalUrl={canonicalUrl}
+      canonicalUrl={resolvedCanonicalUrl}
       ogImage={ogImage}
+      ogImageAlt={ogImageAlt}
+      structuredData={structuredData}
     />
     <ClientRouter />
 
@@ -104,6 +110,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     </style>
   </head>
   <body class="bg-offwhite text-ink antialiased flex flex-col min-h-screen">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Splash Screen -->
     <div id="splash-screen" aria-hidden="true">
       <div class="splash-mark">
@@ -116,7 +123,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     </div>
 
     <Header transition:persist />
-    <main class="flex-1 flex flex-col min-h-[100dvh]">
+    <main id="main-content" class="flex-1 flex flex-col min-h-[100dvh]" tabindex="-1">
       <slot />
     </main>
     <Footer />

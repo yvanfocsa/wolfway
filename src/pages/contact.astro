@@ -32,7 +32,7 @@ import Button from '@/components/Button.astro';
             <h2 class="font-heading text-2xl font-bold uppercase text-ink leading-tight">
               Connect With Us
             </h2>
-            <p class="text-slate-600 font-body font-light text-sm mt-1">
+            <p class="text-slate-600 font-body text-base mt-1">
               Direct channels for logistics coordination and support.
             </p>
           </div>
@@ -47,7 +47,7 @@ import Button from '@/components/Button.astro';
                 </svg>
               </div>
               <div>
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Email Dispatch</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Email Dispatch</span>
                 <a href="mailto:wolfwaylogistics@gmail.com" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
                   wolfwaylogistics@gmail.com
                 </a>
@@ -62,7 +62,7 @@ import Button from '@/components/Button.astro';
                 </svg>
               </div>
               <div>
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Direct Phone</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-[#005F8A] block mb-1 font-body">Direct Phone</span>
                 <a href="tel:+12244464256" class="text-base font-semibold text-slate-800 hover:text-cyan transition-colors font-body leading-none">
                   +1 (224) 446-4256
                 </a>
@@ -78,15 +78,15 @@ import Button from '@/components/Button.astro';
               </div>
               <div class="flex-grow">
                 <div class="flex items-center justify-between mb-3.5">
-                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] block font-body">Office Hours</span>
+                  <span class="text-xs font-bold uppercase tracking-widest text-[#005F8A] block font-body">Office Hours</span>
                   <!-- Dynamic Open/Closed Status Badge -->
-                  <div id="office-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50">
+                  <div id="office-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50">
                     <span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
                     <span>Status Checking</span>
                   </div>
                 </div>
                 
-                <div class="space-y-2 text-xs font-body">
+                <div class="space-y-2 text-sm font-body">
                   <div class="flex justify-between items-center text-slate-600">
                     <span class="font-semibold text-slate-700">Monday to Friday</span>
                     <span class="h-px bg-slate-200/60 flex-grow mx-3 border-dashed border-t"></span>
@@ -104,22 +104,22 @@ import Button from '@/components/Button.astro';
 
           <!-- Quick Actions -->
           <div class="bg-white p-6 border border-slate-200/40 rounded-sm shadow-sm">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#005F8A] mb-4 font-body">Quick Actions</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-[#005F8A] mb-4 font-body">Quick Actions</p>
             <div class="flex flex-col gap-2">
               <a href="/request-a-quote" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Request a freight quote</span>
+                <span class="text-sm font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Request a freight quote</span>
                 <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </a>
               <a href="/drive-with-us" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Apply to drive (OTR / Owner Op)</span>
+                <span class="text-sm font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Apply to drive (OTR / Owner Op)</span>
                 <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </a>
               <a href="/carrier" class="group flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50/20 hover:bg-slate-50 hover:border-cyan/30 rounded-sm transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Join Carrier network</span>
+                <span class="text-sm font-bold uppercase tracking-wider text-slate-700 group-hover:text-cyan transition-colors">Join Carrier network</span>
                 <svg class="h-4 w-4 text-slate-400 group-hover:text-cyan group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -289,10 +289,10 @@ import Button from '@/components/Button.astro';
       }
 
       if (isOpen) {
-        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-emerald-50 text-emerald-700 border border-emerald-500/15';
+        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider select-none font-body transition-colors bg-emerald-50 text-emerald-700 border border-emerald-500/15';
         statusEl.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span><span>Open Now</span>';
       } else {
-        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50';
+        statusEl.className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider select-none font-body transition-colors bg-slate-100 text-slate-500 border border-slate-200/50';
         statusEl.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span><span>Closed</span>';
       }
     } catch (err) {

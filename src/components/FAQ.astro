@@ -22,6 +22,7 @@ const {
 <div class="faq-container w-full select-none">
   <!-- FAQ Header -->
   <div class="mb-10 text-center">
+    {eyebrow && <p class="readable-kicker mb-3 text-cyan">{eyebrow}</p>}
     <h2 class="font-heading text-3xl font-bold uppercase text-ink">
       {title}
     </h2>
@@ -29,7 +30,7 @@ const {
 
   <!-- FAQ Accordion Stack -->
   <div class="max-w-3xl mx-auto space-y-4">
-    {items.map((item, idx) => (
+    {items.map((item) => (
       <details class="faq-item group border border-slate-200 bg-white rounded-sm transition-all duration-300">
         <summary class="faq-summary flex items-center justify-between p-5 cursor-pointer font-heading text-base font-bold uppercase text-ink list-none outline-none focus-visible:bg-slate-50 rounded-sm">
           <span>{item.question}</span>
@@ -38,7 +39,7 @@ const {
           </svg>
         </summary>
         <div class="faq-content overflow-hidden transition-all">
-          <div class="p-5 pt-0 border-t border-slate-100 text-sm leading-relaxed text-slate-600 font-body font-light">
+          <div class="p-5 pt-0 border-t border-slate-100 text-base leading-relaxed text-slate-600 font-body">
             {item.answer}
           </div>
         </div>
@@ -57,6 +58,9 @@ const {
     const detailsElements = document.querySelectorAll('.faq-item') as NodeListOf<HTMLDetailsElement>;
 
     detailsElements.forEach((details) => {
+      if (details.dataset.faqAnimationBound === 'true') return;
+      details.dataset.faqAnimationBound = 'true';
+
       const summary = details.querySelector('.faq-summary') as HTMLElement | null;
       const content = details.querySelector('.faq-content') as HTMLElement | null;
 

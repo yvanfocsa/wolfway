@@ -7,13 +7,32 @@ import HowItWorks from '@/components/HowItWorks.astro';
 import OurStory from '@/components/OurStory.astro';
 import SplitAudience from '@/components/SplitAudience.astro';
 import CTASection from '@/components/CTASection.astro';
+import ComplianceShowcase from '@/components/ComplianceShowcase.astro';
 import { principles } from '@/content/company';
 import { services } from '@/content/services';
+import { absoluteUrl } from '@/content/seo';
+
+const homeStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Open-deck freight transportation',
+    provider: {
+      '@type': 'Organization',
+      name: 'WolfWay Logistics LLC',
+      url: absoluteUrl('/'),
+    },
+    areaServed: 'United States',
+    serviceType: ['Flatbed Freight', 'Step Deck Transport', 'Open Deck Logistics'],
+    url: absoluteUrl('/services'),
+  },
+];
 ---
 
 <BaseLayout
   title="WolfWay Logistics LLC"
   description="Open-deck freight transportation, featuring flatbed, step deck, and open deck logistics built around safety, communication and dependable delivery."
+  structuredData={homeStructuredData}
 >
   <!-- 1. Video Hero -->
   <Hero />
@@ -71,13 +90,16 @@ import { services } from '@/content/services';
     </div>
   </section>
 
-  <!-- 6. How It Works Section -->
+  <!-- 6. Load Protection / Compliance Section -->
+  <ComplianceShowcase />
+
+  <!-- 7. How It Works Section -->
   <HowItWorks />
 
-  <!-- 7. Recruitment & Carrier CTA -->
+  <!-- 8. Recruitment & Carrier CTA -->
   <SplitAudience />
 
-  <!-- 8. Final Freight Quote CTA -->
+  <!-- 9. Final Freight Quote CTA -->
   <CTASection
     variant="dark"
     heading="Ready to Move Your Freight?"

@@ -27,15 +27,21 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
       
       <!-- Category Tabs -->
       <div class="flex justify-center mb-10">
-        <div class="inline-flex p-1.5 bg-slate-200/70 rounded-xl border border-slate-300/50 gap-2">
+        <div class="inline-flex p-1.5 bg-slate-200/70 rounded-xl border border-slate-300/50 gap-2" role="tablist" aria-label="FAQ category">
           <button
             id="tab-shippers"
+            role="tab"
+            aria-selected="true"
+            aria-controls="faq-shippers-container"
             class="px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 bg-white text-ink shadow-xs"
           >
             Shippers
           </button>
           <button
             id="tab-drivers"
+            role="tab"
+            aria-selected="false"
+            aria-controls="faq-drivers-container"
             class="px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 text-slate-600 hover:text-ink"
           >
             Drivers
@@ -44,8 +50,8 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
       </div>
 
       <!-- Shippers FAQ Container -->
-      <div id="faq-shippers-container" class="space-y-4">
-        {shipperFAQs.map((faq, idx) => (
+      <div id="faq-shippers-container" class="space-y-4" role="tabpanel" aria-labelledby="tab-shippers">
+        {shipperFAQs.map((faq) => (
           <details class="group bg-white border border-slate-200/80 rounded-xl overflow-hidden transition-all duration-300 shadow-xs open:border-cyan/40">
             <summary class="flex items-center justify-between p-6 cursor-pointer select-none font-heading text-lg font-bold uppercase text-ink group-hover:text-cyan transition-colors">
               <span>{faq.question}</span>
@@ -55,7 +61,7 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
                 </svg>
               </span>
             </summary>
-            <div class="px-6 pb-6 pt-2 text-slate-600 font-body font-light text-sm leading-relaxed border-t border-slate-100">
+            <div class="px-6 pb-6 pt-2 text-slate-600 font-body text-base leading-relaxed border-t border-slate-100">
               {faq.answer}
             </div>
           </details>
@@ -63,8 +69,8 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
       </div>
 
       <!-- Drivers FAQ Container (Hidden initially) -->
-      <div id="faq-drivers-container" class="space-y-4 hidden">
-        {driverFAQs.map((faq, idx) => (
+      <div id="faq-drivers-container" class="space-y-4 hidden" role="tabpanel" aria-labelledby="tab-drivers">
+        {driverFAQs.map((faq) => (
           <details class="group bg-white border border-slate-200/80 rounded-xl overflow-hidden transition-all duration-300 shadow-xs open:border-cyan/40">
             <summary class="flex items-center justify-between p-6 cursor-pointer select-none font-heading text-lg font-bold uppercase text-ink group-hover:text-cyan transition-colors">
               <span>{faq.question}</span>
@@ -74,7 +80,7 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
                 </svg>
               </span>
             </summary>
-            <div class="px-6 pb-6 pt-2 text-slate-600 font-body font-light text-sm leading-relaxed border-t border-slate-100">
+            <div class="px-6 pb-6 pt-2 text-slate-600 font-body text-base leading-relaxed border-t border-slate-100">
               {faq.answer}
             </div>
           </details>
@@ -84,7 +90,7 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
       <!-- Help Card -->
       <div class="mt-14 p-8 bg-white border border-slate-200/80 rounded-xl text-center shadow-xs">
         <h3 class="font-heading text-xl font-bold uppercase text-ink mb-2">Still have questions?</h3>
-        <p class="text-sm text-slate-500 font-body font-light mb-6">Our 24/7 dispatch coordinators are standing by to assist with your specific shipping needs.</p>
+        <p class="text-base text-slate-600 font-body mb-6">Our 24/7 dispatch coordinators are standing by to assist with your specific shipping needs.</p>
         <div class="flex justify-center gap-4">
           <Button href="/contact" variant="primary" size="md">
             Speak with Dispatch
@@ -117,10 +123,16 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
     const containerDrivers = document.getElementById('faq-drivers-container');
 
     if (!tabShippers || !tabDrivers || !containerShippers || !containerDrivers) return;
+    if (tabShippers.dataset.faqTabsBound === 'true') return;
+
+    tabShippers.dataset.faqTabsBound = 'true';
+    tabDrivers.dataset.faqTabsBound = 'true';
 
     tabShippers.addEventListener('click', () => {
       tabShippers.className = 'px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 bg-white text-ink shadow-xs';
       tabDrivers.className = 'px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 text-slate-600 hover:text-ink';
+      tabShippers.setAttribute('aria-selected', 'true');
+      tabDrivers.setAttribute('aria-selected', 'false');
       containerShippers.classList.remove('hidden');
       containerDrivers.classList.add('hidden');
     });
@@ -128,6 +140,8 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
     tabDrivers.addEventListener('click', () => {
       tabDrivers.className = 'px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 bg-white text-ink shadow-xs';
       tabShippers.className = 'px-6 py-3 rounded-lg font-heading text-sm font-bold uppercase tracking-wider transition-all duration-200 text-slate-600 hover:text-ink';
+      tabDrivers.setAttribute('aria-selected', 'true');
+      tabShippers.setAttribute('aria-selected', 'false');
       containerDrivers.classList.remove('hidden');
       containerShippers.classList.add('hidden');
     });

@@ -30,6 +30,16 @@ const isDark = variant === 'dark';
   data-animate="fade-up"
 >
   <div class="mx-auto max-w-7xl px-5 lg:px-10 text-center">
+    {eyebrow && (
+      <p
+        class:list={[
+          'readable-kicker mb-3',
+          isDark ? 'text-cyan' : 'text-[#005F8A]',
+        ]}
+      >
+        {eyebrow}
+      </p>
+    )}
     <h2
       class:list={[
         'font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase',

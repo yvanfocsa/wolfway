@@ -1,24 +1,38 @@
 ---
+import { absoluteUrl, DEFAULT_OG_IMAGE, organizationSchema, webPageSchema, websiteSchema } from '@/content/seo';
+
 export interface Props {
   title: string;
   description: string;
   canonicalUrl?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
   description,
   canonicalUrl,
-  ogImage = '/images/og-default.jpg',
+  ogImage = DEFAULT_OG_IMAGE,
+  ogImageAlt = 'WolfWay Logistics open-deck freight transportation',
+  structuredData = [],
 } = Astro.props;
 
 const siteName = 'WolfWay Logistics LLC';
-const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const absoluteOgImage = absoluteUrl(ogImage);
+const schemas = [
+  organizationSchema(),
+  websiteSchema(),
+  canonicalUrl ? webPageSchema(fullTitle, description, canonicalUrl) : null,
+  ...(Array.isArray(structuredData) ? structuredData : [structuredData]),
+].filter(Boolean);
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light only" />
 <meta name="theme-color" content="#F6F5F3" />
@@ -34,13 +48,21 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={siteName} />
-{ogImage && <meta property="og:image" content={ogImage} />}
+<meta property="og:locale" content="en_US" />
+{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+{ogImage && <meta property="og:image" content={absoluteOgImage} />}
+{ogImage && <meta property="og:image:secure_url" content={absoluteOgImage} />}
+{ogImage && <meta property="og:image:width" content="1200" />}
+{ogImage && <meta property="og:image:height" content="630" />}
+{ogImage && <meta property="og:image:alt" content={ogImageAlt} />}
 {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteOgImage} />
+<meta name="twitter:image:alt" content={ogImageAlt} />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,6 +70,8 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <link
   href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
   rel="stylesheet"
-  media="print"
-  onload="this.onload=null;this.removeAttribute('media')"
 />
+
+{schemas.map((schema) => (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

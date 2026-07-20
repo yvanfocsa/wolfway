@@ -89,11 +89,10 @@ function initAnimations() {
       }
 
       // ─── B. SERVICES LOAD SEQUENCE ───
-      const serviceSection = document.querySelector('.services-section');
       const serviceCards = document.querySelectorAll('.service-card-reveal');
 
       if (serviceCards.length > 0) {
-        serviceCards.forEach((card, index) => {
+        serviceCards.forEach((card) => {
           const indexLabel = card.querySelector('.service-index');
           const image = card.querySelector('.service-image');
           const title = card.querySelector('.service-title');

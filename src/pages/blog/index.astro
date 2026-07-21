@@ -49,9 +49,9 @@ import { blogPosts } from '@/content/blog';
               <p class="mb-6 text-base leading-relaxed text-slate-600 font-body">
                 {post.excerpt}
               </p>
-              <div class="mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
+              <div class="mt-auto flex flex-col items-start gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
               <span class="text-sm font-semibold text-slate-500 font-body">{post.author}</span>
-              <Button href={`/blog/${post.slug}`} variant="outlineInk" size="sm" arrow={true}>
+              <Button href={`/blog/${post.slug}`} variant="outlineInk" size="sm" arrow={true} class="w-full sm:w-auto">
                 Read Article
               </Button>
               </div>

@@ -142,14 +142,14 @@ const equipmentTypes = [
         </div>
       </div>
 
-      <div class="pt-4 border-t border-slate-100 flex justify-end">
+      <div class="flex justify-end border-t border-slate-100 pt-4">
         <button
           type="button"
           id="quote-btn-next"
-          class="inline-flex h-12 items-center justify-center rounded-sm border border-transparent bg-cyan px-6 font-body text-sm font-bold uppercase tracking-[0.07em] text-navy transition-[background-color,transform,box-shadow] duration-200 hover:bg-cyan-hover hover:shadow-[0_6px_8px_rgba(0,168,225,0.2)] outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px] group/btn"
+          class="group/btn inline-flex min-h-12 w-full items-center justify-center rounded-sm border border-transparent bg-cyan px-6 py-3 font-body text-sm font-bold uppercase tracking-[0.07em] text-navy transition-[background-color,transform,box-shadow] duration-200 hover:bg-cyan-hover hover:shadow-[0_6px_8px_rgba(0,168,225,0.2)] outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px] sm:w-auto"
         >
           Next Step
-          <svg class="ml-2 h-3.5 w-3.5 transition-transform duration-180 ease-out group-hover/btn:translate-x-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <svg class="ml-2 h-3.5 w-3.5 shrink-0 transition-transform duration-180 ease-out group-hover/btn:translate-x-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
@@ -361,11 +361,11 @@ const equipmentTypes = [
       </div>
 
       <!-- Action Buttons -->
-      <div class="pt-4 border-t border-slate-100 flex items-center gap-4">
+      <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:gap-4">
         <button
           type="button"
           id="quote-btn-back"
-          class="inline-flex h-12 items-center justify-center rounded-sm border border-slate-300 bg-transparent px-6 font-body text-sm font-bold uppercase tracking-[0.07em] text-slate-700 transition-colors hover:bg-slate-50 outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px]"
+          class="inline-flex min-h-12 w-full items-center justify-center rounded-sm border border-slate-300 bg-transparent px-6 py-3 font-body text-sm font-bold uppercase tracking-[0.07em] text-slate-700 transition-colors hover:bg-slate-50 outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px] sm:w-auto"
         >
           Back
         </button>
@@ -374,7 +374,7 @@ const equipmentTypes = [
           variant="primary"
           size="default"
           arrow={true}
-          class="group flex-1 sm:flex-none justify-center uppercase font-heading tracking-wider"
+          class="group w-full justify-center uppercase font-heading tracking-wider sm:w-auto"
         >
           Submit Quote Request
         </Button>

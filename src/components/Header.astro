@@ -13,13 +13,18 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
 <header id="site-header" class="fixed top-0 left-0 z-50 w-full transition-all duration-200 border-b select-none py-4 border-transparent bg-transparent text-white group is-transparent">
   <nav class="mx-auto max-w-7xl px-5 lg:px-10 flex items-center justify-between">
     <!-- Logo & Brand Name -->
-    <a href="/" class="group/logo flex min-h-13 shrink-0 items-center gap-3" aria-label="WolfWay Home" focus-visible>
+    <a href="/" class="group/logo flex min-h-13 shrink-0 items-center gap-3" focus-visible>
       <img
         id="header-logo"
-        src="/images/logo_icon.png"
+        src="/images/logo-icon-v2-64.webp"
+        srcset="/images/logo-icon-v2-64.webp 64w, /images/logo-icon-v2.webp 128w"
+        sizes="52px"
         alt=""
         width="52"
         height="52"
+        loading="eager"
+        decoding="sync"
+        fetchpriority="high"
         class="h-13 w-13 shrink-0 object-contain transition-transform duration-300 group-hover/logo:scale-105"
       />
       <span
@@ -115,8 +120,8 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     <!-- Drawer Header -->
     <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
       <h2 id="mobile-menu-title" class="sr-only">Mobile navigation</h2>
-      <a href="/" class="group/drawer-logo flex min-h-11 items-center gap-3 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70 focus-visible:outline-offset-2" aria-label="WolfWay Home">
-        <img src="/images/logo_icon.png" alt="" width="44" height="44" class="h-11 w-11 shrink-0 object-contain transition-transform duration-200 group-hover/drawer-logo:scale-105" />
+      <a href="/" class="group/drawer-logo flex min-h-11 items-center gap-3 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70 focus-visible:outline-offset-2" aria-label="WolfWay Logistics LLC Home">
+        <img src="/images/logo-icon-v2-64.webp" srcset="/images/logo-icon-v2-64.webp 64w, /images/logo-icon-v2.webp 128w" sizes="44px" alt="" width="44" height="44" loading="lazy" decoding="async" class="h-11 w-11 shrink-0 object-contain transition-transform duration-200 group-hover/drawer-logo:scale-105" />
         <span class="min-w-0 whitespace-nowrap text-ink">
           <span class="block font-heading text-xl font-extrabold uppercase leading-none tracking-normal">WolfWay</span>
           <span class="mt-1 block font-heading text-sm font-bold uppercase leading-none tracking-normal text-slate-500">Logistics LLC</span>

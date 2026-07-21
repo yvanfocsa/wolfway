@@ -8,6 +8,7 @@ export interface Props {
   align?: 'left' | 'center';
   image?: ResponsiveImageAsset;
   imageAlt?: string;
+  mobileImagePosition?: 'center' | 'right';
   compact?: boolean;
   fullscreen?: boolean;
 }
@@ -18,6 +19,7 @@ const {
   align = 'left',
   image,
   imageAlt = '',
+  mobileImagePosition = 'center',
   compact = false,
   fullscreen = false,
 } = Astro.props;
@@ -28,6 +30,7 @@ const {
   class:list={[
     'page-hero',
     align === 'center' && 'page-hero--center',
+    mobileImagePosition === 'right' && 'page-hero--mobile-image-right',
     compact && 'page-hero--compact',
     fullscreen && 'page-hero--fullscreen',
   ]}
@@ -64,6 +67,12 @@ const {
   .page-hero.page-hero--fullscreen {
     height: 100svh;
     min-height: 37.5rem;
+  }
+
+  @media (max-width: 47.999rem) {
+    .page-hero--mobile-image-right :global(.page-hero__media img) {
+      object-position: 82% center;
+    }
   }
 
   @media (min-width: 64rem) {

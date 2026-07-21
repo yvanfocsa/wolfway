@@ -1,6 +1,5 @@
 ---
 import Button from './Button.astro';
-import { serviceImages } from '@/content/images';
 ---
 
 <section data-header-overlay="true" class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
@@ -13,12 +12,12 @@ import { serviceImages } from '@/content/images';
       muted
       loop
       playsinline
-      preload="metadata"
-      poster={serviceImages.openDeck.src}
+      preload="none"
+      poster="/images/services/open-deck-v2-960.avif"
       aria-hidden="true"
     >
-      <source src="/videos/hero-mobile-v2.mp4" type="video/mp4" media="(max-width: 767px)" />
-      <source src="/videos/hero-v2.mp4" type="video/mp4" />
+      <source src="/videos/hero-mobile-v3.mp4" type="video/mp4" media="(max-width: 767px)" />
+      <source src="/videos/hero-v3.mp4" type="video/mp4" />
     </video>
     <!-- Dark overlay for text readability -->
     <div class="absolute inset-0 bg-navy/60 z-10" id="hero-overlay"></div>
@@ -65,12 +64,21 @@ import { serviceImages } from '@/content/images';
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Direct playback for instant display if autoplay is allowed (all viewports)
     if (!prefersReducedMotion) {
       videoEl.style.display = 'block';
-      videoEl.play().catch(() => {
-        // Fallback in case of browser strict autoplay policy
-      });
+      const startPlayback = () => {
+        window.setTimeout(() => {
+          videoEl.play().catch(() => {
+            // The optimized poster remains visible if autoplay is unavailable.
+          });
+        }, 600);
+      };
+
+      if (document.readyState === 'complete') {
+        startPlayback();
+      } else {
+        window.addEventListener('load', startPlayback, { once: true });
+      }
     } else {
       // Pause and hide video element on reduced motion to save resources
       videoEl.pause();
@@ -81,3 +89,26 @@ import { serviceImages } from '@/content/images';
   // Re-run on View Transitions page nav
   document.addEventListener('astro:page-load', initHeroVideo);
 </script>
+
+<style>
+  #hero-body-content {
+    animation: hero-reveal 550ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes hero-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hero-body-content {
+      animation: none;
+    }
+  }
+</style>

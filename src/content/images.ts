@@ -30,4 +30,5 @@ export const serviceImages = {
 
 export const heroImages = {
   contact: responsiveImage('/images/heroes/contact-operations-v1'),
+  driverApplication: responsiveImage('/images/heroes/driver-application-v1'),
 } as const;

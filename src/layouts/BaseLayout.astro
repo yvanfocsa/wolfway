@@ -17,7 +17,6 @@ export interface Props {
 
 const { title, description, canonicalUrl, ogImage, ogImageAlt, structuredData } = Astro.props;
 const resolvedCanonicalUrl = canonicalUrl ?? new URL(Astro.url.pathname, SITE_URL).toString();
-const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
@@ -35,89 +34,9 @@ const isHome = Astro.url.pathname === '/';
 
     <!-- Forced Light Mode & Color Scheme Lock -->
     <meta name="color-scheme" content="light only" />
-    <style is:global>
-      :root {
-        color-scheme: light only;
-      }
-      /* Branded first-load screen for the video homepage only. */
-      #splash-screen {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #F5F7FA;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-      }
-      #splash-screen.is-hidden {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-      .splash-mark {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100px;
-        height: 100px;
-      }
-      .splash-ring {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        border: 2px solid transparent;
-        border-top-color: #00B8D9;
-        border-right-color: var(--color-cyan-dark, #005F8A);
-        animation: splash-spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-      .splash-ring-outer {
-        position: absolute;
-        inset: -6px;
-        border-radius: 50%;
-        border: 1px solid rgba(0, 184, 217, 0.2);
-      }
-      .splash-name {
-        margin-top: 1.5rem;
-        font-family: var(--font-heading, sans-serif);
-        font-size: 0.875rem;
-        font-weight: 800;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: #0F172A;
-      }
-      .splash-shimmer {
-        margin-top: 0.75rem;
-        width: 120px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #00B8D9, transparent);
-        border-radius: 2px;
-        animation: splash-shimmer 1.5s ease-in-out infinite;
-      }
-      @keyframes splash-spin {
-        to { transform: rotate(360deg); }
-      }
-      @keyframes splash-shimmer {
-        0%, 100% { opacity: 0; transform: scaleX(0.5); }
-        50% { opacity: 1; transform: scaleX(1); }
-      }
-    </style>
   </head>
   <body class="bg-offwhite text-ink antialiased flex flex-col min-h-screen">
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    {isHome && (
-      <div id="splash-screen" aria-hidden="true">
-        <div class="splash-mark">
-          <div class="splash-ring-outer"></div>
-          <div class="splash-ring"></div>
-          <img src="/images/logo_icon.png" alt="" width="52" height="52" />
-        </div>
-        <span class="splash-name">WolfWay Logistics</span>
-        <div class="splash-shimmer"></div>
-      </div>
-    )}
 
     <Header transition:persist />
     <main id="main-content" class="flex-1 flex flex-col min-h-[100dvh]" tabindex="-1">
@@ -127,23 +46,39 @@ const isHome = Astro.url.pathname === '/';
 
     <!-- Client-side scripts -->
     <script>
-      import '@/scripts/smooth-scroll';
-      import '@/scripts/animations';
-      import '@/scripts/form-helpers';
+      let enhancementsLoaded = false;
 
-      function dismissSplash() {
-        const splash = document.getElementById('splash-screen');
-        if (splash && !splash.classList.contains('is-hidden')) {
-          splash.classList.add('is-hidden');
-          // Remove from DOM after fade-out transition completes
-          setTimeout(() => splash.remove(), 600);
+      function scheduleEnhancements() {
+        const load = () => {
+          import('@/scripts/animations').then(({ initAnimations }) => initAnimations());
+          import('@/scripts/smooth-scroll');
+
+          if (document.querySelector('form')) {
+            import('@/scripts/form-helpers').then(({ initSmartFormHelpers }) => initSmartFormHelpers());
+          }
+
+          enhancementsLoaded = true;
+        };
+
+        if (enhancementsLoaded) {
+          window.requestIdleCallback(load, { timeout: 500 });
+          return;
         }
+
+        const start = () => {
+          window.removeEventListener('pointerdown', start);
+          window.removeEventListener('keydown', start);
+          window.removeEventListener('scroll', start);
+          load();
+        };
+
+        window.addEventListener('pointerdown', start, { once: true, passive: true });
+        window.addEventListener('keydown', start, { once: true });
+        window.addEventListener('scroll', start, { once: true, passive: true });
       }
 
       // Reset scroll position on page swap
       document.addEventListener('astro:after-swap', () => {
-        // Immediately dismiss splash on navigation (not initial load)
-        dismissSplash();
         window.scrollTo(0, 0);
         const lenis = (window as any).lenis;
         if (lenis) {
@@ -151,7 +86,6 @@ const isHome = Astro.url.pathname === '/';
         }
       });
 
-      // On page load: dismiss splash once video is playing or after timeout
       document.addEventListener('astro:page-load', () => {
         if (!window.location.hash) {
           window.scrollTo(0, 0);
@@ -161,21 +95,7 @@ const isHome = Astro.url.pathname === '/';
           }
         }
 
-        const video = document.getElementById('hero-video') as HTMLVideoElement | null;
-        if (video) {
-          // If video is already playing, dismiss immediately
-          if (video.readyState >= 3) {
-            dismissSplash();
-          } else {
-            // Wait for the video to have enough data to play
-            video.addEventListener('canplay', () => dismissSplash(), { once: true });
-            // Keep the branded transition brief on slower connections.
-            setTimeout(() => dismissSplash(), 1400);
-          }
-        } else {
-          // No hero video on this page, dismiss immediately
-          dismissSplash();
-        }
+        scheduleEnhancements();
       });
     </script>
   </body>

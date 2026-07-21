@@ -1,5 +1,46 @@
 @import 'tailwindcss';
 
+/* Self-hosted fonts remove the third-party render-blocking chain. */
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/barlow-condensed-500-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/barlow-condensed-600-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: optional;
+  src: url('/fonts/barlow-condensed-700-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: optional;
+  src: url('/fonts/barlow-condensed-800-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: optional;
+  src: url('/fonts/source-sans-3-400-700-latin.woff2') format('woff2');
+}
+
 /* ─── Brand Theme (Light Theme Config) ─── */
 @theme {
   --color-navy: #111722;

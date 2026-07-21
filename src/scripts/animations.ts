@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 let gsapContext: gsap.Context | null = null;
 
-function initAnimations() {
+export function initAnimations() {
   // Clean up previous animations if any
   if (gsapContext) {
     gsapContext.revert();
@@ -23,72 +23,7 @@ function initAnimations() {
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 320px)', () => {
-      // ─── A. HERO REVEAL (Run once) ───
-      const heroHeading = document.getElementById('hero-heading');
-      const eyebrow = document.getElementById('hero-eyebrow');
-      const bodyContent = document.getElementById('hero-body-content');
-
-      if (heroHeading && !(window as any).heroAnimated) {
-        // Split H1 into lines dynamically
-        const text = heroHeading.innerHTML;
-        const lines = text.split(/<br\s*\/?>/i);
-        heroHeading.innerHTML = lines
-          .map(line => `<span class="hero-line block overflow-hidden py-1"><span class="inline-block" style="opacity: 0; transform: translateY(18px);">${line.trim()}</span></span>`)
-          .join('');
-
-        const headingSpans = heroHeading.querySelectorAll('.hero-line > span');
-
-        // Set parent heading to visible so its split children can animate in
-        gsap.set(heroHeading, { opacity: 1 });
-
-        // Set eyebrow and bodyContent to hidden state dynamically for JS users
-        if (eyebrow) gsap.set(eyebrow, { opacity: 0, y: 15 });
-        if (bodyContent) gsap.set(bodyContent, { opacity: 0, y: 15 });
-
-        const tl = gsap.timeline({
-          onComplete: () => {
-            (window as any).heroAnimated = true;
-          }
-        });
-
-        // 1. Heading lines slide-up
-        tl.to(headingSpans, {
-          y: 0,
-          opacity: 1,
-          duration: 0.65,
-          stagger: 0.10,
-          ease: 'power3.out',
-          delay: 0
-        });
-
-        // 2. Eyebrow, description and CTA buttons fade in
-        if (eyebrow) {
-          tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.3');
-        }
-        if (bodyContent) {
-          tl.to(bodyContent, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
-        }
-      } else {
-        // If hero already animated, just show it
-        if (heroHeading) {
-          heroHeading.style.opacity = '1';
-          const spans = heroHeading.querySelectorAll('.hero-line > span');
-          spans.forEach(s => {
-            (s as HTMLElement).style.opacity = '1';
-            (s as HTMLElement).style.transform = 'none';
-          });
-        }
-        if (eyebrow) {
-          eyebrow.style.opacity = '1';
-          eyebrow.style.transform = 'none';
-        }
-        if (bodyContent) {
-          bodyContent.style.opacity = '1';
-          bodyContent.style.transform = 'none';
-        }
-      }
-
-      // ─── B. SERVICES LOAD SEQUENCE ───
+      // ─── A. SERVICES LOAD SEQUENCE ───
       const serviceCards = document.querySelectorAll('.service-card-reveal');
       const servicesSection = document.querySelector('.services-section');
 
@@ -113,7 +48,7 @@ function initAnimations() {
         });
       }
 
-      // ─── C. PROCESS ROUTE LINE ───
+      // ─── B. PROCESS ROUTE LINE ───
       const routePath = document.getElementById('route-animated-path');
       const routeSection = document.getElementById('process-route-section');
       if (routePath && routeSection) {
@@ -130,7 +65,7 @@ function initAnimations() {
         });
       }
 
-      // ─── D. ORDERED PROCESS REVEAL ───
+      // ─── C. ORDERED PROCESS REVEAL ───
       const processSection = document.getElementById('shipping-process');
       const processSteps = document.querySelectorAll('.process-step');
       if (processSection && processSteps.length > 0) {
@@ -185,11 +120,6 @@ function showEverythingInstantly() {
     routePath.setAttribute('stroke-dashoffset', '0');
   }
 }
-
-// Listen to Astro view transition page load events
-document.addEventListener('astro:page-load', () => {
-  initAnimations();
-});
 
 // Clean up before transitioning to a new page
 document.addEventListener('astro:before-preparation', () => {

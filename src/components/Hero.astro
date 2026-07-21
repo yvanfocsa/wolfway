@@ -3,17 +3,16 @@ import Button from './Button.astro';
 ---
 
 <section data-header-overlay="true" class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
-  <!-- Video / Image background container -->
+  <!-- Video background container -->
   <div class="absolute inset-0 z-0 bg-navy" id="hero-bg-container">
-    <!-- Inline Video element for instant browser parsing and preloading -->
     <video
       id="hero-video"
       class="absolute inset-0 h-full w-full object-cover z-0"
       muted
       loop
       playsinline
-      preload="none"
-      poster="/images/services/open-deck-v2-960.avif"
+      autoplay
+      preload="auto"
       aria-hidden="true"
     >
       <source src="/videos/hero-mobile-v3.mp4" type="video/mp4" media="(max-width: 767px)" />
@@ -60,37 +59,44 @@ import Button from './Button.astro';
 <script>
   function initHeroVideo() {
     const videoEl = document.getElementById('hero-video') as HTMLVideoElement | null;
-    if (!videoEl) return;
+    if (!videoEl || videoEl.dataset.initialized === 'true') return;
+
+    videoEl.dataset.initialized = 'true';
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion) {
-      videoEl.style.display = 'block';
-      const startPlayback = () => {
-        window.setTimeout(() => {
-          videoEl.play().catch(() => {
-            // The optimized poster remains visible if autoplay is unavailable.
-          });
-        }, 600);
-      };
-
-      if (document.readyState === 'complete') {
-        startPlayback();
-      } else {
-        window.addEventListener('load', startPlayback, { once: true });
-      }
-    } else {
-      // Pause and hide video element on reduced motion to save resources
+    if (prefersReducedMotion) {
       videoEl.pause();
       videoEl.style.display = 'none';
+      return;
     }
+
+    const revealVideo = () => videoEl.classList.add('is-playing');
+    videoEl.addEventListener('playing', revealVideo, { once: true });
+
+    if (!videoEl.paused && videoEl.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      revealVideo();
+    }
+
+    videoEl.play().catch(() => {
+      // Keep the solid navy background if autoplay is unavailable.
+    });
   }
 
-  // Re-run on View Transitions page nav
+  initHeroVideo();
   document.addEventListener('astro:page-load', initHeroVideo);
 </script>
 
 <style>
+  #hero-video {
+    opacity: 0;
+    transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #hero-video.is-playing {
+    opacity: 1;
+  }
+
   #hero-body-content {
     animation: hero-reveal 550ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
@@ -107,6 +113,10 @@ import Button from './Button.astro';
   }
 
   @media (prefers-reduced-motion: reduce) {
+    #hero-video {
+      transition: none;
+    }
+
     #hero-body-content {
       animation: none;
     }

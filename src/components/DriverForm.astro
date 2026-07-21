@@ -2,55 +2,75 @@
 // src/components/DriverForm.astro
 ---
 
-<div class="space-y-6">
-  <!-- Interactive Progress Bar -->
-  <div class="bg-slate-100 p-4 rounded-xl border border-slate-200/80">
-    <div class="flex items-center justify-between text-xs font-heading font-bold uppercase tracking-wider text-slate-600 mb-2">
-      <span id="page-driver-step-title" class="text-navy font-extrabold">Step 1 of 3: Personal &amp; Contact Information</span>
-      <span id="page-driver-step-pct" class="text-cyan font-extrabold">0% Completed</span>
+<div class="space-y-8">
+  <div
+    id="page-driver-progress"
+    class="driver-progress"
+    role="progressbar"
+    aria-label="Application progress"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="33"
+  >
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <span id="page-driver-step-title" class="text-base font-bold text-navy">Step 1 of 3: Your details</span>
+      <span id="page-driver-step-pct" class="text-base font-bold text-cyan-dark">33% complete</span>
     </div>
-    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-      <div id="page-driver-progress-bar" class="bg-cyan h-full w-0 transition-all duration-300"></div>
+    <ol class="mt-5 grid grid-cols-3 gap-2" aria-label="Application steps">
+      <li id="page-driver-progress-step-1" class="driver-progress-step" data-state="current">
+        <span class="driver-progress-number">1</span>
+        <span>About you</span>
+      </li>
+      <li id="page-driver-progress-step-2" class="driver-progress-step" data-state="upcoming">
+        <span class="driver-progress-number">2</span>
+        <span>Address</span>
+      </li>
+      <li id="page-driver-progress-step-3" class="driver-progress-step" data-state="upcoming">
+        <span class="driver-progress-number">3</span>
+        <span>CDL history</span>
+      </li>
+    </ol>
+    <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-200" aria-hidden="true">
+      <div id="page-driver-progress-bar" class="h-full bg-cyan transition-[width] duration-300 ease-out" style="width: 33%"></div>
     </div>
   </div>
 
-  <form id="driver-form" class="space-y-6 min-h-[500px]" novalidate>
+  <form id="driver-form" class="site-form min-h-[500px] space-y-7" novalidate>
     <input type="hidden" name="formType" value="full_driver_app" />
 
-    <!-- SUCCESS MESSAGE CARD WITH CELEBRATORY ANIMATION -->
-    <div id="driver-success" class="hidden p-10 border border-emerald-500/30 bg-emerald-500/5 rounded-2xl text-center transition-all duration-500">
+    <div id="driver-success" class="hidden rounded-lg bg-emerald-50 p-8 text-center" role="status" aria-live="polite">
       <div class="flex flex-col items-center justify-center gap-4">
-        <div class="relative flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-xl shadow-emerald-500/30">
-          <span class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-30"></span>
-          <svg class="h-8 w-8 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white">
+          <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        
-        <h4 class="font-heading text-2xl font-extrabold text-navy uppercase tracking-wide mt-2">Application Submitted!</h4>
-        <p class="text-sm sm:text-base text-slate-700 font-body font-light max-w-lg leading-relaxed">
-          Thank you for applying to <strong class="font-semibold text-navy">WolfWay Logistics LLC</strong>. A recruitment coordinator will review your CDL records and contact you within 24 hours.
+        <h4 class="font-heading text-3xl font-extrabold uppercase text-navy">Application submitted</h4>
+        <p class="max-w-lg text-base leading-relaxed text-slate-700">
+          Thank you for applying to <strong class="font-semibold text-navy">WolfWay Logistics LLC</strong>. A recruiter will review your information and contact you within 24 hours.
         </p>
       </div>
     </div>
 
-    <!-- ERROR MESSAGE CARD -->
-    <div id="driver-error" class="hidden p-4 border border-red-500/20 bg-red-500/5 rounded-lg">
-      <p class="text-sm font-medium text-red-600 font-body text-center">
-        Please fill out all required fields on this step to continue.
-      </p>
+    <div id="driver-error" class="hidden rounded-md bg-red-50 p-4 text-red-800" role="alert" aria-live="assertive" tabindex="-1">
+      <p class="font-semibold">Check the highlighted fields before continuing.</p>
     </div>
 
-    <!-- STEP 1: PERSONAL & CONTACT INFORMATION -->
-    <div id="page-step-1" class="space-y-6">
-      <div class="p-4 bg-cyan/5 border border-cyan/20 rounded-xl text-xs text-slate-700 font-body leading-relaxed">
-        <strong class="font-bold text-navy block font-heading uppercase text-xs mb-0.5">FMCSA DOT Equal Opportunity Notice:</strong>
-        In compliance with Federal &amp; State equal opportunity laws, qualified CDL applicants are considered without regard to race, color, or protected status.
+    <fieldset id="page-step-1" class="space-y-7">
+      <legend class="sr-only">Personal and contact information</legend>
+      <div class="form-notice flex items-start gap-3 p-4">
+        <svg class="mt-0.5 h-5 w-5 shrink-0 text-cyan-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        </svg>
+        <p>
+          <strong class="block font-bold text-navy">Equal opportunity notice</strong>
+          Qualified CDL applicants are considered without regard to race, color, or other protected status under federal and state law.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label for="driver-firstname" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 font-body">
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div class="space-y-2">
+          <label for="driver-firstname" class="block">
             First Name <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -60,13 +80,14 @@
             required
             maxlength="40"
             autocomplete="given-name"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="John"
           />
         </div>
 
-        <div>
-          <label for="driver-lastname" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-lastname" class="block">
             Last Name <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -76,46 +97,49 @@
             required
             maxlength="40"
             autocomplete="family-name"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="Doe"
           />
         </div>
 
-        <div>
-          <label for="driver-age-eligible" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-age-eligible" class="block">
             Age Eligibility <span class="text-cyan font-bold">*</span>
           </label>
           <select
             id="driver-age-eligible"
             name="age_eligibility"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
           >
-            <option value="">Select eligibility</option>
+            <option value="" disabled selected>Select eligibility</option>
             <option value="22_or_older">I am 22 or older</option>
             <option value="under_22">I am under 22</option>
           </select>
         </div>
 
-        <div>
-          <label for="driver-contact-pref" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-contact-pref" class="block">
             Preferred Contact Method <span class="text-cyan font-bold">*</span>
           </label>
           <select
             id="driver-contact-pref"
             name="preferred_contact"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
           >
-            <option value="">Select method</option>
+            <option value="" disabled selected>Select method</option>
             <option value="Phone">Phone</option>
             <option value="Text">Text</option>
             <option value="Email">Email</option>
           </select>
         </div>
 
-        <div>
-          <label for="driver-phone" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-phone" class="block">
             Primary Phone <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -125,13 +149,15 @@
             required
             maxlength="14"
             autocomplete="tel"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            inputmode="tel"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="(555) 123-4567"
           />
         </div>
 
-        <div>
-          <label for="driver-email" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-email" class="block">
             Email Address <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -141,24 +167,27 @@
             required
             maxlength="60"
             autocomplete="email"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            inputmode="email"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="john@email.com"
           />
         </div>
       </div>
 
-      <p class="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm leading-relaxed text-slate-700">
-        For privacy, this public form does not collect SSN, full date of birth, or full CDL number. Those details are handled later through direct onboarding.
-      </p>
+      <div class="flex items-start gap-3 rounded-md bg-slate-100 p-4 text-[15px] leading-relaxed text-slate-700">
+        <svg class="mt-0.5 h-5 w-5 shrink-0 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 00-9 0v3.75m-.75 0h10.5A2.25 2.25 0 0119.5 12.75v6A2.25 2.25 0 0117.25 21H6.75a2.25 2.25 0 01-2.25-2.25v-6A2.25 2.25 0 016.75 10.5z" />
+        </svg>
+        <p><strong class="font-semibold text-navy">Privacy first.</strong> We do not collect your SSN, full date of birth, or full CDL number here. Those details are handled later through direct onboarding.</p>
+      </div>
+    </fieldset>
 
-
-    </div>
-
-    <!-- STEP 2: ADDRESS & RESIDENCE HISTORY -->
-    <div id="page-step-2" class="space-y-6 hidden">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div class="sm:col-span-2">
-          <label for="driver-street" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+    <fieldset id="page-step-2" class="hidden space-y-7">
+      <legend class="sr-only">Address and residence history</legend>
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div class="space-y-2 sm:col-span-2">
+          <label for="driver-street" class="block">
             Current Street Address <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -167,13 +196,15 @@
             name="address_line1"
             required
             autocomplete="street-address"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            maxlength="100"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="123 Main Street, Apt 4B"
           />
         </div>
 
-        <div>
-          <label for="driver-location" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-location" class="block">
             City &amp; State <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -181,13 +212,16 @@
             id="driver-location"
             name="city_state"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            maxlength="80"
+            autocomplete="address-level2"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="Chicago, IL"
           />
         </div>
 
-        <div>
-          <label for="driver-zip" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-zip" class="block">
             Zip Code <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -196,49 +230,54 @@
             name="zip"
             required
             autocomplete="postal-code"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            inputmode="numeric"
+            pattern="[0-9]{5}(-[0-9]{4})?"
+            maxlength="10"
+            aria-invalid="false"
+            class="px-4 py-3.5"
             placeholder="60601"
           />
         </div>
       </div>
 
-      <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 font-body">
+      <div class="rounded-md bg-slate-100 p-4">
+        <p class="mb-3 text-[15px] font-bold text-slate-800">
           Residence address for 3 or more years? <span class="text-cyan font-bold">*</span>
-        </label>
-        <div class="flex gap-8">
-          <label class="flex items-center gap-2 text-sm text-ink cursor-pointer font-body font-semibold">
-            <input type="radio" name="residence_3yrs" value="Yes" checked class="accent-cyan h-4.5 w-4.5" /> Yes
+        </p>
+        <div class="flex flex-wrap gap-6">
+          <label class="flex min-h-11 items-center gap-2.5 text-base font-semibold text-ink">
+            <input type="radio" name="residence_3yrs" value="Yes" checked /> Yes
           </label>
-          <label class="flex items-center gap-2 text-sm text-ink cursor-pointer font-body font-semibold">
-            <input type="radio" name="residence_3yrs" value="No" class="accent-cyan h-4.5 w-4.5" /> No
+          <label class="flex min-h-11 items-center gap-2.5 text-base font-semibold text-ink">
+            <input type="radio" name="residence_3yrs" value="No" /> No
           </label>
         </div>
       </div>
-    </div>
+    </fieldset>
 
-    <!-- STEP 3: CDL LICENSE & DRIVING HISTORY -->
-    <div id="page-step-3" class="space-y-6 hidden">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label for="driver-cdl" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+    <fieldset id="page-step-3" class="hidden space-y-7">
+      <legend class="sr-only">CDL license and driving history</legend>
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div class="space-y-2">
+          <label for="driver-cdl" class="block">
             CDL-A License Status <span class="text-cyan font-bold">*</span>
           </label>
           <select
             id="driver-cdl"
             name="cdl_status"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
           >
-            <option value="">Select status</option>
+            <option value="" disabled selected>Select status</option>
             <option value="Active CDL-A">Active CDL-A</option>
             <option value="CDL-A permit">CDL-A permit</option>
             <option value="Not currently licensed">Not currently licensed</option>
           </select>
         </div>
 
-        <div>
-          <label for="driver-state" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-state" class="block">
             State of Issue <span class="text-cyan font-bold">*</span>
           </label>
           <input
@@ -246,35 +285,40 @@
             id="driver-state"
             name="cdl_state"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm sm:text-base text-ink placeholder-slate-400 focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            maxlength="2"
+            autocapitalize="characters"
+            aria-invalid="false"
+            class="px-4 py-3.5 uppercase"
             placeholder="IL"
           />
         </div>
 
-        <div>
-          <label for="driver-exp" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-exp" class="block">
             Verifiable OTR Experience <span class="text-cyan font-bold">*</span>
           </label>
           <select
             id="driver-exp"
             name="experience"
             required
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            aria-invalid="false"
+            class="px-4 py-3.5"
           >
+            <option value="" disabled selected>Select experience</option>
             <option value="1-3 years">1 to 3 years</option>
             <option value="3-5 years">3 to 5 years</option>
             <option value="5+ years">5+ years</option>
           </select>
         </div>
 
-        <div>
-          <label for="driver-mvr" class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 mb-2 font-body">
+        <div class="space-y-2">
+          <label for="driver-mvr" class="block">
             Traffic Accidents / Violations (Past 3 Yrs)
           </label>
           <select
             id="driver-mvr"
             name="mvr_clean"
-            class="w-full border border-slate-200 bg-white px-4 py-3.5 rounded-lg text-sm text-ink focus:border-cyan focus:ring-4 focus:ring-cyan/10 outline-none transition-all duration-300 font-body"
+            class="px-4 py-3.5"
           >
             <option value="Clean MVR Record">Clean MVR Record (0 violations)</option>
             <option value="1 minor violation">1 minor violation</option>
@@ -282,29 +326,86 @@
           </select>
         </div>
       </div>
-    </div>
+    </fieldset>
 
-    <!-- Navigation Footer Controls -->
-    <div id="page-footer-controls" class="pt-6 border-t border-slate-100 flex items-center justify-between">
+    <div id="page-footer-controls" class="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
       <button
         type="button"
         id="page-btn-prev"
-        class="px-6 py-3 rounded-lg border border-slate-300 text-slate-600 font-heading text-xs font-bold uppercase hover:bg-slate-100 transition-colors opacity-50 cursor-not-allowed"
+        class="inline-flex h-13 items-center justify-center gap-2 rounded-sm border border-slate-300 px-6 text-[15px] font-extrabold uppercase tracking-[0.04em] text-slate-700 transition-colors hover:bg-slate-100 disabled:opacity-45"
         disabled
       >
-        &larr; Back
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        <span>Back</span>
       </button>
 
       <button
         type="button"
         id="page-btn-next"
-        class="px-8 py-3.5 rounded-lg bg-cyan text-navy font-heading text-xs font-bold uppercase tracking-wider hover:bg-[#00D4E0] transition-colors shadow-xs"
+        class="inline-flex h-13 items-center justify-center gap-2 rounded-sm bg-cyan px-7 text-[15px] font-extrabold uppercase tracking-[0.04em] text-navy transition-colors hover:bg-cyan-hover"
       >
-        Next Step &rarr;
+        <span id="page-btn-next-label">Continue</span>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
       </button>
     </div>
   </form>
 </div>
+
+<style>
+  .driver-progress {
+    border-bottom: 1px solid #dbe2ea;
+    padding-bottom: 1.5rem;
+  }
+
+  .driver-progress-step {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .driver-progress-number {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.875rem;
+  }
+
+  .driver-progress-step[data-state='current'] {
+    color: #111722;
+  }
+
+  .driver-progress-step[data-state='current'] .driver-progress-number,
+  .driver-progress-step[data-state='complete'] .driver-progress-number {
+    border-color: #00a8e1;
+    background: #00a8e1;
+    color: #111722;
+  }
+
+  @media (max-width: 520px) {
+    .driver-progress-step {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      line-height: 1.25;
+    }
+  }
+</style>
 
 <script>
   import { initAntiSpam, validateAntiSpam, recordSubmission } from '@/scripts/anti-spam';
@@ -314,14 +415,20 @@
   function initPageDriverForm() {
     const prevBtn = document.getElementById('page-btn-prev') as HTMLButtonElement | null;
     const nextBtn = document.getElementById('page-btn-next') as HTMLButtonElement | null;
+    const nextBtnLabel = document.getElementById('page-btn-next-label');
     const form = document.getElementById('driver-form') as HTMLFormElement | null;
     const errorCard = document.getElementById('driver-error');
     const successCard = document.getElementById('driver-success');
     const footerControls = document.getElementById('page-footer-controls');
+    const progress = document.getElementById('page-driver-progress');
+    const progressSteps = Array.from(document.querySelectorAll<HTMLElement>('.driver-progress-step'));
 
-    if (!prevBtn || !nextBtn || !form) return;
+    if (!prevBtn || !nextBtn || !nextBtnLabel || !form) return;
     if (form.dataset.driverFormBound === 'true') return;
     form.dataset.driverFormBound = 'true';
+    step = 1;
+    const previousButton = prevBtn;
+    const nextButtonLabel = nextBtnLabel;
 
     // Initialize anti-spam protections
     initAntiSpam(form);
@@ -334,31 +441,29 @@
       const stepTitle = document.getElementById('page-driver-step-title');
       const stepPct = document.getElementById('page-driver-step-pct');
       const bar = document.getElementById('page-driver-progress-bar');
+      const percentages = [33, 67, 100];
+      const titles = [
+        'Step 1 of 3: Your details',
+        'Step 2 of 3: Your address',
+        'Step 3 of 3: CDL history',
+      ];
+      const currentPercentage = percentages[step - 1];
 
       if (errorCard) errorCard.classList.add('hidden');
 
-      if (step === 1) {
-        if (stepTitle) stepTitle.textContent = 'Step 1 of 3: Personal & Contact Information';
-        if (stepPct) stepPct.textContent = '0% Completed';
-        if (bar) bar.style.width = '0%';
-        prevBtn!.disabled = true;
-        prevBtn!.classList.add('opacity-50', 'cursor-not-allowed');
-        nextBtn!.textContent = 'Next Step \u2192';
-      } else if (step === 2) {
-        if (stepTitle) stepTitle.textContent = 'Step 2 of 3: Address & Residence History';
-        if (stepPct) stepPct.textContent = '33% Completed';
-        if (bar) bar.style.width = '33%';
-        prevBtn!.disabled = false;
-        prevBtn!.classList.remove('opacity-50', 'cursor-not-allowed');
-        nextBtn!.textContent = 'Next Step \u2192';
-      } else if (step === 3) {
-        if (stepTitle) stepTitle.textContent = 'Step 3 of 3: CDL License & Driving History';
-        if (stepPct) stepPct.textContent = '66% Completed';
-        if (bar) bar.style.width = '66%';
-        prevBtn!.disabled = false;
-        prevBtn!.classList.remove('opacity-50', 'cursor-not-allowed');
-        nextBtn!.textContent = 'Submit Official Application';
-      }
+      if (stepTitle) stepTitle.textContent = titles[step - 1] ?? titles[0];
+      if (stepPct) stepPct.textContent = `${currentPercentage}% complete`;
+      if (bar) bar.style.width = `${currentPercentage}%`;
+      progress?.setAttribute('aria-valuenow', String(currentPercentage));
+      previousButton.disabled = step === 1;
+      nextButtonLabel.textContent = step === 3 ? 'Submit application' : 'Continue';
+
+      progressSteps.forEach((item, index) => {
+        const itemStep = index + 1;
+        item.dataset.state = itemStep < step ? 'complete' : itemStep === step ? 'current' : 'upcoming';
+        if (itemStep === step) item.setAttribute('aria-current', 'step');
+        else item.removeAttribute('aria-current');
+      });
     }
 
     function validateCurrentStep(): boolean {
@@ -367,23 +472,41 @@
 
       const requiredInputs = currentStepEl.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]');
       let isValid = true;
+      const invalidInputs: Array<HTMLInputElement | HTMLSelectElement> = [];
+      let eligibilityMessage = '';
 
       requiredInputs.forEach((input) => {
-        if (!input.value.trim()) {
+        const failsRequirement =
+          (input.id === 'driver-age-eligible' && input.value === 'under_22') ||
+          (input.id === 'driver-cdl' && input.value !== 'Active CDL-A');
+        const isInputInvalid = !input.checkValidity() || failsRequirement;
+
+        if (isInputInvalid) {
           isValid = false;
-          input.classList.add('border-red-500', 'ring-2', 'ring-red-500/20');
+          invalidInputs.push(input);
+          input.setAttribute('aria-invalid', 'true');
+          if (input.id === 'driver-age-eligible' && failsRequirement) {
+            eligibilityMessage = 'Applicants must be at least 22 years old for this position.';
+          }
+          if (input.id === 'driver-cdl' && failsRequirement) {
+            eligibilityMessage = 'An active Class A CDL is required for this position.';
+          }
         } else {
-          input.classList.remove('border-red-500', 'ring-2', 'ring-red-500/20');
+          input.setAttribute('aria-invalid', 'false');
         }
       });
 
       if (errorCard) {
         if (!isValid) {
+          const errorText = errorCard.querySelector('p');
+          if (errorText) errorText.textContent = eligibilityMessage || 'Check the highlighted fields before continuing.';
           errorCard.classList.remove('hidden');
         } else {
           errorCard.classList.add('hidden');
         }
       }
+
+      invalidInputs[0]?.focus();
 
       return isValid;
     }
@@ -416,8 +539,13 @@
         const bar = document.getElementById('page-driver-progress-bar');
 
         if (stepTitle) stepTitle.textContent = 'Application Completed';
-        if (stepPct) stepPct.textContent = '100% Completed';
+        if (stepPct) stepPct.textContent = '100% complete';
         if (bar) bar.style.width = '100%';
+        progress?.setAttribute('aria-valuenow', '100');
+        progressSteps.forEach((item) => {
+          item.dataset.state = 'complete';
+          item.removeAttribute('aria-current');
+        });
 
         document.getElementById('page-step-1')?.classList.add('hidden');
         document.getElementById('page-step-2')?.classList.add('hidden');
@@ -434,6 +562,15 @@
         updatePageStepUI();
       }
     });
+
+    form.addEventListener('input', (event) => {
+      const target = event.target;
+      if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) {
+        target.setAttribute('aria-invalid', 'false');
+      }
+    });
+
+    updatePageStepUI();
   }
 
   initPageDriverForm();

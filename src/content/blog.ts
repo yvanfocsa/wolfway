@@ -1,3 +1,5 @@
+import { serviceImages, type ResponsiveImageAsset } from './images';
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -6,6 +8,8 @@ export interface BlogPost {
   date: string;
   readTime: string;
   author: string;
+  image: ResponsiveImageAsset;
+  imageAlt: string;
   content: string;
 }
 
@@ -18,6 +22,8 @@ export const blogPosts: BlogPost[] = [
     date: 'June 18, 2026',
     readTime: '4 min read',
     author: 'WolfWay Logistics Team',
+    image: serviceImages.stepDeck,
+    imageAlt: 'Step-deck trailer configured for tall industrial freight',
     content: `
       Choosing between a standard flatbed and a step-deck trailer is one of the most critical decisions in open-deck logistics.
       
@@ -39,6 +45,8 @@ export const blogPosts: BlogPost[] = [
     date: 'June 05, 2026',
     readTime: '3 min read',
     author: 'WolfWay Dispatch Team',
+    image: serviceImages.openDeck,
+    imageAlt: 'Open-deck truck traveling an interstate freight corridor',
     content: `
       In open-deck transportation, timing is everything. A 30-minute delay at a crane unloading facility can disrupt an entire day's schedule.
 
@@ -57,6 +65,8 @@ export const blogPosts: BlogPost[] = [
     date: 'May 22, 2026',
     readTime: '5 min read',
     author: 'WolfWay Fleet Safety',
+    image: serviceImages.flatbed,
+    imageAlt: 'Flatbed equipment carrying protected industrial cargo',
     content: `
       Vibration damage during transit is a hidden cost for machinery manufacturers. Traditional spring suspensions transfer road shocks directly to the cargo.
 
@@ -75,6 +85,8 @@ export const blogPosts: BlogPost[] = [
     date: 'May 10, 2026',
     readTime: '4 min read',
     author: 'WolfWay Recruiting',
+    image: serviceImages.openDeck,
+    imageAlt: 'Professional CDL-A driver operating open-deck equipment',
     content: `
       Driver retention in the trucking industry remains a primary challenge. Experienced open-deck drivers look for carriers that respect their time behind the wheel.
 

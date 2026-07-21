@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import Button from '@/components/Button.astro';
 import CTASection from '@/components/CTASection.astro';
+import ResponsiveImage from '@/components/ResponsiveImage.astro';
 import { blogPosts } from '@/content/blog';
 ---
 
@@ -9,46 +11,50 @@ import { blogPosts } from '@/content/blog';
   title="Open-Deck Freight Insights & Industry News | WolfWay Logistics LLC"
   description="Expert articles on open-deck logistics, flatbed securement, air-ride cargo protection, driver culture, and 24/7 dispatch coordination."
 >
-  <!-- Page Header -->
-  <section class="bg-navy pt-36 pb-20 relative overflow-hidden select-none">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10 text-center">
-      <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight">
-        Industry News &amp; Articles
-      </h1>
-      <p class="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-white/70 font-body font-light leading-relaxed">
-        Perspectives on open-deck transportation, cargo securement standards, fleet operations, and driver-first logistics.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    title="Open-Deck Field Notes"
+    description="Practical perspectives on cargo securement, trailer selection, fleet operations, and driver-first logistics."
+    align="center"
+    compact={true}
+  />
 
   <!-- Blog Grid Section -->
   <section class="bg-offwhite py-16 sm:py-20 border-b border-slate-200/60 select-none">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <div class="grid gap-8 md:grid-cols-2">
         {blogPosts.map((post) => (
-          <article class="flex flex-col justify-between p-8 bg-white border border-slate-200/80 rounded-xl shadow-xs hover:border-cyan/40 transition-all duration-300 group">
-            <div>
-              <div class="flex items-center gap-3 mb-4">
-                <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 bg-cyan/10 text-[#005F8A] rounded">
+          <article class="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white transition-colors duration-300 hover:border-cyan/60">
+            <a href={`/blog/${post.slug}`} class="aspect-[16/9] overflow-hidden bg-slate-200" aria-label={`Read ${post.title}`}>
+              <ResponsiveImage
+                asset={post.image}
+                alt={post.imageAlt}
+                class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+                pictureClass="h-full w-full"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                loading="lazy"
+              />
+            </a>
+            <div class="flex flex-1 flex-col p-6 sm:p-7">
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="rounded bg-cyan/10 px-2.5 py-1 text-sm font-bold uppercase tracking-wide text-cyan-dark">
                   {post.category}
                 </span>
-                <span class="text-xs text-slate-400 font-body font-light">
+                <span class="text-sm text-slate-500 font-body">
                   {post.date} &bull; {post.readTime}
                 </span>
               </div>
               <h2 class="font-heading text-xl sm:text-2xl font-bold uppercase text-ink group-hover:text-cyan transition-colors leading-tight mb-3">
                 {post.title}
               </h2>
-              <p class="text-sm text-slate-600 font-body font-light leading-relaxed mb-6">
+              <p class="mb-6 text-base leading-relaxed text-slate-600 font-body">
                 {post.excerpt}
               </p>
-            </div>
-            
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-              <span class="text-xs text-slate-400 font-body font-medium">{post.author}</span>
-              <Button href={`/blog/${post.slug}`} variant="outline" size="sm" arrow={true} class="text-xs border-slate-200 text-ink hover:bg-slate-50">
+              <div class="mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
+              <span class="text-sm font-semibold text-slate-500 font-body">{post.author}</span>
+              <Button href={`/blog/${post.slug}`} variant="outlineInk" size="sm" arrow={true}>
                 Read Article
               </Button>
+              </div>
             </div>
           </article>
         ))}

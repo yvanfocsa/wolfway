@@ -90,62 +90,26 @@ function initAnimations() {
 
       // ─── B. SERVICES LOAD SEQUENCE ───
       const serviceCards = document.querySelectorAll('.service-card-reveal');
+      const servicesSection = document.querySelector('.services-section');
 
-      if (serviceCards.length > 0) {
-        serviceCards.forEach((card) => {
-          const indexLabel = card.querySelector('.service-index');
-          const image = card.querySelector('.service-image');
-          const title = card.querySelector('.service-title');
-          const body = card.querySelector('.service-body');
-          const link = card.querySelector('.service-link');
-
-          const cardTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 88%',
-              toggleActions: 'play none none none',
-            }
-          });
-
-          // Index label fade
-          if (indexLabel) {
-            cardTl.fromTo(indexLabel, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
-          }
-          // Image clip path reveal (vertical inset clip reveal)
-          if (image) {
-            cardTl.fromTo(
-              image, 
-              { clipPath: 'inset(100% 0 0 0)' }, 
-              { clipPath: 'inset(7% 0)', duration: 0.65, ease: 'power3.out' }, 
-              0.05
+      if (serviceCards.length > 0 && servicesSection) {
+        ScrollTrigger.create({
+          trigger: servicesSection,
+          start: 'top 78%',
+          once: true,
+          onEnter: () => {
+            gsap.fromTo(
+              serviceCards,
+              { opacity: 0, y: 24 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.12,
+                ease: 'power3.out',
+              },
             );
-          }
-          // Title rises
-          if (title) {
-            cardTl.fromTo(
-              title, 
-              { opacity: 0, y: 16 }, 
-              { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 
-              0.15
-            );
-          }
-          // Body & link fade
-          if (body) {
-            cardTl.fromTo(
-              body, 
-              { opacity: 0 }, 
-              { opacity: 1, duration: 0.4, ease: 'power2.out' }, 
-              0.25
-            );
-          }
-          if (link) {
-            cardTl.fromTo(
-              link, 
-              { opacity: 0 }, 
-              { opacity: 1, duration: 0.3 }, 
-              0.3
-            );
-          }
+          },
         });
       }
 
@@ -166,31 +130,34 @@ function initAnimations() {
         });
       }
 
-      // ─── D. OTHER ANIMS (Sections fade up) ───
-      const fadeElements = document.querySelectorAll('[data-animate="fade-up"]');
-      fadeElements.forEach(el => {
-        gsap.to(el, {
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
+      // ─── D. ORDERED PROCESS REVEAL ───
+      const processSection = document.getElementById('shipping-process');
+      const processSteps = document.querySelectorAll('.process-step');
+      if (processSection && processSteps.length > 0) {
+        ScrollTrigger.create({
+          trigger: processSection,
+          start: 'top 75%',
+          once: true,
+          onEnter: () => {
+            gsap.fromTo(
+              processSteps,
+              { opacity: 0, x: -18 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power3.out',
+              },
+            );
           },
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          ease: 'power2.out',
         });
-      });
+      }
     });
   });
 }
 
 function showEverythingInstantly() {
-  document.querySelectorAll('[data-animate]').forEach(el => {
-    (el as HTMLElement).style.opacity = '1';
-    (el as HTMLElement).style.transform = 'none';
-  });
-
   const heroHeading = document.getElementById('hero-heading');
   const eyebrow = document.getElementById('hero-eyebrow');
   const bodyContent = document.getElementById('hero-body-content');
@@ -208,13 +175,9 @@ function showEverythingInstantly() {
     bodyContent.style.transform = 'none';
   }
 
-  // Show all service cards elements
-  document.querySelectorAll('.service-index, .service-image, .service-title, .service-body, .service-link').forEach(el => {
+  document.querySelectorAll('.service-card-reveal, .process-step').forEach(el => {
     (el as HTMLElement).style.opacity = '1';
     (el as HTMLElement).style.transform = 'none';
-    if (el.classList.contains('service-image')) {
-      (el as HTMLElement).style.clipPath = 'inset(7% 0)';
-    }
   });
 
   const routePath = document.getElementById('route-animated-path');

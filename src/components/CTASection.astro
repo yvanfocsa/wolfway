@@ -24,17 +24,17 @@ const isDark = variant === 'dark';
 
 <section
   class:list={[
-    'py-14 sm:py-20 lg:py-28',
+    'relative overflow-hidden py-16 sm:py-20 lg:py-24',
     isDark ? 'bg-navy' : 'bg-offwhite',
   ]}
-  data-animate="fade-up"
 >
+  <div class="absolute left-0 top-0 h-1 w-full bg-cyan" aria-hidden="true"></div>
   <div class="mx-auto max-w-7xl px-5 lg:px-10 text-center">
     {eyebrow && (
       <p
         class:list={[
           'readable-kicker mb-3',
-          isDark ? 'text-cyan' : 'text-[#005F8A]',
+          isDark ? 'text-cyan' : 'text-cyan-dark',
         ]}
       >
         {eyebrow}
@@ -42,7 +42,7 @@ const isDark = variant === 'dark';
     )}
     <h2
       class:list={[
-        'font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase',
+        'font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase leading-none',
         isDark ? 'text-white' : 'text-ink',
       ]}
     >
@@ -50,8 +50,8 @@ const isDark = variant === 'dark';
     </h2>
     <p
       class:list={[
-        'mt-3 sm:mt-4 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed',
-        isDark ? 'text-white/60' : 'text-steel',
+        'mt-4 sm:mt-5 mx-auto max-w-2xl text-base sm:text-lg leading-relaxed',
+        isDark ? 'text-slate-300' : 'text-slate-600',
       ]}
     >
       {description}
@@ -62,7 +62,7 @@ const isDark = variant === 'dark';
         href={buttonHref}
         size="lg"
         arrow={true}
-        class="group"
+        class="group font-heading font-extrabold"
       >
         {buttonText}
       </Button>

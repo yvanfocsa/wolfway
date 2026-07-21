@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import Button from '@/components/Button.astro';
 import CTASection from '@/components/CTASection.astro';
 import { shipperFAQs, driverFAQs } from '@/content/faq';
@@ -9,17 +10,12 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
   title="Frequently Asked Questions | WolfWay Logistics LLC"
   description="Find quick answers to common questions about freight shipping, open-deck equipment, driver qualification, rates, and 24/7 dispatch support."
 >
-  <!-- Page Header -->
-  <section class="bg-navy pt-36 pb-20 relative overflow-hidden select-none">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10 relative z-10 text-center">
-      <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase text-white leading-none tracking-tight">
-        Frequently Asked Questions
-      </h1>
-      <p class="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-white/70 font-body font-light leading-relaxed">
-        Everything you need to know about shipping open-deck freight, driver opportunities, equipment specs, and dispatch coordination.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    title="Frequently Asked Questions"
+    description="Clear answers about open-deck freight, equipment, driver opportunities, rates, and dispatch coordination."
+    align="center"
+    compact={true}
+  />
 
   <!-- Interactive FAQ Section -->
   <section class="bg-offwhite py-16 sm:py-20 border-b border-slate-200/60 select-none">

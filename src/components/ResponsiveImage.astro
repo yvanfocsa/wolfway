@@ -1,0 +1,50 @@
+---
+import type { ResponsiveImageAsset } from '@/content/images';
+
+export interface Props {
+  asset: ResponsiveImageAsset;
+  alt: string;
+  class?: string;
+  pictureClass?: string;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'async' | 'auto' | 'sync';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  asset,
+  alt,
+  class: className,
+  pictureClass,
+  sizes = '100vw',
+  loading = 'lazy',
+  decoding = 'async',
+  fetchpriority,
+} = Astro.props;
+---
+
+<picture class:list={['block', pictureClass]}>
+  <source
+    type="image/avif"
+    srcset={asset.avifSrcSet}
+    sizes={sizes}
+  />
+  <source
+    type="image/webp"
+    srcset={asset.srcSet}
+    sizes={sizes}
+  />
+  <img
+    src={asset.src}
+    srcset={asset.srcSet}
+    sizes={sizes}
+    width={asset.width}
+    height={asset.height}
+    alt={alt}
+    class={className}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchpriority}
+  />
+</picture>

@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # wrangler cache / dev settings
 .wrangler/
+
+# local design iteration copies and review artifacts
+/upgrade/
+/audit-screenshots/

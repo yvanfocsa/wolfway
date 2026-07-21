@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ResponsiveImage from '@/components/ResponsiveImage.astro';
 import CTASection from '@/components/CTASection.astro';
 import Button from '@/components/Button.astro';
 import EquipmentFitHelper from '@/components/EquipmentFitHelper.astro';
 import FAQ from '@/components/FAQ.astro';
 import { services } from '@/content/services';
+import { serviceImages } from '@/content/images';
 import { absoluteUrl } from '@/content/seo';
 
 const faqItems = [
@@ -73,17 +76,12 @@ const servicesStructuredData = [
   description="Flatbed freight, step deck transport, and open deck logistics services. Reliable open-deck transportation across the United States."
   structuredData={servicesStructuredData}
 >
-  <!-- Page Header -->
-  <section class="bg-navy pt-36 pb-16">
-    <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase text-white max-w-3xl">
-        Open-Deck Transportation Services
-      </h1>
-      <p class="mt-4 max-w-2xl text-base leading-relaxed text-white/60 font-body font-light">
-        WolfWay Logistics LLC coordinates specialized flatbed, step deck, and open-deck transport. From standard cargo lanes to oversized permits, our team matches the right trailer configurations for secure, safe delivery.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    title="Open-Deck Transportation Services"
+    description="Specialized flatbed, step deck, and open-deck transport matched to the cargo, the route, and the securement plan."
+    image={serviceImages.stepDeck}
+    imageAlt="Step-deck trailer hauling an excavator at a construction site"
+  />
 
   <!-- Service Detail Sections -->
   {services.map((service, index) => {
@@ -92,7 +90,6 @@ const servicesStructuredData = [
       <section
         id={service.slug}
         class="py-16 sm:py-20 bg-offwhite border-b border-slate-100/50"
-        data-animate="fade-up"
       >
         <div
           class:list={[
@@ -107,10 +104,12 @@ const servicesStructuredData = [
               !isOdd && 'lg:order-2',
             ]}
           >
-            <img
-              src={service.imagePath}
+            <ResponsiveImage
+              asset={service.image}
               alt={service.imageAlt}
               loading="lazy"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              pictureClass="h-full w-full"
               class="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           </div>
@@ -120,7 +119,7 @@ const servicesStructuredData = [
             <h2 class="font-heading text-3xl font-bold uppercase text-ink">
               {service.title}
             </h2>
-            <p class="mt-4 text-sm leading-relaxed text-slate-600 font-body font-light">
+            <p class="mt-4 text-base leading-relaxed text-slate-600 font-body">
               {service.longDescription}
             </p>
 
@@ -140,7 +139,7 @@ const servicesStructuredData = [
                       clip-rule="evenodd"
                     />
                   </svg>
-                  <span class="text-slate-600 text-sm leading-relaxed font-body font-light">{feature}</span>
+                  <span class="text-base leading-relaxed text-slate-600 font-body">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -162,16 +161,16 @@ const servicesStructuredData = [
   })}
 
   <!-- Equipment Fit Helper Section -->
-  <section class="bg-offwhite py-16 border-b border-slate-100" data-animate="fade-up">
+  <section class="bg-offwhite py-16 border-b border-slate-100">
     <div class="mx-auto max-w-3xl px-5 lg:px-0">
       <EquipmentFitHelper />
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <section class="bg-white py-20 border-b border-slate-100" data-animate="fade-up">
+  <section class="bg-white py-20 border-b border-slate-100">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
-      <FAQ items={faqItems} title="Services FAQ" eyebrow="EQUIPMENT & CAPABILITIES" />
+      <FAQ items={faqItems} title="Services FAQ" eyebrow="" />
     </div>
   </section>
 

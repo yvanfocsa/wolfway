@@ -9,7 +9,7 @@ const equipmentTypes = [
 ];
 ---
 
-<form id="quote-form" class="space-y-6 min-h-[500px]" novalidate>
+<form id="quote-form" class="site-form min-h-[500px] space-y-6" novalidate>
   <input type="hidden" name="formType" value="quote" />
 
   <!-- SUCCESS MESSAGE CARD -->
@@ -38,7 +38,7 @@ const equipmentTypes = [
     <div class="mb-8 rounded-sm border border-slate-200 bg-slate-50/60 p-4" aria-label="Quote request progress">
       <div class="flex items-center justify-between gap-4">
         <div>
-          <p id="quote-step-label" class="font-body text-xs font-bold uppercase tracking-[0.18em] text-cyan" aria-live="polite">
+          <p id="quote-step-label" class="font-body text-sm font-bold uppercase tracking-[0.08em] text-cyan-dark" aria-live="polite">
             Step 1 of 2
           </p>
           <p id="quote-step-title" class="mt-1 font-heading text-lg font-bold uppercase leading-none text-ink">
@@ -146,7 +146,7 @@ const equipmentTypes = [
         <button
           type="button"
           id="quote-btn-next"
-          class="inline-flex items-center justify-center rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer bg-cyan text-navy hover:bg-[#00D4E0] border border-transparent h-10 px-6 text-[13px] active:translate-y-[1px] group/btn"
+          class="inline-flex h-12 items-center justify-center rounded-sm border border-transparent bg-cyan px-6 font-body text-sm font-bold uppercase tracking-[0.07em] text-navy transition-[background-color,transform,box-shadow] duration-200 hover:bg-cyan-hover hover:shadow-[0_6px_8px_rgba(0,168,225,0.2)] outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px] group/btn"
         >
           Next Step
           <svg class="ml-2 h-3.5 w-3.5 transition-transform duration-180 ease-out group-hover/btn:translate-x-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -365,7 +365,7 @@ const equipmentTypes = [
         <button
           type="button"
           id="quote-btn-back"
-          class="inline-flex items-center justify-center rounded-sm font-body font-semibold tracking-[0.08em] uppercase transition-colors outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer border border-slate-300 bg-transparent text-slate-700 hover:bg-slate-50 h-10 px-6 text-[13px] active:translate-y-[1px]"
+          class="inline-flex h-12 items-center justify-center rounded-sm border border-slate-300 bg-transparent px-6 font-body text-sm font-bold uppercase tracking-[0.07em] text-slate-700 transition-colors hover:bg-slate-50 outline-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-cyan/70 focus-visible:outline-offset-2 cursor-pointer active:translate-y-[1px]"
         >
           Back
         </button>
@@ -383,7 +383,7 @@ const equipmentTypes = [
   </div>
 
   <!-- Final equipment confirmation notice -->
-  <p class="text-xs text-slate-500 text-center font-body mt-6 pt-2 border-t border-slate-100/40">
+  <p class="mt-6 border-t border-slate-100/40 pt-3 text-center text-[15px] text-slate-600 font-body">
     Final equipment selection is confirmed by WolfWay Logistics LLC.
   </p>
 </form>

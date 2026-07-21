@@ -1,7 +1,7 @@
 import { company } from './company';
 
 export const SITE_URL = 'https://wolfway.pages.dev';
-export const DEFAULT_OG_IMAGE = '/images/og-default.jpg';
+export const DEFAULT_OG_IMAGE = '/images/og-default-v2.jpg';
 
 export function absoluteUrl(path = '/'): string {
   if (/^https?:\/\//i.test(path)) return path;

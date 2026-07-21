@@ -1,18 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 ---
 
 <BaseLayout title="Privacy Policy" description="Privacy policy for WolfWay Logistics LLC website.">
 
-  <!-- Page Header -->
-  <section class="bg-navy pt-32 pb-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 class="font-heading text-4xl font-bold uppercase tracking-wide text-offwhite md:text-5xl">
-        Privacy Policy
-      </h1>
-      <p class="mt-3 text-steel">Last updated: July 2026</p>
-    </div>
-  </section>
+  <PageHero title="Privacy Policy" description="How WolfWay Logistics LLC handles information submitted through this website." compact={true}>
+    <p slot="actions" class="mt-5 text-base font-semibold text-white/70">Last updated: July 2026</p>
+  </PageHero>
 
   <!-- Content -->
   <section class="bg-offwhite py-16 flex-1">
@@ -95,7 +90,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       </h2>
       <p class="text-steel leading-relaxed">
         If you have any questions or concerns about this Privacy Policy, please contact us at
-        <a href="mailto:wolfwaylogistics@gmail.com" class="text-cyan underline hover:text-cyan/80 transition-colors">wolfwaylogistics@gmail.com</a>.
+        <a href="mailto:wolfwaylogistics@gmail.com" class="inline-flex min-h-11 items-center break-all text-cyan underline transition-colors hover:text-cyan/80">wolfwaylogistics@gmail.com</a>.
       </p>
 
     </div>

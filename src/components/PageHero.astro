@@ -1,0 +1,59 @@
+---
+import ResponsiveImage from './ResponsiveImage.astro';
+import type { ResponsiveImageAsset } from '@/content/images';
+
+export interface Props {
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  image?: ResponsiveImageAsset;
+  imageAlt?: string;
+  compact?: boolean;
+}
+
+const {
+  title,
+  description,
+  align = 'left',
+  image,
+  imageAlt = '',
+  compact = false,
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    'page-hero',
+    align === 'center' && 'page-hero--center',
+    compact && 'page-hero--compact',
+  ]}
+>
+  {image && (
+    <div class="page-hero__media" aria-hidden={imageAlt ? undefined : 'true'}>
+      <ResponsiveImage
+        asset={image}
+        alt={imageAlt}
+        class="h-full w-full object-cover"
+        pictureClass="h-full w-full"
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  )}
+  {image && <div class="page-hero__veil" aria-hidden="true"></div>}
+
+  <div class="page-shell page-hero__inner">
+    <slot name="meta" />
+    <h1 class="page-hero__title">{title}</h1>
+    {description && <p class="page-hero__copy">{description}</p>}
+    <slot name="actions" />
+  </div>
+</section>
+
+<style>
+  .page-hero--compact {
+    min-height: clamp(21rem, 38vw, 28rem);
+    padding-bottom: clamp(3.5rem, 6vw, 5rem);
+  }
+</style>

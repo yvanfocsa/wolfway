@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import Button from '@/components/Button.astro';
 import CTASection from '@/components/CTASection.astro';
 import { blogPosts, type BlogPost } from '@/content/blog';
@@ -49,7 +50,7 @@ const articleStructuredData = [
     datePublished: publishedDate,
     dateModified: publishedDate,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
-    image: absoluteUrl('/images/og-default.jpg'),
+    image: absoluteUrl(post.image.src),
   },
 ];
 ---
@@ -60,10 +61,8 @@ const articleStructuredData = [
   canonicalUrl={absoluteUrl(`/blog/${post.slug}`)}
   structuredData={articleStructuredData}
 >
-  <!-- Page Header -->
-  <section class="bg-navy pt-36 pb-20 relative overflow-hidden select-none">
-    <div class="mx-auto max-w-4xl px-5 lg:px-10 relative z-10 text-center">
-      <div class="inline-flex items-center gap-3 mb-4">
+  <PageHero title={post.title} align="center" image={post.image} imageAlt={post.imageAlt} compact={true}>
+      <div slot="meta" class="mb-5 inline-flex flex-wrap items-center justify-center gap-3">
         <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-cyan text-navy rounded">
           {post.category}
         </span>
@@ -71,14 +70,10 @@ const articleStructuredData = [
           {post.date} &bull; {post.readTime}
         </time>
       </div>
-      <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase text-white leading-tight tracking-tight">
-        {post.title}
-      </h1>
-      <p class="mt-4 text-xs font-heading font-semibold uppercase tracking-wider text-white/50">
+      <p slot="actions" class="mt-5 text-base font-semibold text-white/70">
         By {post.author}
       </p>
-    </div>
-  </section>
+  </PageHero>
 
   <!-- Article Body -->
   <section class="bg-white py-16 sm:py-20 border-b border-slate-200/60">
@@ -86,14 +81,14 @@ const articleStructuredData = [
       
       <!-- Back Link -->
       <div class="mb-8">
-        <a href="/blog" class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-[#005F8A] hover:text-cyan transition-colors">
+        <a href="/blog" class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-dark hover:text-cyan transition-colors">
           &larr; Back to all articles
         </a>
       </div>
 
       <!-- Article Content -->
       <div class="prose prose-slate max-w-none font-body font-light text-slate-700 leading-relaxed text-base space-y-6">
-        <p class="text-lg font-normal text-slate-900 leading-relaxed border-l-4 border-cyan pl-4 italic">
+        <p class="border-y border-slate-200 py-5 text-xl font-normal italic leading-relaxed text-slate-900">
           {post.excerpt}
         </p>
         

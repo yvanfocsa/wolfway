@@ -1,3 +1,5 @@
+import { serviceImages, type ResponsiveImageAsset } from './images';
+
 export interface Service {
   slug: string;
   title: string;
@@ -6,7 +8,7 @@ export interface Service {
   longDescription: string;
   features: string[];
   imageAlt: string;
-  imagePath: string;
+  image: ResponsiveImageAsset;
 }
 
 export const services: Service[] = [
@@ -25,8 +27,8 @@ export const services: Service[] = [
       'Real-time GPS tracking',
       'Dedicated dispatch support',
     ],
-    imageAlt: 'Flatbed truck hauling steel beams on an open highway',
-    imagePath: '/images/services/flatbed.jpg',
+    imageAlt: 'Blue tractor hauling secured structural steel on a flatbed trailer',
+    image: serviceImages.flatbed,
   },
   {
     slug: 'step-deck-transport',
@@ -43,9 +45,8 @@ export const services: Service[] = [
       'Experienced oversize load planning',
       'Permit coordination when needed',
     ],
-    imageAlt:
-      'Step deck trailer loaded with construction equipment at a job site',
-    imagePath: '/images/services/step-deck.jpg',
+    imageAlt: 'Step-deck trailer hauling an excavator at a construction site',
+    image: serviceImages.stepDeck,
   },
   {
     slug: 'open-deck-logistics',
@@ -62,8 +63,7 @@ export const services: Service[] = [
       'End-to-end shipment management',
       'Consolidated billing and documentation',
     ],
-    imageAlt:
-      'Multiple open deck trucks lined up at a freight terminal at dawn',
-    imagePath: '/images/services/open-deck.jpg',
+    imageAlt: 'Open-deck trucks staged with secured freight in an industrial yard',
+    image: serviceImages.openDeck,
   },
 ];

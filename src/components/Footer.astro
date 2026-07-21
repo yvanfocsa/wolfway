@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
             WolfWay Logistics LLC
           </span>
         </a>
-        <p class="mt-3 text-sm leading-relaxed text-slate-400 max-w-xs">
+        <p class="mt-3 text-base leading-relaxed text-slate-300 max-w-sm">
           Open-deck freight transportation built around safety, communication and dependable delivery.
         </p>
       </div>
@@ -35,7 +35,7 @@ const year = new Date().getFullYear();
             <li>
               <a
                 href={item.href}
-                class="text-sm text-slate-400 hover:text-white transition-colors duration-200"
+                class="inline-flex min-h-11 min-w-11 items-center text-base text-slate-300 transition-colors duration-200 hover:text-white"
               >
                 {item.label}
               </a>
@@ -53,7 +53,7 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={`tel:${company.phoneRaw}`}
-              class="text-sm text-slate-400 hover:text-white transition-colors duration-200"
+              class="inline-flex min-h-11 items-center text-base text-slate-300 transition-colors duration-200 hover:text-white"
             >
               {company.phone}
             </a>
@@ -61,7 +61,7 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={`mailto:${company.email}`}
-              class="text-sm text-slate-400 hover:text-white transition-colors duration-200"
+              class="inline-flex min-h-11 items-center break-all text-base text-slate-300 transition-colors duration-200 hover:text-white"
             >
               {company.email}
             </a>
@@ -72,14 +72,14 @@ const year = new Date().getFullYear();
 
     <!-- Bottom bar -->
     <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <p class="text-xs text-slate-400">
+      <p class="text-sm text-slate-400">
         &copy; {year} {company.name}. All rights reserved.
       </p>
       <div class="flex gap-5 sm:gap-6">
-        <a href="/privacy-policy" class="text-xs text-slate-400 hover:text-white transition-colors duration-200">
+        <a href="/privacy-policy" class="inline-flex min-h-11 min-w-11 items-center text-sm text-slate-400 transition-colors duration-200 hover:text-white">
           Privacy Policy
         </a>
-        <a href="/terms" class="text-xs text-slate-400 hover:text-white transition-colors duration-200">
+        <a href="/terms" class="inline-flex min-h-11 min-w-11 items-center text-sm text-slate-400 transition-colors duration-200 hover:text-white">
           Terms of Service
         </a>
       </div>

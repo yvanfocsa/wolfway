@@ -5,29 +5,55 @@ import DriverForm from '@/components/DriverForm.astro';
 ---
 
 <BaseLayout
-  title="Driver Recruitment Portal | WolfWay Logistics LLC"
-  description="Official CDL-A Driver Application Portal for WolfWay Logistics LLC. Complete your 30-second pre-qualification and DOT driver application."
+  title="CDL-A Driver Pre-Qualification | WolfWay Logistics LLC"
+  description="Complete WolfWay Logistics LLC's three-step CDL-A driver pre-qualification. A recruiter reviews your information and follows up directly."
 >
   <PageHero
-    title="WolfWay Driver Application"
-    description="Complete three focused pre-qualification steps. A dedicated recruiter will review your information and contact you within 24 hours."
+    title="Start Your Driver Application"
+    description="Complete three focused pre-qualification steps. A recruiter will review your information and contact you directly."
     align="center"
     compact={true}
   >
     <p slot="actions" class="mt-5 text-base text-white/75">Need help? <a href="tel:+12244464256" class="inline-flex min-h-11 items-center font-bold text-cyan hover:underline">Call recruiting at +1 (224) 446-4256</a></p>
   </PageHero>
 
-  <!-- Standalone Portal Application Container -->
-  <section class="bg-offwhite py-16 sm:py-20 border-b border-slate-200/60 select-none flex-1">
-    <div class="mx-auto max-w-3xl px-5 lg:px-0">
-      <div class="form-panel p-6 sm:p-10">
-        <DriverForm />
-      </div>
+  <section id="pre-qualify-form" class="section-band flex-1 bg-offwhite">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <h2 class="section-title text-ink">Start your application</h2>
+        <p class="section-copy mt-5">Three focused steps. A recruiter follows up directly after reviewing your qualifications.</p>
 
-      <!-- Trust Disclosures Footer -->
-      <div class="mx-auto mt-8 max-w-2xl space-y-2 text-center text-[15px] leading-relaxed text-slate-600 font-body">
-        <p>&copy; 2026 WolfWay Logistics LLC. All information collected is protected under FMCSA DOT equal opportunity standards.</p>
-        <p>WolfWay Logistics LLC operates in the United States. This portal is available to US drivers only.</p>
+        <div class="mt-8 border-t border-slate-300">
+          <div class="flex gap-4 border-b border-slate-300 py-5">
+            <svg class="mt-0.5 h-6 w-6 shrink-0 text-cyan-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <strong class="block text-base text-navy">No sensitive identity numbers</strong>
+              <span class="text-[15px] leading-relaxed text-slate-600">SSN and full CDL details stay out of this public form.</span>
+            </div>
+          </div>
+          <div class="flex gap-4 border-b border-slate-300 py-5">
+            <svg class="mt-0.5 h-6 w-6 shrink-0 text-cyan-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            <div>
+              <strong class="block text-base text-navy">Human follow-up</strong>
+              <span class="text-[15px] leading-relaxed text-slate-600">Questions? Call recruiting at +1 (224) 446-4256.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div>
+        <div class="form-panel p-6 sm:p-9 lg:p-10">
+          <DriverForm />
+        </div>
+
+        <div class="mt-6 space-y-1 text-[15px] leading-relaxed text-slate-600">
+          <p>Information submitted here is used only to review your driver pre-qualification.</p>
+          <p>WolfWay Logistics LLC considers qualified applicants in accordance with federal and state equal opportunity requirements.</p>
+        </div>
       </div>
     </div>
   </section>

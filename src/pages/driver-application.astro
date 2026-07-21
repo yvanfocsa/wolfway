@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import DriverForm from '@/components/DriverForm.astro';
+import { serviceImages } from '@/content/images';
 ---
 
 <BaseLayout
@@ -12,12 +13,14 @@ import DriverForm from '@/components/DriverForm.astro';
     title="Start Your Driver Application"
     description="Complete three focused pre-qualification steps. A recruiter will review your information and contact you directly."
     align="center"
-    compact={true}
+    image={serviceImages.openDeck}
+    imageAlt="Open-deck trucks staged with secured freight in an industrial yard"
+    fullscreen={true}
   >
     <p slot="actions" class="mt-5 text-base text-white/75">Need help? <a href="tel:+12244464256" class="inline-flex min-h-11 items-center font-bold text-cyan hover:underline">Call recruiting at +1 (224) 446-4256</a></p>
   </PageHero>
 
-  <section id="pre-qualify-form" class="section-band flex-1 bg-offwhite">
+  <section id="pre-qualify-form" class="section-band flex-1 scroll-mt-20 bg-offwhite">
     <div class="page-shell grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
       <aside class="lg:sticky lg:top-28 lg:self-start">
         <h2 class="section-title text-ink">Start your application</h2>

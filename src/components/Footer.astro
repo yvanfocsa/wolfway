@@ -1,85 +1,81 @@
 ---
+import Button from '@/components/Button.astro';
 import { footerNav } from '@/content/navigation';
 import { company } from '@/content/company';
 
 const year = new Date().getFullYear();
+const primaryNav = footerNav.filter(
+  ({ href }) => !['/request-a-quote', '/privacy-policy', '/terms'].includes(href),
+);
 ---
 
-<footer class="bg-navy">
-  <div class="mx-auto max-w-7xl px-5 lg:px-10 py-12 sm:py-16">
-    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
-      <!-- Brand -->
-      <div>
-        <a href="/" class="flex items-center gap-3 group" aria-label="WolfWay Logistics home">
-          <img
-            src="/images/logo_icon.png"
-            alt="WolfWay Logo"
-            class="h-16 w-16 object-contain group-hover:scale-105 transition-transform"
-          />
-          <span class="font-heading text-xl font-extrabold uppercase tracking-widest text-white group-hover:text-cyan transition-colors">
+<footer class="bg-navy text-white">
+  <div class="page-shell py-8 sm:py-10">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <a href="/" class="group flex min-h-12 items-center gap-3" aria-label="WolfWay Logistics home">
+        <img
+          src="/images/logo_icon.png"
+          alt=""
+          width="48"
+          height="48"
+          class="h-12 w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
+        />
+        <span>
+          <span class="block font-heading text-xl font-extrabold uppercase leading-none tracking-wider transition-colors group-hover:text-cyan">
             WolfWay Logistics LLC
           </span>
-        </a>
-        <p class="mt-3 text-base leading-relaxed text-slate-300 max-w-sm">
-          Open-deck freight transportation built around safety, communication and dependable delivery.
-        </p>
-      </div>
+          <span class="mt-1 block text-[15px] leading-snug text-slate-300">
+            {company.tagline}
+          </span>
+        </span>
+      </a>
 
-      <!-- Navigation -->
-      <div>
-        <h3 class="font-heading text-sm font-semibold uppercase tracking-wider text-white mb-4">
-          Navigation
-        </h3>
-        <ul class="space-y-2.5">
-          {footerNav.map((item) => (
+      <Button href="/request-a-quote" variant="primary" size="sm" arrow={true} class="w-full sm:w-auto">
+        Request a Quote
+      </Button>
+    </div>
+
+    <div class="mt-6 border-t border-white/10 pt-3 lg:flex lg:items-center lg:justify-between lg:gap-8">
+      <nav aria-label="Footer navigation">
+        <ul class="flex flex-wrap gap-x-5 sm:gap-x-7">
+          {primaryNav.map((item) => (
             <li>
               <a
                 href={item.href}
-                class="inline-flex min-h-11 min-w-11 items-center text-base text-slate-300 transition-colors duration-200 hover:text-white"
+                class="inline-flex min-h-11 items-center text-base font-semibold text-slate-300 transition-colors duration-200 hover:text-white"
               >
                 {item.label}
               </a>
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
 
-      <!-- Contact -->
-      <div>
-        <h3 class="font-heading text-sm font-semibold uppercase tracking-wider text-white mb-4">
-          Contact
-        </h3>
-        <ul class="space-y-2.5">
-          <li>
-            <a
-              href={`tel:${company.phoneRaw}`}
-              class="inline-flex min-h-11 items-center text-base text-slate-300 transition-colors duration-200 hover:text-white"
-            >
-              {company.phone}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`mailto:${company.email}`}
-              class="inline-flex min-h-11 items-center break-all text-base text-slate-300 transition-colors duration-200 hover:text-white"
-            >
-              {company.email}
-            </a>
-          </li>
-        </ul>
+      <div class="flex flex-wrap items-center gap-x-6 lg:shrink-0 lg:justify-end">
+        <a
+          href={`tel:${company.phoneRaw}`}
+          class="inline-flex min-h-11 items-center text-base font-semibold text-white transition-colors duration-200 hover:text-cyan"
+        >
+          {company.phone}
+        </a>
+        <a
+          href={`mailto:${company.email}`}
+          class="inline-flex min-h-11 items-center text-base font-semibold text-slate-300 transition-colors duration-200 hover:text-white"
+        >
+          Email dispatch
+        </a>
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <p class="text-sm text-slate-400">
+    <div class="mt-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <p class="text-[15px] leading-relaxed text-slate-400">
         &copy; {year} {company.name}. All rights reserved.
       </p>
-      <div class="flex gap-5 sm:gap-6">
-        <a href="/privacy-policy" class="inline-flex min-h-11 min-w-11 items-center text-sm text-slate-400 transition-colors duration-200 hover:text-white">
+      <div class="flex flex-wrap gap-x-6">
+        <a href="/privacy-policy" class="inline-flex min-h-11 items-center text-[15px] text-slate-400 transition-colors duration-200 hover:text-white">
           Privacy Policy
         </a>
-        <a href="/terms" class="inline-flex min-h-11 min-w-11 items-center text-sm text-slate-400 transition-colors duration-200 hover:text-white">
+        <a href="/terms" class="inline-flex min-h-11 items-center text-[15px] text-slate-400 transition-colors duration-200 hover:text-white">
           Terms of Service
         </a>
       </div>

@@ -7,9 +7,7 @@ export interface ResponsiveImageAsset {
   height: number;
 }
 
-function serviceImage(name: string): ResponsiveImageAsset {
-  const base = `/images/services/${name}-v2`;
-
+function responsiveImage(base: string): ResponsiveImageAsset {
   return {
     src: `${base}.webp`,
     srcSet: `${base}-960.webp 960w, ${base}.webp 1672w`,
@@ -20,8 +18,16 @@ function serviceImage(name: string): ResponsiveImageAsset {
   };
 }
 
+function serviceImage(name: string): ResponsiveImageAsset {
+  return responsiveImage(`/images/services/${name}-v2`);
+}
+
 export const serviceImages = {
   flatbed: serviceImage('flatbed'),
   openDeck: serviceImage('open-deck'),
   stepDeck: serviceImage('step-deck'),
+} as const;
+
+export const heroImages = {
+  contact: responsiveImage('/images/heroes/contact-operations-v1'),
 } as const;

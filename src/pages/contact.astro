@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import Button from '@/components/Button.astro';
-import { serviceImages } from '@/content/images';
+import { heroImages } from '@/content/images';
 ---
 
 <BaseLayout
@@ -12,8 +12,9 @@ import { serviceImages } from '@/content/images';
   <PageHero
     title="Talk to the Team Moving the Load"
     description="Freight coordination, driver recruiting, and carrier partnerships all start with a direct conversation. Choose the right channel below."
-    image={serviceImages.flatbed}
-    imageAlt="Blue tractor hauling secured structural steel on a flatbed trailer"
+    image={heroImages.contact}
+    imageAlt="Freight dispatcher coordinating a secured open-deck load from the operations office"
+    fullscreen={true}
   />
 
   <!-- Modern Spacious Contact Section -->

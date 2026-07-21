@@ -181,19 +181,31 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     const header = document.getElementById('site-header');
     if (!header) return;
 
-    // Check if the current page has a Hero section
-    const hero = document.querySelector('section.relative.h-\\[100svh\\], section.relative.h-\\[100dvh\\], #hero-bg-container');
+    const transparentClasses = ['is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white'];
+    const solidClasses = ['is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink'];
+
+    const setTransparent = () => {
+      header.classList.remove(...solidClasses);
+      header.classList.add(...transparentClasses);
+    };
+
+    const setSolid = () => {
+      header.classList.remove(...transparentClasses);
+      header.classList.add(...solidClasses);
+    };
+
+    const hero = document.querySelector('[data-header-overlay="true"]');
     
     if (hero) {
-      // Use IntersectionObserver to track scroll state dynamically
+      const heroRect = hero.getBoundingClientRect();
+      heroRect.bottom > 80 && heroRect.top < window.innerHeight ? setTransparent() : setSolid();
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            header.classList.remove('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
-            header.classList.add('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
+            setTransparent();
           } else {
-            header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
-            header.classList.add('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
+            setSolid();
           }
         });
       }, {
@@ -206,9 +218,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
       // Save observer reference to disconnect on view transitions
       (window as any).headerObserver = observer;
     } else {
-      // No hero exists: immediately set scrolled state
-      header.classList.remove('is-transparent', 'bg-transparent', 'py-5', 'border-transparent', 'text-white');
-      header.classList.add('is-scrolled', 'backdrop-blur-md', 'bg-white/90', 'py-3', 'border-slate-200/80', 'shadow-xs', 'text-ink');
+      setSolid();
     }
   }
 

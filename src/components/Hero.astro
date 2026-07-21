@@ -3,7 +3,7 @@ import Button from './Button.astro';
 import { serviceImages } from '@/content/images';
 ---
 
-<section class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
+<section data-header-overlay="true" class="relative h-[100svh] min-h-[600px] lg:h-[100dvh] flex items-center overflow-hidden bg-navy select-none">
   <!-- Video / Image background container -->
   <div class="absolute inset-0 z-0 bg-navy" id="hero-bg-container">
     <!-- Inline Video element for instant browser parsing and preloading -->

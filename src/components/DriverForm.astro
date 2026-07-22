@@ -10,11 +10,11 @@
     aria-label="Application progress"
     aria-valuemin="0"
     aria-valuemax="100"
-    aria-valuenow="33"
+    aria-valuenow="0"
   >
     <div class="flex flex-wrap items-center justify-between gap-2">
       <span id="page-driver-step-title" class="text-base font-bold text-navy">Step 1 of 3: Your details</span>
-      <span id="page-driver-step-pct" class="text-base font-bold text-cyan-dark">33% complete</span>
+      <span id="page-driver-step-pct" class="text-base font-bold text-cyan-dark">0% complete</span>
     </div>
     <ol class="mt-5 grid grid-cols-3 gap-2" aria-label="Application steps">
       <li id="page-driver-progress-step-1" class="driver-progress-step" data-state="current">
@@ -31,7 +31,7 @@
       </li>
     </ol>
     <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-200" aria-hidden="true">
-      <div id="page-driver-progress-bar" class="h-full bg-cyan transition-[width] duration-300 ease-out" style="width: 33%"></div>
+      <div id="page-driver-progress-bar" class="h-full bg-cyan transition-[width] duration-300 ease-out" style="width: 0%"></div>
     </div>
   </div>
 
@@ -328,11 +328,12 @@
       </div>
     </fieldset>
 
-    <div id="page-footer-controls" class="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+    <div id="page-footer-controls" class="flex flex-col-reverse justify-end gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center">
       <button
         type="button"
         id="page-btn-prev"
         class="inline-flex min-h-13 items-center justify-center gap-2 rounded-sm border border-slate-300 px-6 py-3 text-[15px] font-extrabold uppercase tracking-[0.04em] text-slate-700 transition-colors hover:bg-slate-100 disabled:opacity-45"
+        hidden
         disabled
       >
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -441,7 +442,7 @@
       const stepTitle = document.getElementById('page-driver-step-title');
       const stepPct = document.getElementById('page-driver-step-pct');
       const bar = document.getElementById('page-driver-progress-bar');
-      const percentages = [33, 67, 100];
+      const percentages = [0, 33, 67];
       const titles = [
         'Step 1 of 3: Your details',
         'Step 2 of 3: Your address',
@@ -455,7 +456,9 @@
       if (stepPct) stepPct.textContent = `${currentPercentage}% complete`;
       if (bar) bar.style.width = `${currentPercentage}%`;
       progress?.setAttribute('aria-valuenow', String(currentPercentage));
+      previousButton.hidden = step === 1;
       previousButton.disabled = step === 1;
+      if (footerControls) footerControls.style.justifyContent = step === 1 ? 'flex-end' : 'space-between';
       nextButtonLabel.textContent = step === 3 ? 'Submit application' : 'Continue';
 
       progressSteps.forEach((item, index) => {

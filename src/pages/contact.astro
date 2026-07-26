@@ -15,10 +15,19 @@ import { heroImages } from '@/content/images';
     image={heroImages.contact}
     imageAlt="Freight dispatcher coordinating a secured open-deck load from the operations office"
     fullscreen={true}
-  />
+  >
+    <div slot="actions" class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <Button href="#contact-options" variant="primary" size="lg" arrow={true} class="w-full justify-center sm:w-auto">
+        Choose a Contact Route
+      </Button>
+      <Button href="tel:+12244464256" variant="outline" size="lg" class="w-full justify-center sm:w-auto">
+        Call WolfWay
+      </Button>
+    </div>
+  </PageHero>
 
   <!-- Modern Spacious Contact Section -->
-  <section class="bg-offwhite py-20 sm:py-24 animate-fade-in flex-1">
+  <section id="contact-options" class="flex-1 scroll-mt-20 bg-offwhite py-20 animate-fade-in sm:py-24">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       
       <!-- Split Layout (Uncluttered, Editorial Flow) -->

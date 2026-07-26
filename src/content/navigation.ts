@@ -7,6 +7,7 @@ export const mainNav: NavItem[] = [
   { label: 'Services', href: '/services' },
   { label: 'Shippers', href: '/request-a-quote' },
   { label: 'Drivers', href: '/drive-with-us' },
+  { label: 'Carriers', href: '/carrier' },
   { label: 'Contact', href: '/contact' },
 ];
 

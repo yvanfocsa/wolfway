@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import QuoteForm from '@/components/QuoteForm.astro';
+import Button from '@/components/Button.astro';
 import { serviceImages } from '@/content/images';
 ---
 
@@ -15,10 +16,19 @@ import { serviceImages } from '@/content/images';
     image={serviceImages.openDeck}
     imageAlt="Open-deck trucks staged with secured freight in an industrial yard"
     fullscreen={true}
-  />
+  >
+    <div slot="actions" class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <Button href="#quote-form-section" variant="primary" size="lg" arrow={true} class="w-full justify-center sm:w-auto">
+        Start Your Quote
+      </Button>
+      <Button href="tel:+12244464256" variant="outline" size="lg" class="w-full justify-center sm:w-auto">
+        Call Dispatch
+      </Button>
+    </div>
+  </PageHero>
 
   <!-- Main Quote Section -->
-  <section class="bg-offwhite py-16 sm:py-24 flex-1">
+  <section id="quote-form-section" class="flex-1 scroll-mt-20 bg-offwhite py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         

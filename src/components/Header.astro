@@ -6,6 +6,30 @@ import { ArrowRight, Menu, Phone, X } from '@lucide/astro';
 const pathname = new URL(Astro.request.url).pathname;
 // Normalize pathname (strip trailing slash if any, except for root)
 const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname;
+
+const isDriverJourney = currentPath === '/drive-with-us' || currentPath === '/driver-application';
+const isCarrierJourney = currentPath === '/carrier';
+
+const isNavItemActive = (href: string) => {
+  if (href === '/drive-with-us') return isDriverJourney;
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+};
+
+const journeyCta = isDriverJourney
+  ? {
+      href: '#pre-qualify-form',
+      label: 'Apply to Drive',
+    }
+  : isCarrierJourney
+    ? {
+        href: '#carrier-application',
+        label: 'Join Network',
+      }
+    : {
+        href: currentPath === '/request-a-quote' ? '#quote-form-section' : '/request-a-quote',
+        label: 'Request a Quote',
+      };
 ---
 
 <div id="scroll-progress" class="fixed left-0 top-0 z-[80] h-0.5 w-full origin-left scale-x-0 bg-cyan shadow-[0_0_20px_rgba(0,168,225,0.45)]" aria-hidden="true"></div>
@@ -41,10 +65,10 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     </a>
 
     <!-- Desktop Nav Links & CTA -->
-    <div class="hidden lg:flex items-center gap-8">
-      <div class="flex items-center gap-5">
+    <div class="hidden lg:flex items-center gap-6">
+      <div class="flex items-center gap-3">
         {mainNav.map((item) => {
-          const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+          const isActive = isNavItemActive(item.href);
           return (
             <a
               href={item.href}
@@ -72,12 +96,12 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
           +1 (224) 446-4256
         </a>
         <Button 
-          href="/driver-application" 
+          href={journeyCta.href}
           variant="primary" 
           size="sm" 
           class="rounded-sm font-heading font-extrabold tracking-wider uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan/70"
         >
-          Apply to Drive
+          {journeyCta.label}
         </Button>
       </div>
     </div>
@@ -140,7 +164,7 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     <!-- Navigation links -->
     <nav class="flex flex-1 flex-col justify-start gap-2 overflow-y-auto overscroll-contain px-4 py-5" aria-label="Mobile navigation">
       {mainNav.map((item, i) => {
-        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        const isActive = isNavItemActive(item.href);
         return (
           <a
             href={item.href}
@@ -173,12 +197,12 @@ const currentPath = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(
     <div class="border-t border-slate-200 bg-slate-50 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
       <Button
         id="menu-cta"
-        href="/driver-application"
+        href={journeyCta.href}
         variant="primary"
         size="md"
         class="w-full justify-center rounded-sm font-heading font-extrabold uppercase tracking-normal"
       >
-        Apply to Drive
+        {journeyCta.label}
         <ArrowRight class="ml-2.5 h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1" stroke-width={2.25} aria-hidden="true" />
       </Button>
 

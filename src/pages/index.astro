@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
 import HeroTrustBar from '@/components/HeroTrustBar.astro';
+import AudienceSelector from '@/components/AudienceSelector.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import OurStory from '@/components/OurStory.astro';
@@ -37,13 +38,16 @@ const homeStructuredData = [
   <!-- 1. Video Hero -->
   <Hero />
 
-  <!-- 2. Trust & Stats Bar -->
+  <!-- 2. Audience pathways -->
+  <AudienceSelector />
+
+  <!-- 3. Trust & Stats Bar -->
   <HeroTrustBar />
 
-  <!-- 3. Our Story / Heritage Section -->
+  <!-- 4. Our Story / Heritage Section -->
   <OurStory />
 
-  <!-- 4. Services Section -->
+  <!-- 5. Services Section -->
   <section class="bg-offwhite py-16 sm:py-20 lg:py-24 services-section">
     <div class="mx-auto max-w-7xl px-5 lg:px-10">
       <div class="mb-12 grid gap-5 md:grid-cols-[1fr_0.8fr] md:items-end">
@@ -73,19 +77,19 @@ const homeStructuredData = [
     </div>
   </section>
 
-  <!-- 5. Freight Capabilities -->
+  <!-- 6. Freight Capabilities -->
   <FreightCapabilities />
 
-  <!-- 6. Load Protection / Compliance Section -->
+  <!-- 7. Load Protection / Compliance Section -->
   <ComplianceShowcase />
 
-  <!-- 7. How It Works Section -->
+  <!-- 8. How It Works Section -->
   <HowItWorks />
 
-  <!-- 8. Recruitment & Carrier CTA -->
+  <!-- 9. Recruitment & Carrier CTA -->
   <SplitAudience />
 
-  <!-- 9. Final Freight Quote CTA -->
+  <!-- 10. Final Freight Quote CTA -->
   <CTASection
     variant="dark"
     heading="Ready to Move Your Freight?"

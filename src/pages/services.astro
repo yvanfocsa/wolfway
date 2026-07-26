@@ -82,7 +82,16 @@ const servicesStructuredData = [
     image={serviceImages.stepDeck}
     imageAlt="Step-deck trailer hauling an excavator at a construction site"
     fullscreen={true}
-  />
+  >
+    <div slot="actions" class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <Button href="/request-a-quote#quote-form-section" variant="primary" size="lg" arrow={true} class="w-full justify-center sm:w-auto">
+        Request a Freight Quote
+      </Button>
+      <Button href="#flatbed-freight" variant="outline" size="lg" class="w-full justify-center sm:w-auto">
+        Explore Equipment
+      </Button>
+    </div>
+  </PageHero>
 
   <!-- Service Detail Sections -->
   {services.map((service, index) => {
@@ -148,7 +157,7 @@ const servicesStructuredData = [
             <div class="mt-8">
               <Button
                 variant="primary"
-                href="/request-a-quote"
+                href={`/request-a-quote?equipment=${encodeURIComponent(service.shortTitle)}#quote-form-section`}
                 arrow={true}
                 class="group w-full sm:w-auto"
               >
@@ -180,7 +189,7 @@ const servicesStructuredData = [
     variant="dark"
     heading="Need a Custom Solution?"
     description="Every load is different. Whether you need specialized equipment, permit coordination, or dedicated carrier lanes, our team will coordinate a secure open-deck transportation plan."
-    buttonText="Contact Us"
-    buttonHref="/contact"
+    buttonText="REQUEST A FREIGHT QUOTE"
+    buttonHref="/request-a-quote#quote-form-section"
   />
 </BaseLayout>

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import DriverForm from '@/components/DriverForm.astro';
+import Button from '@/components/Button.astro';
 import { heroImages } from '@/content/images';
 ---
 
@@ -18,7 +19,19 @@ import { heroImages } from '@/content/images';
     mobileImagePosition="right"
     fullscreen={true}
   >
-    <p slot="actions" class="mt-5 text-base text-white/75">Need help? <a href="tel:+12244464256" class="inline-flex min-h-11 items-center font-bold text-cyan hover:underline">Call recruiting at +1 (224) 446-4256</a></p>
+    <div slot="actions" class="mt-8">
+      <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button href="#pre-qualify-form" variant="primary" size="lg" arrow={true} class="w-full justify-center sm:w-auto">
+          Start Application
+        </Button>
+        <Button href="/drive-with-us" variant="outline" size="lg" class="w-full justify-center sm:w-auto">
+          Review Driver Opportunities
+        </Button>
+      </div>
+      <p class="mt-4 text-base text-white/80">
+        Need help? <a href="tel:+12244464256" class="inline-flex min-h-11 items-center font-bold text-cyan hover:underline">Call recruiting at +1 (224) 446-4256</a>
+      </p>
+    </div>
   </PageHero>
 
   <section id="pre-qualify-form" class="section-band flex-1 scroll-mt-20 bg-offwhite">

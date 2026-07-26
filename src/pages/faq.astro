@@ -2,7 +2,6 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import Button from '@/components/Button.astro';
-import CTASection from '@/components/CTASection.astro';
 import { shipperFAQs, driverFAQs } from '@/content/faq';
 ---
 
@@ -85,30 +84,20 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
 
       <!-- Help Card -->
       <div class="mt-14 rounded-lg border border-slate-200/80 bg-white p-6 text-center shadow-xs sm:p-8">
-        <h2 class="font-heading text-xl font-bold uppercase text-ink mb-2">Still have questions?</h2>
-        <p class="text-base text-slate-600 font-body mb-6">Our 24/7 dispatch coordinators are standing by to assist with your specific shipping needs.</p>
+        <h2 id="faq-help-title" class="mb-2 font-heading text-xl font-bold uppercase text-ink">Still have a load question?</h2>
+        <p id="faq-help-copy" class="mb-6 text-base text-slate-600 font-body">Talk directly with dispatch or send the shipment details for a focused freight quote.</p>
         <div class="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
-          <Button href="/contact" variant="primary" size="md" class="w-full sm:w-auto">
-            Speak with Dispatch
+          <Button id="faq-primary-action" href="tel:+12244464256" variant="primary" size="md" class="w-full sm:w-auto">
+            <span id="faq-primary-label">Call Dispatch</span>
           </Button>
-          <Button href="/request-a-quote" variant="secondary" size="md" class="w-full sm:w-auto">
-            Request Freight Quote
+          <Button id="faq-secondary-action" href="/request-a-quote#quote-form-section" variant="secondary" size="md" class="w-full sm:w-auto">
+            <span id="faq-secondary-label">Request Freight Quote</span>
           </Button>
         </div>
       </div>
 
     </div>
   </section>
-
-  <!-- CTA -->
-  <CTASection
-    variant="dark"
-    eyebrow="READY TO SHIP?"
-    heading="Move Your Cargo With Confidence"
-    description="Get a fast, transparent quote for flatbed, step deck, or specialized open-deck freight today."
-    buttonText="REQUEST A FREIGHT QUOTE"
-    buttonHref="/request-a-quote"
-  />
 </BaseLayout>
 
 <style>
@@ -125,26 +114,65 @@ import { shipperFAQs, driverFAQs } from '@/content/faq';
     const tabDrivers = document.getElementById('tab-drivers');
     const containerShippers = document.getElementById('faq-shippers-container');
     const containerDrivers = document.getElementById('faq-drivers-container');
+    const helpTitle = document.getElementById('faq-help-title');
+    const helpCopy = document.getElementById('faq-help-copy');
+    const primaryAction = document.getElementById('faq-primary-action') as HTMLAnchorElement | null;
+    const primaryLabel = document.getElementById('faq-primary-label');
+    const secondaryAction = document.getElementById('faq-secondary-action') as HTMLAnchorElement | null;
+    const secondaryLabel = document.getElementById('faq-secondary-label');
 
     if (!tabShippers || !tabDrivers || !containerShippers || !containerDrivers) return;
     if (tabShippers.dataset.faqTabsBound === 'true') return;
 
-    tabShippers.dataset.faqTabsBound = 'true';
-    tabDrivers.dataset.faqTabsBound = 'true';
+    const shipperTab = tabShippers;
+    const driverTab = tabDrivers;
+    const shipperPanel = containerShippers;
+    const driverPanel = containerDrivers;
 
-    tabShippers.addEventListener('click', () => {
-      tabShippers.setAttribute('aria-selected', 'true');
-      tabDrivers.setAttribute('aria-selected', 'false');
-      containerShippers.classList.remove('hidden');
-      containerDrivers.classList.add('hidden');
+    shipperTab.dataset.faqTabsBound = 'true';
+    driverTab.dataset.faqTabsBound = 'true';
+
+    function showAudience(audience: 'shippers' | 'drivers') {
+      const isShipper = audience === 'shippers';
+
+      shipperTab.setAttribute('aria-selected', String(isShipper));
+      driverTab.setAttribute('aria-selected', String(!isShipper));
+      shipperTab.setAttribute('tabindex', isShipper ? '0' : '-1');
+      driverTab.setAttribute('tabindex', isShipper ? '-1' : '0');
+      shipperPanel.classList.toggle('hidden', !isShipper);
+      driverPanel.classList.toggle('hidden', isShipper);
+      shipperPanel.setAttribute('aria-hidden', String(!isShipper));
+      driverPanel.setAttribute('aria-hidden', String(isShipper));
+
+      if (helpTitle) helpTitle.textContent = isShipper ? 'Still have a load question?' : 'Ready for the next step?';
+      if (helpCopy) {
+        helpCopy.textContent = isShipper
+          ? 'Talk directly with dispatch or send the shipment details for a focused freight quote.'
+          : 'Start the short pre-qualification or speak directly with recruiting before you apply.';
+      }
+      if (primaryAction) primaryAction.href = isShipper ? 'tel:+12244464256' : '/driver-application#pre-qualify-form';
+      if (primaryLabel) primaryLabel.textContent = isShipper ? 'Call Dispatch' : 'Start Driver Application';
+      if (secondaryAction) secondaryAction.href = isShipper ? '/request-a-quote#quote-form-section' : 'tel:+12244464256';
+      if (secondaryLabel) secondaryLabel.textContent = isShipper ? 'Request Freight Quote' : 'Call Recruiting';
+    }
+
+    shipperTab.addEventListener('click', () => showAudience('shippers'));
+    driverTab.addEventListener('click', () => showAudience('drivers'));
+
+    const tabs = [shipperTab, driverTab];
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        const nextIndex = event.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+        const nextTab = tabs[nextIndex];
+        nextTab?.focus();
+        showAudience(nextTab === driverTab ? 'drivers' : 'shippers');
+      });
     });
 
-    tabDrivers.addEventListener('click', () => {
-      tabDrivers.setAttribute('aria-selected', 'true');
-      tabShippers.setAttribute('aria-selected', 'false');
-      containerDrivers.classList.remove('hidden');
-      containerShippers.classList.add('hidden');
-    });
+    const requestedAudience = new URLSearchParams(window.location.search).get('audience');
+    showAudience(requestedAudience === 'drivers' ? 'drivers' : 'shippers');
   }
 
   setupFAQTabs();

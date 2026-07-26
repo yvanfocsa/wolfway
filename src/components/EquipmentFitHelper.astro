@@ -1,5 +1,6 @@
 ---
 // src/components/EquipmentFitHelper.astro
+import Button from './Button.astro';
 ---
 
 <div class="bg-white p-8 border border-slate-200/50 rounded-sm shadow-sm select-none">
@@ -7,8 +8,8 @@
     <h3 class="font-heading text-2xl font-bold uppercase text-ink">
       Equipment Fit Helper
     </h3>
-    <p class="text-sm text-slate-600 font-body mt-1">
-      Select your cargo type below to find the suitable open-deck trailer configuration.
+    <p class="mt-2 text-base leading-relaxed text-slate-600 font-body">
+      Match the load to a likely trailer, then carry that choice directly into the quote form.
     </p>
   </div>
 
@@ -18,39 +19,39 @@
       type="radio" 
       id="fit-general" 
       name="fit-option" 
-      class="peer/general hidden" 
+      class="peer/general sr-only"
       checked 
     />
     <input 
       type="radio" 
       id="fit-taller" 
       name="fit-option" 
-      class="peer/taller hidden" 
+      class="peer/taller sr-only"
     />
     <input 
       type="radio" 
       id="fit-notsure" 
       name="fit-option" 
-      class="peer/notsure hidden" 
+      class="peer/notsure sr-only"
     />
 
     <!-- Radio selectors triggers -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
       <label 
         for="fit-general" 
-        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-sm uppercase tracking-wider text-slate-700 peer-checked/general:border-cyan peer-checked/general:bg-cyan/5 peer-checked/general:text-cyan-dark"
+        class="block min-h-13 cursor-pointer rounded-sm border border-slate-200 p-4 text-center text-base font-semibold uppercase tracking-wider text-slate-700 transition-all hover:bg-slate-50 peer-checked/general:border-cyan peer-checked/general:bg-cyan/5 peer-checked/general:text-cyan-dark peer-focus-visible/general:outline peer-focus-visible/general:outline-3 peer-focus-visible/general:outline-cyan-dark peer-focus-visible/general:outline-offset-2"
       >
         General Freight
       </label>
       <label 
         for="fit-taller" 
-        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-sm uppercase tracking-wider text-slate-700 peer-checked/taller:border-cyan peer-checked/taller:bg-cyan/5 peer-checked/taller:text-cyan-dark"
+        class="block min-h-13 cursor-pointer rounded-sm border border-slate-200 p-4 text-center text-base font-semibold uppercase tracking-wider text-slate-700 transition-all hover:bg-slate-50 peer-checked/taller:border-cyan peer-checked/taller:bg-cyan/5 peer-checked/taller:text-cyan-dark peer-focus-visible/taller:outline peer-focus-visible/taller:outline-3 peer-focus-visible/taller:outline-cyan-dark peer-focus-visible/taller:outline-offset-2"
       >
         Taller Freight
       </label>
       <label 
         for="fit-notsure" 
-        class="cursor-pointer border border-slate-200 p-4 text-center rounded-sm hover:bg-slate-50 transition-all block font-semibold text-sm uppercase tracking-wider text-slate-700 peer-checked/notsure:border-cyan peer-checked/notsure:bg-cyan/5 peer-checked/notsure:text-cyan-dark"
+        class="block min-h-13 cursor-pointer rounded-sm border border-slate-200 p-4 text-center text-base font-semibold uppercase tracking-wider text-slate-700 transition-all hover:bg-slate-50 peer-checked/notsure:border-cyan peer-checked/notsure:bg-cyan/5 peer-checked/notsure:text-cyan-dark peer-focus-visible/notsure:outline peer-focus-visible/notsure:outline-3 peer-focus-visible/notsure:outline-cyan-dark peer-focus-visible/notsure:outline-offset-2"
       >
         Not Sure
       </label>
@@ -64,10 +65,13 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <div>
-          <h4 class="font-heading text-sm font-bold uppercase text-ink">Flatbed may be suitable.</h4>
-          <p class="text-sm text-slate-600 font-body mt-1.5 leading-relaxed">
+          <h4 class="font-heading text-base font-bold uppercase text-ink">Flatbed may be suitable.</h4>
+          <p class="mt-1.5 text-base leading-relaxed text-slate-600 font-body">
             Standard flatbed trailers are ideal for steel, machinery, pipe, construction materials, and general cargo that can be loaded from the side or top, up to 8.5 feet in height.
           </p>
+          <Button href="/request-a-quote?equipment=Flatbed#quote-form-section" variant="primary" size="sm" arrow={true} class="mt-5 w-full sm:w-auto">
+            Quote This Load
+          </Button>
         </div>
       </div>
     </div>
@@ -79,10 +83,13 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <div>
-          <h4 class="font-heading text-sm font-bold uppercase text-ink">Step deck may be suitable.</h4>
-          <p class="text-sm text-slate-600 font-body mt-1.5 leading-relaxed">
+          <h4 class="font-heading text-base font-bold uppercase text-ink">Step deck may be suitable.</h4>
+          <p class="mt-1.5 text-base leading-relaxed text-slate-600 font-body">
             Step deck (single drop) trailers have a lowered rear bed designed to carry taller cargo (up to 10 feet) without requiring special over-height permits.
           </p>
+          <Button href="/request-a-quote?equipment=Step%20Deck#quote-form-section" variant="primary" size="sm" arrow={true} class="mt-5 w-full sm:w-auto">
+            Quote This Load
+          </Button>
         </div>
       </div>
     </div>
@@ -94,10 +101,13 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <div>
-          <h4 class="font-heading text-sm font-bold uppercase text-ink">Let our dispatch team help.</h4>
-          <p class="text-sm text-slate-600 font-body mt-1.5 leading-relaxed">
+          <h4 class="font-heading text-base font-bold uppercase text-ink">Let our dispatch team help.</h4>
+          <p class="mt-1.5 text-base leading-relaxed text-slate-600 font-body">
             Tell us about your load specifications (length, width, height, and weight) and we will help identify the safest and most cost-effective open-deck trailer option.
           </p>
+          <Button href="/request-a-quote?equipment=Not%20sure#quote-form-section" variant="primary" size="sm" arrow={true} class="mt-5 w-full sm:w-auto">
+            Ask for Equipment Help
+          </Button>
         </div>
       </div>
     </div>

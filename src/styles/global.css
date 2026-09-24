@@ -230,6 +230,13 @@ video {
   inset: 0;
 }
 
+/* Fill the visible viewport, but let long content grow instead of clipping. */
+.viewport-hero,
+.page-hero.page-hero--fullscreen {
+  min-height: max(37.5rem, 100vh);
+  min-height: max(37.5rem, 100dvh);
+}
+
 .page-hero__media img {
   width: 100%;
   height: 100%;

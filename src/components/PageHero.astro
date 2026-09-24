@@ -21,7 +21,7 @@ const {
   imageAlt = '',
   mobileImagePosition = 'center',
   compact = false,
-  fullscreen = false,
+  fullscreen = Boolean(image),
 } = Astro.props;
 ---
 
@@ -64,20 +64,10 @@ const {
     padding-bottom: clamp(3.5rem, 6vw, 5rem);
   }
 
-  .page-hero.page-hero--fullscreen {
-    height: 100svh;
-    min-height: 37.5rem;
-  }
-
   @media (max-width: 47.999rem) {
     .page-hero--mobile-image-right :global(.page-hero__media img) {
       object-position: 82% center;
     }
   }
 
-  @media (min-width: 64rem) {
-    .page-hero.page-hero--fullscreen {
-      height: 100dvh;
-    }
-  }
 </style>
